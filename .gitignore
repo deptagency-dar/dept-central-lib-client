@@ -1,0 +1,17 @@
+# Ignore build output
+build/
+dist/
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore editor-specific files
+.vscode/
+*.vscode/
+*.code-workspace
+
+# Ignore testing output
+coverage
+
+# Ignore any other files or directories you don't want to track
+**/.DS_Store

@@ -1,0 +1,76 @@
+.radio {
+  display: flex;
+  align-items: stretch;
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio input {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid white;
+  outline: 2px solid var(--radio-initial-color);
+}
+
+.button input:checked {
+  background-color: var(--radio-scheme);
+}
+
+.button input:checked,
+.button input:not(:disabled):hover {
+  outline-color: var(--radio-scheme);
+}
+
+.check input {
+  display: none;
+}
+
+.radio input:disabled,
+.radio input:disabled ~ * {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+.radio input:disabled {
+  background-color: var(--radio-disabled-color);
+  border: none;
+}
+
+.radioIcon {
+  outline: 2px solid var(--radio-initial-color);
+  border-radius: 50%;
+}
+
+.check input:checked + .radioIcon {
+  outline-offset: -1px;
+  outline-width: 3px;
+  outline-color: var(--radio-scheme);
+}
+
+.check input:not(:disabled):hover + .radioIcon {
+  outline-color: var(--radio-scheme);
+}
+
+.check input:checked + .radioIcon circle {
+  fill: var(--radio-scheme);
+  stroke: var(--radio-scheme);
+}
+
+.check input:disabled + .radioIcon circle {
+  fill: var(--radio-disabled-color);
+  stroke: var(--radio-disabled-color);
+}
+
+.check input:not(:checked) + .radioIcon path {
+  display: none;
+}
+
+.label {
+  composes: baseBold from '../../styles/typography.module.css';
+  margin-inline-start: .5rem;
+}

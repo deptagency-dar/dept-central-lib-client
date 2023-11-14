@@ -1,0 +1,76 @@
+/* button.module.css */
+
+
+@value buttonTextColor: white;
+
+.button {
+  composes: largeBold from '../../styles/typography.module.css';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: none;
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+  gap: .5rem;
+  opacity: 1;
+  transition:
+    color .3s,
+    background-color .3s;
+  padding: 1rem 1.25rem;
+  border-radius: 2.5rem;
+  background-color: transparent;
+  height: 2.8125rem;
+}
+
+.solid {
+  composes: button;
+  background-color: var(--button-scheme);
+  color: var(--button-text-color);
+}
+
+.outline {
+  composes: button;
+  border: 1px solid var(--button-scheme);
+  color: var(--button-scheme);
+}
+
+.link {
+  composes: button;
+  color: var(--button-scheme);
+  text-decoration: underline;
+  text-underline-offset: .5rem;
+}
+
+:is(.link):not(:disabled):hover {
+  color: var(--button-hover-color);
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--button-hover-color);
+}
+
+.solid:not(:disabled):hover {
+  background-color: var(--button-hover-color);
+  color: buttonTextColor;
+}
+
+.outline:not(:disabled):hover {
+  background-color: var(--button-scheme);
+  color: buttonTextColor;
+}
+
+:is(.solid, .outline):not(:disabled):focus {
+  background-color: var(--button-focus-color);
+  color: buttonTextColor;
+}
+
+.link:not(:disabled):focus {
+  color: var(--button-focus-color);
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--button-focus-color);
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,47 @@
+{/* typography.mdx */}
+
+import { Meta, Typeset } from '@storybook/blocks';
+
+<Meta title="Theme/Typography" />
+
+export const typography = {
+  type: {
+    primary: '"Maison Neue", Helvetica, Arial, sans-serif',
+  },
+  weight: {
+    regular: '400',
+    bold: '600',
+  },
+  size: {
+    h1: 48,
+    h2: 38,
+    h3: 30,
+    h4: 24,
+    large: 18,
+    base: 16,
+    small: 14,
+  },
+};
+
+export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+# Typography
+
+**Font:** Maison Neue
+
+**Weights:** 400(regular), 600(bold)
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.h1),
+    Number(typography.size.h2),
+    Number(typography.size.h3),
+    Number(typography.size.h4),
+    Number(typography.size.large),
+    Number(typography.size.base),
+    Number(typography.size.small),
+  ]}
+  fontWeight={typography.weight.bold}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
