@@ -49,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type = 'button',
       disabled = false,
       children,
-      ...props
+      ...rest
     }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
@@ -71,7 +71,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         style={buttonStyles}
         type={type}
-        {...props}
+        {...rest}
       >
         {children}
       </button>

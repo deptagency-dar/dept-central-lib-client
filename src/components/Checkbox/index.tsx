@@ -14,7 +14,8 @@ interface CheckboxOwnProps {
 type CheckboxRootAttributes = Pick<
   InputHTMLAttributes<HTMLInputElement>,
   | 'children'
-  | 'checked'
+  // | 'checked'
+  | 'defaultChecked'
   | 'disabled'
   | 'hidden'
   | 'id'
@@ -25,6 +26,7 @@ type CheckboxRootAttributes = Pick<
   | 'required'
   | 'tabIndex'
   | 'value'
+  | 'name'
 >
 
 export type CheckboxProps = CheckboxRootAttributes & CheckboxOwnProps
@@ -42,11 +44,9 @@ const createCheckboxStyles = (
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
-      checked = false,
       colorScheme = 'primary',
       colorShade = 600,
       variant = 'check',
-      disabled = false,
       children,
       ...props
     }: CheckboxProps,
@@ -66,8 +66,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       <label className={checkboxClasses} style={checkboxStyles}>
         <input
           type="checkbox"
-          checked={checked}
-          disabled={disabled}
           ref={ref}
           {...props}
         />

@@ -50,7 +50,7 @@ export default {
         type: { summary: `"button" | "check"` },
       },
     },
-    checked: {
+    defaultChecked: {
       control: 'boolean',
       description: 'Indicates whether the radio is checked or not.',
       table: {
@@ -79,8 +79,6 @@ export const Default: Story = {
   args: {
     children: 'Default Radio',
     variant: 'button',
-    checked: false,
-    disabled: false,
   },
 }
 
@@ -92,16 +90,16 @@ export const Variants: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<Radio checked>Radio Button</Radio>
-<Radio variant="check" checked>Radio Check</Radio>
+        code: `<Radio defaultChecked>Radio Button</Radio>
+<Radio variant="check" defaultChecked>Radio Check</Radio>
           `,
       },
     },
   },
   render: () => (
     <div className="grid gap-4 grid-cols-3">
-      <Radio checked onChange={() => {}}>Radio Button</Radio>
-      <Radio variant="check" checked onChange={() => {}}>
+      <Radio defaultChecked>Radio Button</Radio>
+      <Radio variant="check" defaultChecked>
         Radio Check
       </Radio>
     </div>
@@ -116,30 +114,30 @@ export const Colors: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<Radio colorScheme="primary" checked>Primary Radio</Radio>
-<Radio colorScheme="grayscale" checked>GrayScale Radio</Radio>
-<Radio colorScheme="warning" checked>Warning Radio</Radio>
-<Radio colorScheme="error" checked>Error Radio</Radio>
-<Radio colorScheme="success" checked>Success Radio</Radio>
+        code: `<Radio colorScheme="primary" defaultChecked>Primary Radio</Radio>
+<Radio colorScheme="grayscale" defaultChecked>GrayScale Radio</Radio>
+<Radio colorScheme="warning" defaultChecked>Warning Radio</Radio>
+<Radio colorScheme="error" defaultChecked>Error Radio</Radio>
+<Radio colorScheme="success" defaultChecked>Success Radio</Radio>
           `,
       },
     },
   },
   render: () => (
     <div className="grid gap-4 grid-cols-3 grid-rows-2">
-      <Radio colorScheme="primary" checked onChange={() => {}}>
+      <Radio colorScheme="primary" defaultChecked>
         Primary Radio
       </Radio>
-      <Radio colorScheme="grayscale" checked onChange={() => {}}>
+      <Radio colorScheme="grayscale" defaultChecked>
         GrayScale Radio
       </Radio>
-      <Radio colorScheme="warning" checked onChange={() => {}}>
+      <Radio colorScheme="warning" defaultChecked>
         Warning Radio
       </Radio>
-      <Radio colorScheme="error" checked onChange={() => {}}>
+      <Radio colorScheme="error" defaultChecked>
         Error Radio
       </Radio>
-      <Radio colorScheme="success" checked onChange={() => {}}>
+      <Radio colorScheme="success" defaultChecked>
         Success Radio
       </Radio>
     </div>

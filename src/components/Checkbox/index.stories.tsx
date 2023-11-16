@@ -50,7 +50,7 @@ export default {
         type: { summary: `"check" | "toggle"` },
       },
     },
-    checked: {
+    defaultChecked: {
       control: 'boolean',
       description: 'Indicates whether the checkbox is checked or not.',
       table: {
@@ -79,8 +79,6 @@ export const Default: Story = {
   args: {
     children: 'Default Checkbox',
     variant: 'check',
-    checked: false,
-    disabled: false,
   },
 }
 
@@ -92,18 +90,16 @@ export const Variants: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<Checkbox checked>Checkbox Check</Checkbox>
-<Checkbox variant="toggle" checked>Checkbox Toggle</Checkbox>
+        code: `<Checkbox>Checkbox Check</Checkbox>
+<Checkbox variant="toggle">Checkbox Toggle</Checkbox>
           `,
       },
     },
   },
   render: () => (
     <div className="grid gap-4 grid-cols-3">
-      <Checkbox checked onChange={() => {}}>Checkbox Button</Checkbox>
-      <Checkbox variant="toggle" checked onChange={() => {}}>
-        Checkbox Check
-      </Checkbox>
+      <Checkbox>Checkbox Button</Checkbox>
+      <Checkbox variant="toggle">Checkbox Check</Checkbox>
     </div>
   ),
 }
@@ -116,30 +112,30 @@ export const Colors: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<Checkbox colorScheme="primary" checked>Primary Checkbox</Checkbox>
-<Checkbox colorScheme="grayscale" checked>GrayScale Checkbox</Checkbox>
-<Checkbox colorScheme="warning" checked>Warning Checkbox</Checkbox>
-<Checkbox colorScheme="error" checked>Error Checkbox</Checkbox>
-<Checkbox colorScheme="success" checked>Success Checkbox</Checkbox>
+        code: `<Checkbox colorScheme="primary" defaultChecked>Primary Checkbox</Checkbox>
+<Checkbox colorScheme="grayscale" defaultChecked>GrayScale Checkbox</Checkbox>
+<Checkbox colorScheme="warning" defaultChecked>Warning Checkbox</Checkbox>
+<Checkbox colorScheme="error" defaultChecked>Error Checkbox</Checkbox>
+<Checkbox colorScheme="success" defaultChecked>Success Checkbox</Checkbox>
           `,
       },
     },
   },
   render: () => (
     <div className="grid gap-4 grid-cols-3 grid-rows-2">
-      <Checkbox colorScheme="primary" checked onChange={() => {}}>
+      <Checkbox colorScheme="primary" defaultChecked>
         Primary Checkbox
       </Checkbox>
-      <Checkbox colorScheme="grayscale" checked onChange={() => {}}>
+      <Checkbox colorScheme="grayscale" defaultChecked>
         GrayScale Checkbox
       </Checkbox>
-      <Checkbox colorScheme="warning" checked onChange={() => {}}>
+      <Checkbox colorScheme="warning" defaultChecked>
         Warning Checkbox
       </Checkbox>
-      <Checkbox colorScheme="error" checked onChange={() => {}}>
+      <Checkbox colorScheme="error" defaultChecked>
         Error Checkbox
       </Checkbox>
-      <Checkbox colorScheme="success" checked onChange={() => {}}>
+      <Checkbox colorScheme="success" defaultChecked>
         Success Checkbox
       </Checkbox>
     </div>

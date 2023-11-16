@@ -14,7 +14,6 @@ interface RadioOwnProps {
 type RadioRootAttributes = Pick<
   InputHTMLAttributes<HTMLInputElement>,
   | 'children'
-  | 'checked'
   | 'disabled'
   | 'hidden'
   | 'id'
@@ -25,6 +24,8 @@ type RadioRootAttributes = Pick<
   | 'required'
   | 'tabIndex'
   | 'value'
+  | 'name'
+  | 'defaultChecked'
 >
 
 export type RadioProps = RadioRootAttributes & RadioOwnProps
@@ -42,13 +43,11 @@ const createRadioStyles = (
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
   (
     {
-      checked = false,
       colorScheme = 'primary',
       colorShade = 600,
       variant = 'button',
-      disabled = false,
       children,
-      ...props
+      ...rest
     }: RadioProps,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
@@ -60,11 +59,9 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     return (
       <label className={radioClasses} style={radioStyles}>
         <input
-          checked={checked}
-          disabled={disabled}
           type="radio"
           ref={ref}
-          {...props}
+          {...rest}
         />
         {variant === 'check' && (
           <svg
