@@ -11,14 +11,14 @@ To use this design system in your React project, follow these steps:
 1. **Installation**: Install the design system package in your project.
 
    ```bash
-   npm install dept-central-lib-client
+   yarn add dept-central-lib-client
    ```
 
 2. **Import the global styles**:
    Import the stylesheet into your root component file.
 
    ```javascript
-   import '@juanaraneta/dist/styles.css'
+   import '@juanaraneta/dept-central-lib-client/dist/styles.css'
    ```
 
 3. **Import Components**: Import the desired components into your React components.
