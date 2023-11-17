@@ -27,7 +27,7 @@ type TextFieldRootAttributes = Pick<
   | 'size'
 >
 
-type TextFieldProps = TextFieldRootAttributes & TextFieldOwnProps
+export type TextFieldProps = TextFieldRootAttributes & TextFieldOwnProps
 
 const createTextFieldStyles = (
   color: string,
