@@ -1,0 +1,71 @@
+### Button Component
+
+The `Button` component is a versatile button implementation for React, allowing easy integration and customization. Below, you'll find essential information on how to use this component effectively.
+
+### Usage
+
+```jsx
+// Import component
+import { Button } from '@juanaraneta/dept-central-lib-client'
+```
+
+```jsx
+// Example usage
+<Button
+  colorScheme="primary"
+  colorShade={600}
+  variant="solid"
+  onClick={() => console.log('Button clicked')}
+>
+  Click me!
+</Button>
+```
+
+### Props
+
+| Prop        | Type               | Description                                | Default Value |
+| ----------- | ------------------ | ------------------------------------------ | ------------- |
+| colorScheme | keyof ColorPalette | Specifies the color scheme for the button. | "primary"     |
+| colorShade  | keyof ColorShade   | Specifies the color shade for the button.  | 600           |
+| variant     | ButtonVariant      | Specifies the button variant.              | "solid"       |
+| type        | string             | Specifies the button type.                 | "button"      |
+| disabled    | boolean            | Disables the button if set to `true`.      | false         |
+| children    | ReactNode          | Content to be displayed within the button. | -             |
+
+_Note: Other standard HTML button attributes can also be applied._
+
+### Styling
+
+The button's appearance is determined by its color scheme and variant. You can further customize the button's style by modifying the CSS module.
+
+### Examples
+
+```jsx
+// Solid button
+<Button colorScheme="primary" variant="solid">
+  Solid Button
+</Button>
+
+// Outline button
+<Button colorScheme="secondary" variant="outline">
+  Outline Button
+</Button>
+
+// Link button
+<Button colorScheme="tertiary" variant="link">
+  Link Button
+</Button>
+
+// Disabled button
+<Button colorScheme="primary" disabled>
+  Disabled Button
+</Button>
+```
+
+### Customization
+
+For advanced customization, you can modify the button's appearance by adjusting the color scheme, shade, and variant props.
+
+### Go main README
+
+[Main README](../../../README.md#components)

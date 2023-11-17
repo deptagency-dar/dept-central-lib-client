@@ -14,13 +14,20 @@ To use this design system in your React project, follow these steps:
    npm install dept-central-lib-client
    ```
 
-2. **Import Components**: Import the desired components into your React components.
+2. **Import the global styles**:
+   Import the stylesheet into your root component file.
 
-   ```jsx
-   import { Button, Checkbox, Radio } from 'dept-central-lib-client';
+   ```javascript
+   import '@juanaraneta/dist/styles.css'
    ```
 
-3. **Usage**: Use the components in your JSX as needed.
+3. **Import Components**: Import the desired components into your React components.
+
+   ```jsx
+   import { Button, Checkbox, Radio } from '@juanaraneta/dept-central-lib-client'
+   ```
+
+4. **Usage**: Use the components in your JSX as needed.
 
    ```jsx
    <Button colorScheme="primary" variant="solid">
@@ -30,47 +37,9 @@ To use this design system in your React project, follow these steps:
 
 ## Components
 
-### Button Component
-
-The `Button` component allows you to create buttons with different color schemes, shades, and variants.
-
-```jsx
-import { Button, ButtonProps } from 'dept-central-lib-client';
-
-const MyButton: React.FC<ButtonProps> = ({ children }) => (
-  <Button colorScheme="primary" variant="solid">
-    {children}
-  </Button>
-);
-```
-
-### Checkbox Component
-
-The `Checkbox` component provides customizable checkboxes with different color schemes and variants.
-
-```jsx
-import { Checkbox, CheckboxProps } from 'dept-central-lib-client';
-
-const MyCheckbox: React.FC<CheckboxProps> = ({ children }) => (
-  <Checkbox colorScheme="primary" variant="check">
-    {children}
-  </Checkbox>
-);
-```
-
-### Radio Component
-
-The `Radio` component allows you to create radio buttons with various color schemes and variants.
-
-```jsx
-import { Radio, RadioProps } from 'dept-central-lib-client';
-
-const MyRadio: React.FC<RadioProps> = ({ children }) => (
-  <Radio colorScheme="primary" variant="button">
-    {children}
-  </Radio>
-);
-```
+- [Button](src/components/Button/README.md)
+- [Checkbox](src/components/Checkbox/README.md)
+- [Radio](src/components/Radio/README.md)
 
 ## Color Palette
 
@@ -95,7 +64,12 @@ The design system provides CSS classes for different shadow sizes. You can apply
 The design system includes utility functions, some of them for example are for working with colors, such as getting contrast colors, lightening, and darkening colors.
 
 ```jsx
-import { getContrastColor, getLightenColor, getDarkenColor, getColor } from 'dept-central-lib-client/utils';
+import {
+  getContrastColor,
+  getLightenColor,
+  getDarkenColor,
+  getColor,
+} from 'dept-central-lib-client/utils'
 ```
 
 Feel free to explore and customize these utilities based on your project's needs.
@@ -122,7 +96,6 @@ To contribute to the design system, follow these steps:
    ```
 
 3. Make your changes and create a pull request.
-
 
 # Unit Testing
 
