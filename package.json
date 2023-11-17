@@ -1,6 +1,6 @@
 {
   "name": "dept-central-lib-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A lightweight typeScript react component library",
   "main": "dist/index.js",
   "module": "dist/index.min.js",
