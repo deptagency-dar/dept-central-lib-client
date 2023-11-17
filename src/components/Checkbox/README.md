@@ -23,24 +23,24 @@ import { Checkbox } from '@juanaraneta/dept-central-lib-client'
 
 ### Props
 
-| Prop           | Type                                       | Description                                          | Default Value |
-| -------------- | ------------------------------------------ | ---------------------------------------------------- | ------------- |
-| colorScheme    | keyof ColorPalette                         | Specifies the color scheme for the checkbox.         | "primary"     |
-| colorShade     | keyof ColorShade                           | Specifies the color shade for the checkbox.          | 600           |
-| variant        | 'check' \| 'toggle'                        | Specifies the checkbox variant.                      | "check"       |
-| children       | ReactNode                                  | Label for the checkbox.                              | -             |
-| defaultChecked | boolean                                    | Specifies whether the checkbox is initially checked. | -             |
-| disabled       | boolean                                    | Disables the checkbox if set to `true`.              | false         |
-| hidden         | boolean                                    | Hides the checkbox if set to `true`.                 | false         |
-| id             | string                                     | Specifies the id for the checkbox.                   | -             |
-| onChange       | (e: ChangeEvent<HTMLInputElement>) => void | Function triggered on checkbox change.               | -             |
-| onClick        | (e: MouseEvent<HTMLInputElement>) => void  | Function triggered on checkbox click.                | -             |
-| onFocus        | (e: FocusEvent<HTMLInputElement>) => void  | Function triggered on checkbox focus.                | -             |
-| readOnly       | boolean                                    | Makes the checkbox read-only if set to `true`.       | false         |
-| required       | boolean                                    | Makes the checkbox required if set to `true`.        | false         |
-| tabIndex       | number                                     | Specifies the tab order of the checkbox.             | -             |
-| value          | string                                     | Specifies the value of the checkbox.                 | -             |
-| name           | string                                     | Specifies the name of the checkbox.                  | -             |
+| Prop           | Type                                                                    | Description                                          | Default Value |
+| -------------- | ----------------------------------------------------------------------- | ---------------------------------------------------- | ------------- |
+| colorScheme    | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | Specifies the color scheme for the checkbox.         | "primary"     |
+| colorShade     | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | Specifies the color shade for the checkbox.          | 600           |
+| variant        | 'check' \| 'toggle'                                                     | Specifies the checkbox variant.                      | "check"       |
+| children       | ReactNode                                                               | Label for the checkbox.                              | -             |
+| defaultChecked | boolean                                                                 | Specifies whether the checkbox is initially checked. | -             |
+| disabled       | boolean                                                                 | Disables the checkbox if set to `true`.              | false         |
+| hidden         | boolean                                                                 | Hides the checkbox if set to `true`.                 | false         |
+| id             | string                                                                  | Specifies the id for the checkbox.                   | -             |
+| onChange       | (e: ChangeEvent<HTMLInputElement>) => void                              | Function triggered on checkbox change.               | -             |
+| onClick        | (e: MouseEvent<HTMLInputElement>) => void                               | Function triggered on checkbox click.                | -             |
+| onFocus        | (e: FocusEvent<HTMLInputElement>) => void                               | Function triggered on checkbox focus.                | -             |
+| readOnly       | boolean                                                                 | Makes the checkbox read-only if set to `true`.       | false         |
+| required       | boolean                                                                 | Makes the checkbox required if set to `true`.        | false         |
+| tabIndex       | number                                                                  | Specifies the tab order of the checkbox.             | -             |
+| value          | string                                                                  | Specifies the value of the checkbox.                 | -             |
+| name           | string                                                                  | Specifies the name of the checkbox.                  | -             |
 
 _Note: Other standard HTML input attributes can also be applied._
 
