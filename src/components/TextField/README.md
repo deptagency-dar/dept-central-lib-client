@@ -5,10 +5,13 @@ The `TextField` component is a customizable text input field for React, designed
 ## Usage
 
 ```jsx
-import { TextField } from 'path/to/TextField'
+// Import component
+import { TextField } from 'dept-central-lib-client'
+```
 
+```jsx
 // Example usage
-;<TextField
+<TextField
   label="Username"
   colorScheme="primary"
   colorShade={600}

@@ -6,7 +6,7 @@ The `Button` component is a versatile button implementation for React, allowing 
 
 ```jsx
 // Import component
-import { Button } from '@juanaraneta/dept-central-lib-client'
+import { Button } from 'dept-central-lib-client'
 ```
 
 ```jsx

@@ -18,13 +18,13 @@ To use this design system in your React project, follow these steps:
    Import the stylesheet into your root component file.
 
    ```javascript
-   import '@juanaraneta/dept-central-lib-client/dist/styles.css'
+   import 'dept-central-lib-client/dist/styles.css'
    ```
 
 3. **Import Components**: Import the desired components into your React components.
 
    ```jsx
-   import { Button, Checkbox, Radio } from '@juanaraneta/dept-central-lib-client'
+   import { Button, Checkbox, Radio } from 'dept-central-lib-client'
    ```
 
 4. **Usage**: Use the components in your JSX as needed.

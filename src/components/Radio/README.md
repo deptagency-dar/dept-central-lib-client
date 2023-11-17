@@ -6,7 +6,7 @@ The `Radio` component provides a customizable radio button for React application
 
 ```jsx
 // Import component
-import { Radio } from '@juanaraneta/dept-central-lib-client'
+import { Radio } from 'dept-central-lib-client'
 ```
 
 ```jsx

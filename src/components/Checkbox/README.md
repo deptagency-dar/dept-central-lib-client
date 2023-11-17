@@ -6,7 +6,7 @@ The `Checkbox` component provides a customizable checkbox or toggle switch for R
 
 ```jsx
 // Import component
-import { Checkbox } from '@juanaraneta/dept-central-lib-client'
+import { Checkbox } from 'dept-central-lib-client'
 ```
 
 ```jsx
