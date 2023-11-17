@@ -1,8 +1,8 @@
-### Radio Component
+# Radio Component
 
 The `Radio` component provides a customizable radio button for React applications. Below is comprehensive information on using and customizing this component.
 
-### Usage
+## Usage
 
 ```jsx
 // Import component
@@ -21,7 +21,7 @@ import { Radio } from '@juanaraneta/dept-central-lib-client'
 </Radio>
 ```
 
-### Props
+## Props
 
 | Prop           | Type                                                                    | Description                                              | Default Value |
 | -------------- | ----------------------------------------------------------------------- | -------------------------------------------------------- | ------------- |
@@ -44,11 +44,11 @@ import { Radio } from '@juanaraneta/dept-central-lib-client'
 
 _Note: Other standard HTML input attributes can also be applied._
 
-### Styling
+## Styling
 
 The appearance of the radio button is determined by its color scheme, shade, and variant. You can further customize the radio button's style by modifying the CSS module.
 
-### Examples
+## Examples
 
 ```jsx
 // Standard radio button
@@ -71,6 +71,6 @@ The appearance of the radio button is determined by its color scheme, shade, and
 
 For advanced customization, adjust the color scheme, shade, and variant props to suit your requirements.
 
-### Go main README
+## Go main README
 
 [Main README](../../../README.md#components)

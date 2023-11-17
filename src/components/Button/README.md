@@ -1,8 +1,8 @@
-### Button Component
+# Button Component
 
 The `Button` component is a versatile button implementation for React, allowing easy integration and customization. Below, you'll find essential information on how to use this component effectively.
 
-### Usage
+## Usage
 
 ```jsx
 // Import component
@@ -21,7 +21,7 @@ import { Button } from '@juanaraneta/dept-central-lib-client'
 </Button>
 ```
 
-### Props
+## Props
 
 | Prop        | Type                                                                    | Description                                | Default Value |
 | ----------- | ----------------------------------------------------------------------- | ------------------------------------------ | ------------- |
@@ -34,11 +34,11 @@ import { Button } from '@juanaraneta/dept-central-lib-client'
 
 _Note: Other standard HTML button attributes can also be applied._
 
-### Styling
+## Styling
 
 The button's appearance is determined by its color scheme and variant. You can further customize the button's style by modifying the CSS module.
 
-### Examples
+## Examples
 
 ```jsx
 // Solid button
@@ -66,6 +66,6 @@ The button's appearance is determined by its color scheme and variant. You can f
 
 For advanced customization, you can modify the button's appearance by adjusting the color scheme, shade, and variant props.
 
-### Go main README
+## Go main README
 
 [Main README](../../../README.md#components)

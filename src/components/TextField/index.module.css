@@ -1,0 +1,50 @@
+/* TextField.module.css */
+
+.textField {
+  display: flex;
+  width: 20.5rem;
+  justify-content: center;
+  flex-direction: column;
+  height: 4.375rem;
+  padding: 1rem 1.25rem;
+  gap: 1rem;
+  flex-shrink: 0;
+  border-radius: 0.375rem;
+  background: #fff;
+  composes: shadowSmall from '../../styles/shadows.module.css';
+}
+
+.label {
+  composes: small from '../../styles/typography.module.css';
+  align-self: stretch;
+  color: var(--textfield-label-color);
+}
+
+.textField input {
+  outline: none;
+  align-self: stretch;
+}
+
+.textField input::placeholder {
+  color: var(--textfield-placeholder-color);
+}
+
+.error {
+  border-block-end: 2px solid var(--textfield-error-color);
+  border-radius: 0.375rem 0.375rem 0rem 0rem;
+}
+
+.errorMessage {
+  color: var(--textfield-error-color);
+  composes: small from '../../styles/typography.module.css';
+}
+
+.textField:focus-within {
+  border-block-end: 2px solid var(--textfield-scheme);
+  border-radius: 0.375rem 0.375rem 0rem 0rem;
+}
+
+.disabled {
+  background-color: var(--textfield-disabled-color);
+  cursor: not-allowed;
+}

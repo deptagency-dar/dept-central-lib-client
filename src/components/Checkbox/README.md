@@ -1,8 +1,8 @@
-### Checkbox Component
+# Checkbox Component
 
 The `Checkbox` component provides a customizable checkbox or toggle switch for React applications. Below is comprehensive information on using and customizing this component.
 
-### Usage
+## Usage
 
 ```jsx
 // Import component
@@ -21,7 +21,7 @@ import { Checkbox } from '@juanaraneta/dept-central-lib-client'
 </Checkbox>
 ```
 
-### Props
+## Props
 
 | Prop           | Type                                                                    | Description                                          | Default Value |
 | -------------- | ----------------------------------------------------------------------- | ---------------------------------------------------- | ------------- |
@@ -44,11 +44,11 @@ import { Checkbox } from '@juanaraneta/dept-central-lib-client'
 
 _Note: Other standard HTML input attributes can also be applied._
 
-### Styling
+## Styling
 
 The appearance of the checkbox is determined by its color scheme, shade, and variant. You can further customize the checkbox's style by modifying the CSS module.
 
-### Examples
+## Examples
 
 ```jsx
 // Standard checkbox
@@ -71,6 +71,6 @@ The appearance of the checkbox is determined by its color scheme, shade, and var
 
 For advanced customization, adjust the color scheme, shade, and variant props to suit your requirements.
 
-### Go main README
+## Go main README
 
 [Main README](../../../README.md#components)

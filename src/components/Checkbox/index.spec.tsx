@@ -18,7 +18,7 @@ describe('Checkbox component', () => {
 
   it('renders as checked when the "checked" prop is true', () => {
     const { getByLabelText } = render(
-      <Checkbox checked onChange={() => {}}>
+      <Checkbox defaultChecked>
         Checkbox Label
       </Checkbox>,
     )
@@ -56,7 +56,7 @@ describe('Checkbox component', () => {
 
   it('renders switch for "toggle" variant', () => {
     const { container } = render(
-      <Checkbox variant="toggle" onChange={() => {}}>
+      <Checkbox variant="toggle">
         Checkbox Label
       </Checkbox>,
     )
@@ -68,7 +68,7 @@ describe('Checkbox component', () => {
 
   it('updates when checked prop changes', () => {
     const { getByLabelText, rerender } = render(
-      <Checkbox checked={false} onChange={() => {}}>
+      <Checkbox>
         Checkbox Label
       </Checkbox>,
     )
@@ -77,7 +77,7 @@ describe('Checkbox component', () => {
     expect(checkboxInput).not.toBeChecked()
 
     rerender(
-      <Checkbox checked>
+      <Checkbox defaultChecked>
         Checkbox Label
       </Checkbox>,
     )

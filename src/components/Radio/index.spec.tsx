@@ -22,7 +22,7 @@ describe('Radio component', () => {
 
   it('renders as checked when the "checked" prop is true', () => {
     const { getByLabelText } = render(
-      <Radio checked onChange={() => {}}>
+      <Radio defaultChecked>
         Radio Label
       </Radio>,
     )
@@ -58,7 +58,7 @@ describe('Radio component', () => {
 
   it('renders check icon for "check" variant', () => {
     const { container } = render(
-      <Radio variant="check" onChange={() => {}}>
+      <Radio variant="check">
         Radio Label
       </Radio>,
     )
@@ -70,7 +70,7 @@ describe('Radio component', () => {
 
   it('updates when checked prop changes', () => {
     const { getByLabelText, rerender } = render(
-      <Radio checked={false} onChange={() => {}}>
+      <Radio>
         Radio Label
       </Radio>,
     )
@@ -78,7 +78,7 @@ describe('Radio component', () => {
 
     expect(radioInput).not.toBeChecked()
 
-    rerender(<Radio checked>Radio Label</Radio>)
+    rerender(<Radio defaultChecked>Radio Label</Radio>)
 
     expect(radioInput).toBeChecked()
   })
