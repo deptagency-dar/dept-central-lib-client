@@ -1,5 +1,7 @@
 # DEPT Central Lib Client
 
+Repo owner: @dario.gonzalez
+
 ## Introduction
 
 This repository contains a React design system with TypeScript support that utilizes Webpack for compilation. The design system includes ui components, as well as styles for shadows, color palettes, typography, etc.
