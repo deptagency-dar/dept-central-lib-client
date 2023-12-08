@@ -10,7 +10,6 @@ type SearchInputRootAttributes = Pick<
   | 'disabled'
   | 'value'
   | 'onChange'
-  | 'placeholder'
   | 'id'
   | 'name'
   | 'min'
