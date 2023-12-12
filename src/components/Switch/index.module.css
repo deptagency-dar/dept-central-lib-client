@@ -32,5 +32,5 @@ button:not(.selected) {
 
 .selected {
   background-color: #fff;
-  color: #5B40CB;
+  color: var(--switch-scheme);
 }

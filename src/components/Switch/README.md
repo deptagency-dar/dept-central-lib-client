@@ -5,19 +5,22 @@ The `Switch` component is a selector between two options, presented as side-by-s
 ## Usage
 
 ```jsx
-import { Switch } from 'dept-central-lib-client';
+import { Switch } from 'dept-central-lib-client'
 
-<Switch
+;<Switch
   leftOption="Option 1"
   rightOption="Option 2"
-  onSwitch={(selectedOption) => console.log(`Selected option: ${selectedOption}`)}
+  onChange={(selectedOption) =>
+    console.log(`Selected option: ${selectedOption}`)
+  }
 />
 ```
 
 ## Props
 
-| Prop        | Type       | Description                                           | Default Value |
-| ----------- | ---------- | ----------------------------------------------------- | ------------- |
-| leftOption  | string     | Text for the left button option.                      | -             |
-| rightOption | string     | Text for the right button option.                     | -             |
-| onSwitch    | function   | Callback function triggered when an option is chosen. | -             |
+| Prop           | Type     | Description                                           | Default Value |
+| -------------- | -------- | ----------------------------------------------------- | ------------- |
+| leftOption     | string   | Text for the left button option.                      | -             |
+| rightOption    | string   | Text for the right button option.                     | -             |
+| onChange       | function | Callback function triggered when an option is chosen. | -             |
+| selectedOption | string   | Text for the default selected option.                 | -             |
