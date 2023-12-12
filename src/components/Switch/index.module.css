@@ -1,0 +1,36 @@
+/* Switch.module.css */
+
+.switch {
+  display: flex;
+  height: 3rem;
+  width: 11.25rem;
+}
+
+.button {
+  composes: baseBold from '../../styles/typography.module.css';
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:not(.selected) {
+  opacity: .5;
+}
+
+.leftButton {
+  border-radius: 100px 0 0 100px;
+}
+
+.rightButton {
+  border-radius:  0 100px 100px 0;
+}
+
+.selected {
+  background-color: #fff;
+  color: var(--switch-scheme);
+}
