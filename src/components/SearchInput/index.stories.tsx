@@ -57,14 +57,14 @@ export const WithPlaceholder: Story = {
       source: {
         code: `<SearchInput 
   label="SearchInput with Error" 
-  placeholder="Enter text here" 
+  placeholder="Search anything..." 
 />`,
       },
     },
   },
   args: {
     ...Default.args,
-    placeholder: 'Enter text here',
+    placeholder: 'Search anything...',
   },
 }
 
