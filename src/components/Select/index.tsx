@@ -36,10 +36,11 @@ export const Select: FC<SelectProps> = ({
   )
 
   return (
-    <Listbox value={selected} onChange={handleOnChange}>
+    <Listbox value={selected} onChange={handleOnChange} disabled={disabled}>
       {({ open }) => (
         <div className="relative mt-2 w-full">
           <Listbox.Button
+            data-testid="select"
             className={classNames(
               open && 'border-b-2 border-primary-600',
               disabled && 'pointer-events-none opacity-50',
