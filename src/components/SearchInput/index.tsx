@@ -2,10 +2,6 @@
 import { forwardRef, ForwardedRef, InputHTMLAttributes } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
-interface SearchInputOwnProps {
-  placeholder: string
-}
-
 type SearchInputRootAttributes = Pick<
   InputHTMLAttributes<HTMLInputElement>,
   | 'disabled'
@@ -19,13 +15,15 @@ type SearchInputRootAttributes = Pick<
   | 'maxLength'
   | 'pattern'
   | 'size'
+  | 'placeholder'
 >
 
-export type SearchInputProps = SearchInputRootAttributes & SearchInputOwnProps
-
-export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
+export const SearchInput = forwardRef<
+  HTMLInputElement,
+  SearchInputRootAttributes
+>(
   (
-    { placeholder, ...rest }: SearchInputProps,
+    { placeholder, ...rest }: SearchInputRootAttributes,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
     const disabledClasses = rest.disabled
