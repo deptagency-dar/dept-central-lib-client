@@ -1,7 +1,10 @@
 // Select.tsx
-import { FC, Fragment, useCallback, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
+import { FC, useCallback, useState } from 'react'
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from '@heroicons/react/20/solid'
 import { classNames } from '../../utils'
 
 export interface SelectOption {
@@ -24,6 +27,7 @@ export const Select: FC<SelectProps> = ({
   onChange,
 }) => {
   const [selected, setSelected] = useState<SelectOption>()
+  const [open, setOpen] = useState(false)
 
   if (!options) throw new Error('Options are required.')
 
@@ -31,84 +35,95 @@ export const Select: FC<SelectProps> = ({
     (option: SelectOption) => {
       setSelected(option)
       onChange(option)
+      setOpen(false)
     },
     [onChange],
   )
 
-  return (
-    <Listbox value={selected} onChange={handleOnChange} disabled={disabled}>
-      {({ open }) => (
-        <div className="relative mt-2 w-full">
-          <Listbox.Button
-            data-testid="select"
-            className={classNames(
-              open && 'border-b-2 border-primary-600',
-              disabled && 'pointer-events-none opacity-50',
-              'relative w-full min-w-[15rem] rounded-md cursor-default bg-white py-4 pl-6 pr-16 text-left  shadow-md focus:outline-none',
-            )}
-          >
-            {label && (
-              <Listbox.Label className="block text-sm leading-5 text-gray-800 mb-4">
-                {label}
-              </Listbox.Label>
-            )}
-            {selected ? (
-              <span className="block truncate">{selected.label}</span>
-            ) : (
-              <span className="block truncate text-gray-400">
-                {placeholder}
-              </span>
-            )}
-            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-              {open ? (
-                <ChevronUpIcon
-                  className="h-8 w-8 text-primary-600"
-                  aria-hidden="true"
-                />
-              ) : (
-                <ChevronDownIcon
-                  className="h-8 w-8 text-gray-900"
-                  aria-hidden="true"
-                />
-              )}
-            </span>
-          </Listbox.Button>
+  const Icon = open ? ChevronUpIcon : ChevronDownIcon
 
-          <Transition
-            show={open}
-            as={Fragment}
-            leave="transition ease-in duration-50"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+  return (
+    <div className="relative">
+      <label
+        htmlFor="listbox"
+        className="block text-sm font-medium text-secondary-700"
+      >
+        {label}
+      </label>
+      <div className="mt-1 relative">
+        <button
+          type="button"
+          disabled={disabled}
+          aria-haspopup="listbox"
+          aria-expanded="true"
+          aria-labelledby="listbox-label"
+          className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          onClick={() => setOpen(!open)}
+        >
+          <span className="flex items-center">
+            <span className="ml-3 block truncate">
+              {selected ? selected.label : placeholder}
+            </span>
+          </span>
+          <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <Icon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          </span>
+        </button>
+        <div
+          className={classNames(
+            open ? 'block' : 'hidden',
+            'absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg',
+          )}
+        >
+          <ul
+            tabIndex={-1}
+            role="listbox"
+            aria-labelledby="listbox-label"
+            aria-activedescendant="listbox-item-3"
+            className="max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
           >
-            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {options.map((option) => (
-                <Listbox.Option
-                  key={option.value}
-                  className={({ active }) =>
-                    classNames(
-                      active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                      'relative cursor-default select-none py-2 pl-3 pr-9',
-                    )
-                  }
-                  value={option}
-                >
-                  {({ selected }) => (
-                    <span
-                      className={classNames(
-                        selected ? 'font-semibold' : 'font-normal',
-                        'block truncate',
-                      )}
-                    >
-                      {option.label}
-                    </span>
-                  )}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </Transition>
+            {options.map((option) => (
+              <li
+                key={option.value}
+                id="listbox-item-0"
+                role="option"
+                className={classNames(
+                  selected?.value === option.value
+                    ? 'text-white bg-indigo-600'
+                    : 'text-gray-900',
+                  'cursor-default select-none relative py-2 pl-3 pr-9',
+                )}
+                onClick={() => handleOnChange(option)}
+              >
+                <div className="flex items-center">
+                  <span
+                    className={classNames(
+                      selected?.value === option.value
+                        ? 'font-semibold'
+                        : 'font-normal',
+                      'ml-3 block truncate',
+                    )}
+                  >
+                    {option.label}
+                  </span>
+                </div>
+                {selected?.value === option.value && (
+                  <span
+                    className={classNames(
+                      selected?.value === option.value
+                        ? 'text-white'
+                        : 'text-indigo-600',
+                      'absolute inset-y-0 right-0 flex items-center pr-4',
+                    )}
+                  >
+                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
-      )}
-    </Listbox>
+      </div>
+    </div>
   )
 }
