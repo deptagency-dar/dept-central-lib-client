@@ -90,7 +90,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18"
   }
 }
