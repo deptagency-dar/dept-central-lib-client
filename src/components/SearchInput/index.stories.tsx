@@ -1,6 +1,7 @@
 // SearchInput.stories.tsx
 import { StoryObj, Meta } from '@storybook/react'
 import { SearchInput } from '.'
+import { colors } from '../../constants'
 
 export default {
   title: 'Components/SearchInput',
@@ -35,6 +36,22 @@ export default {
     onChange: {
       description: 'Event triggered when the SearchInput value changes.',
       action: 'changed',
+    },
+    colorScheme: {
+      control: 'select',
+      description: 'Color of the button.',
+      options: Object.keys(colors),
+      table: {
+        defaultValue: { summary: 'primary' },
+      },
+    },
+    colorShade: {
+      control: 'select',
+      description: 'Shade of the color (25 to 900).',
+      options: [25, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+      table: {
+        defaultValue: { summary: 600 },
+      },
     },
   },
 } as Meta<typeof SearchInput>
