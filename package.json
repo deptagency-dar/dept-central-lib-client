@@ -2,7 +2,7 @@
   "name": "dept-central-lib-client",
   "version": "1.1.2",
   "description": "A lightweight typeScript react component library",
-  "license":"ISC",
+  "license": "ISC",
   "main": "dist/index.js",
   "module": "dist/index.min.js",
   "types": "dist/index.d.ts",
@@ -81,12 +81,15 @@
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.1",
     "storybook": "^7.2.2",
-    "tailwindcss": "^3.3.3",
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.4.4",
     "typescript": "^5.1.6",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.0.18",
+    "tailwindcss": "^3.3.3"
   }
 }
