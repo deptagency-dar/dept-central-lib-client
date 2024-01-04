@@ -5,13 +5,17 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/20/solid'
-import { classNames } from '../../utils'
+import { classNames, getLightenColor } from '../../utils'
+import { ColorShade, ColorPalette } from '../../types'
+import { getColor } from '../../utils'
 
 export interface SelectOption {
   label: string
   value: string
 }
 interface SelectProps {
+  colorScheme?: keyof ColorPalette
+  colorShade?: keyof ColorShade
   label: string
   options: SelectOption[]
   placeholder: string
@@ -20,6 +24,8 @@ interface SelectProps {
 }
 
 export const Select: FC<SelectProps> = ({
+  colorScheme = 'primary',
+  colorShade = 600,
   label,
   options,
   placeholder,
@@ -30,6 +36,9 @@ export const Select: FC<SelectProps> = ({
   const [open, setOpen] = useState(false)
 
   if (!options) throw new Error('Options are required.')
+
+  const color = getColor(colorScheme, colorShade)
+  const borderColor = getLightenColor(color, 80)
 
   const handleOnChange = useCallback(
     (option: SelectOption) => {
@@ -54,10 +63,12 @@ export const Select: FC<SelectProps> = ({
         <button
           type="button"
           disabled={disabled}
+          data-testid="select"
           aria-haspopup="listbox"
           aria-expanded="true"
           aria-labelledby="listbox-label"
-          className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          style={{ borderColor, outlineColor: color }}
+          className="relative w-full min-w-[18rem] bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1  focus:border-indigo-600 sm:text-sm"
           onClick={() => setOpen(!open)}
         >
           <span className="flex items-center">
@@ -66,7 +77,11 @@ export const Select: FC<SelectProps> = ({
             </span>
           </span>
           <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <Icon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            <Icon
+              className="h-5 w-5 text-gray-400"
+              style={{ color }}
+              aria-hidden="true"
+            />
           </span>
         </button>
         <div
@@ -79,7 +94,6 @@ export const Select: FC<SelectProps> = ({
             tabIndex={-1}
             role="listbox"
             aria-labelledby="listbox-label"
-            aria-activedescendant="listbox-item-3"
             className="max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
           >
             {options.map((option) => (
@@ -87,23 +101,21 @@ export const Select: FC<SelectProps> = ({
                 key={option.value}
                 id="listbox-item-0"
                 role="option"
+                tabIndex={0}
+                style={{ outlineColor: color }}
                 className={classNames(
                   selected?.value === option.value
-                    ? 'text-white bg-indigo-600'
+                    ? 'bg-gray-50'
                     : 'text-gray-900',
-                  'cursor-default select-none relative py-2 pl-3 pr-9',
+                  'cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-gray-100',
                 )}
                 onClick={() => handleOnChange(option)}
+                onKeyDown={(key) =>
+                  key.code === 'Enter' && handleOnChange(option)
+                }
               >
                 <div className="flex items-center">
-                  <span
-                    className={classNames(
-                      selected?.value === option.value
-                        ? 'font-semibold'
-                        : 'font-normal',
-                      'ml-3 block truncate',
-                    )}
-                  >
+                  <span className="ml-3 block truncate text-md">
                     {option.label}
                   </span>
                 </div>
@@ -115,6 +127,7 @@ export const Select: FC<SelectProps> = ({
                         : 'text-indigo-600',
                       'absolute inset-y-0 right-0 flex items-center pr-4',
                     )}
+                    style={{ color }}
                   >
                     <CheckIcon className="h-5 w-5" aria-hidden="true" />
                   </span>
