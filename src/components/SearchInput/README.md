@@ -26,7 +26,6 @@ import { SearchInput } from 'dept-central-lib-client'
 | id          | string                                     | Specifies the id for the radio button.          | -             |
 | placeholder | string                                     | Specifies the placeholder for the search input. | -             |
 | onChange    | (e: ChangeEvent<HTMLInputElement>) => void | Function triggered on radio button change.      | -             |
-| onFocus     | (e: FocusEvent<HTMLInputElement>) => void  | Function triggered on radio button focus.       | -             |
 
 _Note: Other standard HTML input attributes can also be applied._
 
