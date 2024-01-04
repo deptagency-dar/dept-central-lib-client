@@ -43,6 +43,8 @@ To use this design system in your React project, follow these steps:
 - [Checkbox](src/components/Checkbox/README.md)
 - [Radio](src/components/Radio/README.md)
 - [TextField](src/components/TextField/README.md)
+- [Select](src/components/Select/README.md)
+- [SearchInput](src/components/SearchInput/README.md)
 
 ## Color Palette
 
@@ -59,6 +61,12 @@ The design system provides CSS classes for different shadow sizes. You can apply
 ```jsx
 <div className="shadowMedium">This element has a medium shadow.</div>
 ```
+
+## Tailwind CSS
+
+The design system includes Tailwind CSS as a dependency. This allows you to use Tailwind CSS classes in your application. You can also customize the Tailwind CSS configuration to suit your needs.
+
+Learn more about Tailwind CSS [here](https://tailwindcss.com/).
 
 ## Utils
 
