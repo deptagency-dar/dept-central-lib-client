@@ -1,5 +1,3 @@
-/* No es necesario incluir las variables personalizadas, ya que Tailwind CSS utiliza sus propias variables */
-
 /* Headings */
 .h1 {
   @apply font-semibold text-3xl leading-10 tracking-tight;
