@@ -1,36 +1,26 @@
 /* Switch.module.css */
 
 .switch {
-  display: flex;
-  height: 3rem;
-  width: 11.25rem;
+  @apply flex h-12 w-48;
 }
 
 .button {
+  @apply flex-1 border border-gray-300 py-2 px-4 cursor-pointer transition duration-300 ease-in-out flex justify-center items-center;
   composes: baseBold from '../../styles/typography.module.css';
-  flex: 1;
-  border: 1px solid #ccc;
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .button:not(.selected) {
-  opacity: .5;
+  @apply opacity-50;
 }
 
 .leftButton {
-  border-radius: 100px 0 0 100px;
+  @apply rounded-l-full;
 }
 
 .rightButton {
-  border-radius:  0 100px 100px 0;
+  @apply rounded-r-full;
 }
 
 .selected {
-  background-color: #fff;
-  color: var(--switch-scheme);
+  @apply bg-white text-[--switch-scheme];
 }

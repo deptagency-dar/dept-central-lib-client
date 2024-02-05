@@ -8,7 +8,6 @@ import styles from './index.module.css'
 interface RadioOwnProps {
   colorScheme?: keyof ColorPalette
   colorShade?: keyof ColorShade
-  variant?: 'button' | 'check'
 }
 
 type RadioRootAttributes = Pick<
@@ -45,7 +44,6 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     {
       colorScheme = 'primary',
       colorShade = 600,
-      variant = 'button',
       children,
       ...rest
     }: RadioProps,
@@ -55,32 +53,13 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     const initialColor = colors.grayscale[500]!
     const disabledColor = colors.grayscale[100]!
     const radioStyles = createRadioStyles(color, initialColor, disabledColor)
-    const radioClasses = `${styles.radio} ${styles[variant]}`.trim()
     return (
-      <label className={radioClasses} style={radioStyles}>
+      <label className={styles.radio} style={radioStyles}>
         <input
           type="radio"
           ref={ref}
           {...rest}
         />
-        {variant === 'check' && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            className={styles.radioIcon}
-          >
-            <circle cx="10" cy="10" r="9" strokeWidth="2" />
-            <path
-              d="M6.25 10L8.75 12.5L13.75 7.5"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        )}
         {children && <span className={styles.label}>{children}</span>}
       </label>
     )

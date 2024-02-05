@@ -56,18 +56,6 @@ describe('Radio component', () => {
     expect(handleChange).toHaveBeenCalledTimes(1)
   })
 
-  it('renders check icon for "check" variant', () => {
-    const { container } = render(
-      <Radio variant="check">
-        Radio Label
-      </Radio>,
-    )
-
-    const checkIcon = container.querySelector('.radioIcon')
-
-    expect(checkIcon).toBeInTheDocument()
-  })
-
   it('updates when checked prop changes', () => {
     const { getByLabelText, rerender } = render(
       <Radio>

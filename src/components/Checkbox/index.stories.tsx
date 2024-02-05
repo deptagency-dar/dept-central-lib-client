@@ -71,6 +71,10 @@ export default {
       action: 'clicked',
     },
   },
+  args: {
+    disabled: false,
+    defaultChecked: false,
+  }
 } satisfies Meta<typeof Checkbox>
 
 type Story = StoryObj<typeof Checkbox>

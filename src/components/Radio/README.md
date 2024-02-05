@@ -14,7 +14,6 @@ import { Radio } from 'dept-central-lib-client'
 <Radio
   colorScheme="primary"
   colorShade={600}
-  variant="button"
   onChange={(e) => console.log('Radio changed', e.target.checked)}
 >
   Select me
@@ -27,7 +26,6 @@ import { Radio } from 'dept-central-lib-client'
 | -------------- | ----------------------------------------------------------------------- | -------------------------------------------------------- | ------------- |
 | colorScheme    | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | Specifies the color scheme for the radio button.         | "primary"     |
 | colorShade     | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | Specifies the color shade for the radio button.          | 600           |
-| variant        | 'button' \| 'check'                                                     | Specifies the radio button variant.                      | "button"      |
 | children       | ReactNode                                                               | Label for the radio button.                              | -             |
 | defaultChecked | boolean                                                                 | Specifies whether the radio button is initially checked. | -             |
 | disabled       | boolean                                                                 | Disables the radio button if set to `true`.              | false         |

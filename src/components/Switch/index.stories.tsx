@@ -3,7 +3,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Switch } from '.'
 import { colors } from '../../constants'
-import { useState } from 'react'
 import React from 'react'
 
 export default {
@@ -112,36 +111,20 @@ export const Colors: Story = {
   },
   render: () => (
     <div className="grid gap-4 grid-cols-2 grid-rows-3">
-      <Switch
-        colorScheme="primary"
-        leftOption="Left"
-        rightOption="Right"
-      />
-      <Switch
-        colorScheme="grayscale"
-        leftOption="Left"
-        rightOption="Right"
-      />
-      <Switch
-        colorScheme="warning"
-        leftOption="Left"
-        rightOption="Right"
-      />
-      <Switch
-        colorScheme="error"
-        leftOption="Left"
-        rightOption="Right"
-      />
-      <Switch
-        colorScheme="success"
-        leftOption="Left"
-        rightOption="Right"
-      />
+      <Switch colorScheme="primary" leftOption="Left" rightOption="Right" />
+      <Switch colorScheme="grayscale" leftOption="Left" rightOption="Right" />
+      <Switch colorScheme="warning" leftOption="Left" rightOption="Right" />
+      <Switch colorScheme="error" leftOption="Left" rightOption="Right" />
+      <Switch colorScheme="success" leftOption="Left" rightOption="Right" />
     </div>
   ),
 }
 
 export const ControlledSwitch: Story = {
+  args: {
+    ...Default.args,
+    onChange: console.log,
+  },
   parameters: {
     docs: {
       source: {
@@ -154,18 +137,5 @@ export const ControlledSwitch: Story = {
 />`,
       },
     },
-  },
-  render: () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [, setSelectedOption] = useState('Left')
-    return (
-      <Switch
-        leftOption="Left"
-        rightOption="Right"
-        onChange={(option) => setSelectedOption(option)}
-        colorScheme="primary"
-        colorShade={600}
-      />
-    )
   },
 }

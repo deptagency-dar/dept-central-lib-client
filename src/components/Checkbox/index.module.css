@@ -1,75 +1,50 @@
 .checkbox {
-  display: inline-flex;
-  align-items: stretch;
-  cursor: pointer;
-  user-select: none;
+  @apply flex items-center cursor-pointer select-none;
 }
 
 .checkbox input {
-  width: 1.25rem;
-  height: 1.25rem;
-  flex-shrink: 0;
-  appearance: none;
-  border-radius: 4px;
-  background-color: white;
-  border: 2px solid var(--checkbox-initial-color);
+  @apply w-5 h-5 flex-shrink-0 appearance-none border-2 border-[--checkbox-initial-color] rounded bg-white;
 }
 
-.check input:checked {
+.checkbox input:checked {
+  @apply accent-[--checkbox-scheme];
   appearance: auto;
-  accent-color: var(--checkbox-scheme);
 }
 
 .checkbox input:not(:disabled):hover {
-  border-color: var(--checkbox-scheme);
+  @apply border-[--checkbox-scheme];
 }
 
 .toggle input {
-  display: none;
+  @apply hidden;
 }
 
 .toggleSlider {
-  width: 2.03125rem;
-  height: 1.25rem;
-  background-color: #98a2b3;
-  border-radius: 0.75rem;
-  position: relative;
-  transition: background-color 0.3s ease;
+  @apply w-[2.03125rem] h-5 bg-gray-400 rounded-full relative transition-colors ease-in duration-300;
 }
 
 .toggleSlider::before {
-  content: '';
-  width: 1.09375rem;
-  height: 1.09375rem;
-  background-color: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 0.0625rem;
-  left: 0.0625rem;
-  transition:
-    transform 0.3s ease,
-    background-color 0.3s ease;
+  @apply content-[''] w-[1.09375rem] h-[1.09375rem] bg-white rounded-[50%] absolute top-[0.0625rem] left-[0.0625rem] transition transform ease-in duration-300;
 }
 
 .toggle input:checked + .toggleSlider {
-  background-color: var(--checkbox-scheme);
+  @apply bg-[--checkbox-scheme];
 }
 
 .toggle input:checked + .toggleSlider::before {
-  transform: translateX(0.8125rem);
+  @apply translate-x-[0.8125rem];
 }
 
 .checkbox input:disabled,
 .checkbox input:disabled ~ * {
-  cursor: not-allowed;
-  opacity: .5;
+  @apply cursor-not-allowed opacity-50;
 }
 
 .checkbox input:disabled {
-  background-color: var(--checkbox-disabled-color);
+  @apply bg-[--checkbox-disabled-color];
 }
 
 .label {
+  @apply ml-2;
   composes: baseBold from '../../styles/typography.module.css';
-  margin-inline-start: .5rem;
 }
