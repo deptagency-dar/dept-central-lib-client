@@ -14,7 +14,6 @@ interface CheckboxOwnProps {
 type CheckboxRootAttributes = Pick<
   InputHTMLAttributes<HTMLInputElement>,
   | 'children'
-  // | 'checked'
   | 'defaultChecked'
   | 'disabled'
   | 'hidden'
@@ -64,11 +63,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     return (
       <label className={checkboxClasses} style={checkboxStyles}>
-        <input
-          type="checkbox"
-          ref={ref}
-          {...props}
-        />
+        <input type="checkbox" ref={ref} {...props} />
         {variant === 'toggle' && <span className={styles.toggleSlider}></span>}
         {children && <span className={styles.label}>{children}</span>}
       </label>

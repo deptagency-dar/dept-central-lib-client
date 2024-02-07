@@ -45,7 +45,6 @@ export default {
     disabled: {
       control: 'boolean',
       description: 'Indicates whether the button is disabled.',
-      if: { arg: 'busy', truthy: false },
       table: {
         defaultValue: { summary: false },
         type: { summary: 'boolean' },

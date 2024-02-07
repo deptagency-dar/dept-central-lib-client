@@ -41,15 +41,6 @@ export default {
         defaultValue: { summary: 600 },
       },
     },
-    variant: {
-      control: 'select',
-      description: 'Type of radio: "button" or "check".',
-      options: ['button', 'check'],
-      table: {
-        defaultValue: { summary: 'button' },
-        type: { summary: `"button" | "check"` },
-      },
-    },
     defaultChecked: {
       control: 'boolean',
       description: 'Indicates whether the radio is checked or not.',
@@ -71,6 +62,10 @@ export default {
       action: 'clicked',
     },
   },
+  args: {
+    defaultChecked: false,
+    disabled: false,
+  },
 } satisfies Meta<typeof Radio>
 
 type Story = StoryObj<typeof Radio>
@@ -78,32 +73,7 @@ type Story = StoryObj<typeof Radio>
 export const Default: Story = {
   args: {
     children: 'Default Radio',
-    variant: 'button',
   },
-}
-
-/**
- * This is a list o radio with different variants.
- * Just adding the **variant** in one of these values **button**, **check**.
- */
-export const Variants: Story = {
-  parameters: {
-    docs: {
-      source: {
-        code: `<Radio defaultChecked>Radio Button</Radio>
-<Radio variant="check" defaultChecked>Radio Check</Radio>
-          `,
-      },
-    },
-  },
-  render: () => (
-    <div className="grid gap-4 grid-cols-3">
-      <Radio defaultChecked>Radio Button</Radio>
-      <Radio variant="check" defaultChecked>
-        Radio Check
-      </Radio>
-    </div>
-  ),
 }
 
 /**

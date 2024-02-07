@@ -1,50 +1,34 @@
-/* TextField.module.css */
-
 .textField {
-  display: flex;
-  width: 20.5rem;
-  justify-content: center;
-  flex-direction: column;
-  height: 4.375rem;
-  padding: 1rem 1.25rem;
-  gap: 1rem;
-  flex-shrink: 0;
-  border-radius: 0.375rem;
-  background: #fff;
+  @apply flex w-[20.5rem] justify-center flex-col h-[4.375rem] py-[1rem] px-[1.25rem] gap-4 flex-shrink-0 rounded-[0.375rem] bg-white;
   composes: shadowSmall from '../../styles/shadows.module.css';
 }
 
 .label {
+  @apply self-stretch text-[--textfield-label-color];
   composes: small from '../../styles/typography.module.css';
-  align-self: stretch;
-  color: var(--textfield-label-color);
 }
 
 .textField input {
-  outline: none;
-  align-self: stretch;
+  @apply outline-none self-stretch;
 }
 
 .textField input::placeholder {
-  color: var(--textfield-placeholder-color);
+  @apply text-[--textfield-placeholder-color];
 }
 
 .error {
-  border-block-end: 2px solid var(--textfield-error-color);
-  border-radius: 0.375rem 0.375rem 0rem 0rem;
+  @apply border-b-2 border-[--textfield-error-color] rounded-b-[0.375rem] border-[2px];
 }
 
 .errorMessage {
-  color: var(--textfield-error-color);
+  @apply text-[--textfield-error-color];
   composes: small from '../../styles/typography.module.css';
 }
 
 .textField:focus-within {
-  border-block-end: 2px solid var(--textfield-scheme);
-  border-radius: 0.375rem 0.375rem 0rem 0rem;
+  @apply border-b-2 border-[--textfield-scheme] rounded-b-[0.375rem];
 }
 
 .disabled {
-  background-color: var(--textfield-disabled-color);
-  cursor: not-allowed;
+  @apply bg-[--textfield-disabled-color] cursor-not-allowed;
 }
