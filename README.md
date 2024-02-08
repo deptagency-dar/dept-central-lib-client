@@ -6,6 +6,10 @@ Repo owner: @dario.gonzalez
 
 This repository contains a React design system with TypeScript support that utilizes Webpack for compilation. The design system includes ui components, as well as styles for shadows, color palettes, typography, etc.
 
+## Documentation
+
+It's the [url](https://deptagency-dar.github.io/dept-central-lib-client) website for storybook docs.
+
 ## Getting Started
 
 To use this design system in your React project, follow these steps:
