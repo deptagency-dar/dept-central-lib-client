@@ -20,18 +20,24 @@
   @apply button underline text-[--button-scheme] underline-offset-[0.5rem];
 }
 
-.link:not(:disabled):hover,
 .solid:not(:disabled):hover {
-  @apply bg-[--button-hover-color] text-[buttonTextColor] decoration-2 decoration-[--button-hover-color];
+  @apply bg-[--button-hover-color] text-[buttonTextColor];
+}
+
+.link:not(:disabled):hover {
+  @apply text-[--button-focus-color] decoration-2 decoration-[--button-hover-color];
 }
 
 .outline:not(:disabled):hover {
   @apply bg-[--button-scheme] text-[buttonTextColor];
 }
 
-:is(.solid, .outline):not(:disabled):focus,
+:is(.solid, .outline):not(:disabled):focus {
+  @apply bg-[--button-focus-color] text-[buttonTextColor];
+}
+
 .link:not(:disabled):focus {
-  @apply bg-[--button-focus-color] text-[buttonTextColor] decoration-2 decoration-[--button-focus-color];
+  @apply text-[--button-focus-color] decoration-2 decoration-[--button-focus-color];
 }
 
 .disabled {
