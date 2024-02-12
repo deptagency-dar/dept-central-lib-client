@@ -13,7 +13,7 @@ export interface SelectOption {
   label: string
   value: string
 }
-interface SelectProps {
+export interface SelectProps {
   colorScheme?: keyof ColorPalette
   colorShade?: keyof ColorShade
   label: string
