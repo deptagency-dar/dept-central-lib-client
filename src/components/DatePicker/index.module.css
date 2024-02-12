@@ -1,0 +1,11 @@
+.datepicker {
+  @apply flex;
+}
+
+.datepicker input {
+  @apply border border-[--datepicker-scheme] min-w-80;
+}
+
+.disabled input {
+  @apply bg-[--datepicker-disabled-color] border border-gray-300;
+}
