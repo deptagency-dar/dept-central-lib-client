@@ -40,6 +40,7 @@ module.exports = (_env, argv) => {
                 },
               },
             },
+            'postcss-loader'
           ],
         },
       ],
