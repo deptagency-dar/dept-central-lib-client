@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
-import ProfilePreview from '.'
+import { ProfilePreview } from '.'
 
 const user = {
   name: 'John Doe',
