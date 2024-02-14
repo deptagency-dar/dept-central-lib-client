@@ -2,8 +2,8 @@ import React from 'react'
 
 interface User {
   name: string | null
-  email?: string
-  image?: string
+  email?: string | null
+  image?: string | null
 }
 
 type TProfilePreview = 'normal' | 'compact' | 'image'
@@ -33,7 +33,8 @@ export const ProfilePreview: React.FC<TProps> = ({
         width={70}
         height={70}
         className="rounded-full"
-        src={user.image}
+        referrerPolicy="no-referrer"
+        src={user.image || undefined}
         alt="Avatar"
       />
     )
