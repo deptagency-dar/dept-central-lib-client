@@ -1,17 +1,17 @@
-# ProfilePreview Component
+# UserInfo Component
 
-The `ProfilePreview` component is intended to display brief information about a user, giving the option to logout if needed.
+The `UserInfo` component is intended to display brief information about a user, giving the option to logout if needed.
 
 ## Usage
 
 ```jsx
 // Import component
-import { ProfilePreview } from 'dept-central-lib-client'
+import { UserInfo } from 'dept-central-lib-client'
 ```
 
 ```jsx
 // Example usage
-<ProfilePreview
+<UserInfo
   user={user}
   type="normal"
   onLogout={() => console.log('Logging out user')}
@@ -47,16 +47,16 @@ const user = {
   image: 'https://example.com/some-image.png'
 }
 // Type normal (default if non specified)
-<ProfilePreview user={user} type="normal" />
+<UserInfo user={user} type="normal" />
 
 // Type normal with logout action
-<ProfilePreview user={user} type="normal" onLogout={() => console.log('logging user out')} />
+<UserInfo user={user} type="normal" onLogout={() => console.log('logging user out')} />
 
 // Display only the user image
-<ProfilePreview user={user} type="image" />
+<UserInfo user={user} type="image" />
 
 // Display in compact style
-<ProfilePreview user={user} type="compact" />
+<UserInfo user={user} type="compact" />
 ```
 
 ## Go main README

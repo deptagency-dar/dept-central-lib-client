@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react'
-import { ProfilePreview } from '.'
+import { UserInfo } from '.'
 
 const user = {
   name: 'John Doe',
@@ -8,8 +8,8 @@ const user = {
 }
 
 export default {
-  title: 'Components/ProfilePreview',
-  component: ProfilePreview,
+  title: 'Components/UserInfo',
+  component: UserInfo,
   parameters: {
     docs: {
       toc: {
@@ -47,9 +47,9 @@ export default {
     type: 'normal',
     user,
   }
-} satisfies Meta<typeof ProfilePreview>
+} satisfies Meta<typeof UserInfo>
 
-type Story = StoryObj<typeof ProfilePreview>
+type Story = StoryObj<typeof UserInfo>
 
 export const Default: Story = {
   args: {
@@ -66,7 +66,7 @@ export const Normal: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<ProfilePreview user={user} type="normal" />`,
+        code: `<UserInfo user={user} type="normal" />`,
       },
     },
   },
@@ -83,7 +83,7 @@ export const NormalWithLogoutAction: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<ProfilePreview user={user} type="normal" />`,
+        code: `<UserInfo user={user} type="normal" />`,
       },
     },
   },
@@ -100,7 +100,7 @@ export const Image: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<ProfilePreview user={user} type="image" />`,
+        code: `<UserInfo user={user} type="image" />`,
       },
     },
   },
@@ -117,7 +117,7 @@ export const Compact: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<ProfilePreview user={user} type="compact" />`,
+        code: `<UserInfo user={user} type="compact" />`,
       },
     },
   },

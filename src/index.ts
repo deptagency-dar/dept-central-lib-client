@@ -5,7 +5,7 @@ export {
   Checkbox,
   Radio,
   TextField,
-  ProfilePreview,
+  UserInfo,
   type ButtonProps,
   type CheckboxProps,
   type RadioProps,
