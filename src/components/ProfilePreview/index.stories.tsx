@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react'
-import ProfilePreview from '.'
+import { ProfilePreview } from '.'
 
 const user = {
   name: 'John Doe',

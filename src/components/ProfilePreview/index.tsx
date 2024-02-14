@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface User {
-  name: string
+  name: string | null
   email?: string
   image?: string
 }
@@ -15,7 +15,7 @@ type TProps = {
   onLogout?: () => void
 }
 
-const ProfilePreview: React.FC<TProps> = ({
+export const ProfilePreview: React.FC<TProps> = ({
   user,
   type = 'normal',
   className = '',
@@ -76,5 +76,3 @@ const ProfilePreview: React.FC<TProps> = ({
     </div>
   )
 }
-
-export default ProfilePreview
