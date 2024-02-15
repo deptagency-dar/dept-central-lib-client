@@ -56,10 +56,10 @@ export const UserInfo: React.FC<TProps> = ({
 
   if (type === 'compact') {
     return (
-      <div className={`${className} flex`}>
+      <div className={`${className} flex items-center`}>
         {avatar()}
-        <div className={`px-3`}>
-          <div className="font-bold text-xl">
+        <div className="px-3 w-[80%]">
+          <div className="font-bold text-xl text-ellipsis overflow-hidden">
             {user.name}
           </div>
           {logoutLink()}
@@ -77,11 +77,11 @@ export const UserInfo: React.FC<TProps> = ({
           </div>
         )
       }
-      <div className="px-5 pt-4">
-        <div className="font-bold text-xl">
+      <div className="px-2 pt-4 w-full">
+        <div className="font-bold text-xl text-ellipsis overflow-hidden">
           {user.name}
         </div>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-gray-400 text-ellipsis overflow-hidden">
           {user.email}
         </div>
         {logoutLink()}
