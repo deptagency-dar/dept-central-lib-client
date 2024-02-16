@@ -1,4 +1,5 @@
-import './styles/styles.css'
+import '../globals.css'
+
 
 export {
   Button,
