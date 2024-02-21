@@ -22,5 +22,5 @@
 }
 
 .selected {
-  @apply bg-white text-[--switch-scheme];
+  @apply text-white bg-[--switch-scheme];
 }
