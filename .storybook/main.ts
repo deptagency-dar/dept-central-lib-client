@@ -15,11 +15,6 @@ const config = {
     autodocs: 'tag',
   },
 
-  // framework: {
-  //   name: '@storybook/react-webpack5',
-  //   options: {},
-  // },
-
   framework: {
     name: '@storybook/react-vite',
     options: {
