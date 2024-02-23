@@ -1,11 +1,20 @@
 .datepicker {
-  @apply flex;
+  @apply border border-[--datepicker-scheme] rounded w-80 px-4 py-2;
 }
 
-.datepicker input {
-  @apply border border-[--datepicker-scheme] min-w-80;
+.day {
+  @apply w-10 h-10 flex justify-center items-center mx-px rounded-lg;
 }
 
-.disabled input {
+.selected {
+  @apply bg-[--datepicker-scheme] text-white;
+}
+
+.rangeItem {
+  @apply bg-[--datepicker-range-item-color];
+}
+
+.disabled {
   @apply bg-[--datepicker-disabled-color] border border-gray-300;
 }
+

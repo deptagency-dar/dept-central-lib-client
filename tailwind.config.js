@@ -4,7 +4,6 @@ import { colors } from './src/constants'
 module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/react-tailwindcss-datepicker/dist/index.esm.js',
   ],
   theme: {
     extend: {

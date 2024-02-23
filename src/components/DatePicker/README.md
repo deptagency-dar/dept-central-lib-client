@@ -26,15 +26,12 @@ import { DatePicker } from 'dept-central-lib-client'
 | isRange       | boolean                                                                 | Specifies whether the date picker is in range mode.       | false         |
 | colorScheme   | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | Specifies the color scheme for the date picker.           | "primary"     |
 | colorShade    | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | Specifies the color shade for the date picker.            | 600           |
-| configs       | Configs                                                                 | Additional configurations for the date picker.            | -             |
-| displayFormat | string                                                                  | Format for displaying the selected date.                  | "MM/dd/yyyy"  |
+| config       | Config                                                                 | Additional configurations for the date picker.            | -             |
 | maxDate       | Date                                                                    | Maximum allowed date for selection in the date picker.    | -             |
 | minDate       | Date                                                                    | Minimum allowed date for selection in the date picker.    | -             |
 | showFooter    | boolean                                                                 | Indicates whether to display a footer in the date picker. | false         |
-| showShortcuts | boolean                                                                 | Indicates whether to show shortcuts in the date picker.   | false         |
 | placeholder   | string                                                                  | Placeholder text for the date picker input.               | -             |
 | onChange      | (value: Date \| { startDate: Date, endDate: Date }) => void             | Function triggered on date selection.                     | -             |
-| value         | Date \| { startDate: Date, endDate: Date }                              | Control the selected date(s) externally.                  | -             |
 | disabled      | boolean                                                                 | Disables the date picker if set to `true`.                | false         |
 | id            | string                                                                  | Specifies the id for the date picker.                     | -             |
 
@@ -54,9 +51,6 @@ The appearance of the date picker is determined by its color scheme, shade, and 
 
 // Date picker with footer
 <DatePicker startDate={new Date()} showFooter />
-
-// Date picker with custom display format
-<DatePicker startDate={new Date()} displayFormat="MM/DD/YYYY" />
 ```
 
 ### Customization
