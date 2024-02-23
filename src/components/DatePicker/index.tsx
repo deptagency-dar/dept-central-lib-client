@@ -2,45 +2,26 @@ import {
   forwardRef,
   ForwardedRef,
   InputHTMLAttributes,
-  useState,
   CSSProperties,
   ChangeEventHandler,
   useEffect,
   useRef,
+  useReducer,
 } from 'react'
 import { ColorShade, ColorPalette } from '../../types'
 import { getColor, getLightenColor } from '../../utils'
 import styles from './index.module.css'
-
-interface DatePickerOwnProps {
-  startDate?: Date
-  endDate?: Date
-  isRange?: boolean
-  colorScheme?: keyof ColorPalette
-  colorShade?: keyof ColorShade
-  maxDate?: Date
-  minDate?: Date
-  showFooter?: boolean
-  config?: DatePickerConfig
-  onChange?: (value: { startDate: Date | null; endDate?: Date | null }) => void
-}
-
-type DatePickerConfig = {
-  language: string
-  footer: FooterLabels
-}
-
-type FooterLabels = {
-  cancel: string
-  apply: string
-}
-
-type DatePickerRootAttributes = Pick<
-  InputHTMLAttributes<HTMLInputElement>,
-  'disabled' | 'id' | 'required' | 'placeholder'
->
-
-export type DatePickerProps = DatePickerRootAttributes & DatePickerOwnProps
+import {
+  getDateFormatByLocale,
+  getDaysOfWeekByLocale,
+  getMonthsByLocale,
+  getDateStringByLocale,
+} from '../../utils/dates'
+import {
+  DatePickerContext,
+  datePickerReducer,
+  useDatePicker,
+} from './use-datepicker'
 
 const createDatePickerStyles = (
   color: string,
@@ -52,92 +33,6 @@ const createDatePickerStyles = (
   '--datepicker-disabled-color': disabledColor,
 })
 
-const getLocale = (locale?: string): string => {
-  if (!locale) {
-    locale = navigator.language
-  } else if (locale.length === 2) {
-    locale = `${locale}-${locale.toUpperCase()}`
-  }
-  return locale
-}
-
-const getDateFormat = (language?: string): string => {
-  const locale = getLocale(language)
-  const formatter = new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-  const parts = formatter.formatToParts(new Date())
-
-  const order = parts.map((part) => part.type)
-  const formatMap: Record<string, string> = {
-    year: 'yyyy',
-    month: 'MM',
-    day: 'dd',
-  }
-  const dateFormat = order
-    .map((type, index) => formatMap[type] ?? parts[index].value)
-    .join('')
-    .toLocaleLowerCase()
-
-  return dateFormat
-}
-
-const calculateValue = ({
-  isRange,
-  startDate,
-  endDate,
-  language,
-}: {
-  isRange: boolean
-  startDate: Date | null
-  endDate?: Date | null
-  language?: string
-}): string => {
-  const config: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }
-  const locale = getLocale(language)
-  if (isRange && startDate && endDate) {
-    return `${new Intl.DateTimeFormat(locale, config).format(startDate)} ~ ${new Intl.DateTimeFormat(locale, config).format(endDate)}`
-  }
-
-  return startDate
-    ? new Intl.DateTimeFormat(locale, config).format(startDate)
-    : ''
-}
-
-const getDaysOfWeek = (language?: string): string[] => {
-  const locale = getLocale(language)
-  const daysOfWeek: string[] = []
-  const formatter = new Intl.DateTimeFormat(locale, { weekday: 'short' })
-  const currentYear = new Date().getUTCFullYear()
-
-  for (let i = 0; i < 7; i++) {
-    const day = new Date(Date.UTC(currentYear, 0, 2))
-    day.setUTCDate(day.getUTCDate() + i)
-    const dayOfWeek = formatter
-      .format(day)
-      .replace(/^\w/, (c) => c.toUpperCase())
-    daysOfWeek.push(dayOfWeek)
-  }
-
-  return daysOfWeek
-}
-
-const getMonths = (language?: string): string[] => {
-  const locale = getLocale(language)
-  const formatter = new Intl.DateTimeFormat(locale, { month: 'long' })
-  return Array.from({ length: 12 }, (_, index) => {
-    const date = new Date()
-    date.setMonth(index)
-    return formatter.format(date).replace(/^\w/, (c) => c.toUpperCase())
-  })
-}
-
 const DayOfWeek = ({ day }: { day: string }) => (
   <span className="m-px w-10 block text-center text-sm text-gray-500">
     {day}
@@ -146,20 +41,22 @@ const DayOfWeek = ({ day }: { day: string }) => (
 
 const MonthSelector = ({
   language,
-  month,
   onChange,
 }: {
   language: string
-  month: number
   onChange: ChangeEventHandler<HTMLSelectElement>
 }) => {
+  const {
+    state: { month },
+  } = useDatePicker()
+
   return (
     <select
       className="mr-2 px-2 py-1 border border-gray-300 rounded-md"
       value={month}
       onChange={onChange}
     >
-      {getMonths(language).map((month, index) => (
+      {getMonthsByLocale(language).map((month, index) => (
         <option key={index} value={index}>
           {month}
         </option>
@@ -169,12 +66,14 @@ const MonthSelector = ({
 }
 
 const YearSelector = ({
-  year,
   onChange,
 }: {
-  year: number
   onChange: ChangeEventHandler<HTMLSelectElement>
 }) => {
+  const {
+    state: { year },
+  } = useDatePicker()
+
   return (
     <select
       className="px-2 py-1 border border-gray-300 rounded-md"
@@ -198,19 +97,23 @@ const DatePickerInput = ({
   ...rest
 }: {
   onClick: () => void
-  defaultValue?: string
   placeholder?: string
   className?: string
   style?: CSSProperties
   disabled?: boolean
   ref: ForwardedRef<HTMLInputElement>
 }) => {
+  const {
+    state: { value },
+  } = useDatePicker()
+
   return (
     <div className={`relative ${className}`} style={style}>
       <input
         type="text"
         onClick={onClick}
         disabled={disabled}
+        defaultValue={value}
         readOnly
         {...rest}
         className="block w-full outline-none text-gray-400"
@@ -257,7 +160,7 @@ const FooterActions = ({
         {cancel}
       </button>
       <button
-        className="ml-2 px-4 py-2 bg-[--datepicker-scheme] text-white rounded-md hover:bg-blue-600"
+        className="ml-2 px-4 py-2 bg-[--datepicker-scheme] text-white rounded-md hover:opacity-80"
         onClick={onApply}
       >
         {apply}
@@ -267,17 +170,13 @@ const FooterActions = ({
 }
 
 const Calendar = ({
-  language,
-  year,
-  month,
   dateButtons,
+  language,
   onMonthChange,
   onYearChange,
 }: {
-  language: string
-  year: number
-  month: number
   dateButtons: JSX.Element[] | null
+  language: string
   onMonthChange: (value: number) => void
   onYearChange: (value: number) => void
 }) => {
@@ -288,17 +187,15 @@ const Calendar = ({
           <div className="col-span-3 flex justify-center items-center gap-x-1">
             <MonthSelector
               language={language}
-              month={month}
               onChange={(e) => onMonthChange(parseInt(e.target.value))}
             />
             <YearSelector
-              year={year}
               onChange={(e) => onYearChange(parseInt(e.target.value))}
             />
           </div>
         </div>
         <div className="flex justify-center gap-x-1 pb-1.5">
-          {getDaysOfWeek(language).map((day) => (
+          {getDaysOfWeekByLocale(language).map((day) => (
             <DayOfWeek key={day} day={day} />
           ))}
         </div>
@@ -307,6 +204,36 @@ const Calendar = ({
     </div>
   )
 }
+
+interface DatePickerOwnProps {
+  startDate?: Date
+  endDate?: Date
+  isRange?: boolean
+  colorScheme?: keyof ColorPalette
+  colorShade?: keyof ColorShade
+  maxDate?: Date
+  minDate?: Date
+  showFooter?: boolean
+  config?: DatePickerConfig
+  onChange?: (value: { startDate: Date; endDate?: Date }) => void
+}
+
+type DatePickerConfig = {
+  language: string
+  footer: FooterLabels
+}
+
+type FooterLabels = {
+  cancel: string
+  apply: string
+}
+
+type DatePickerRootAttributes = Pick<
+  InputHTMLAttributes<HTMLInputElement>,
+  'disabled' | 'id' | 'required' | 'placeholder'
+>
+
+export type DatePickerProps = DatePickerRootAttributes & DatePickerOwnProps
 
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   (
@@ -333,19 +260,23 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
     const { language, footer: footerLabels } = config
-    const [modalOpen, setModalOpen] = useState(false)
-    const [year, setYear] = useState(new Date().getFullYear())
-    const [secondYear, setSecondYear] = useState(year)
-    const [month, setMonth] = useState(new Date().getMonth())
-    const [secondMonth, setSecondMonth] = useState(month + 1)
-    const [startDate, setStartDate] = useState<Date | null>(
-      initialStartDate ?? null,
-    )
-    const [endDate, setEndDate] = useState<Date | null>(initialEndDate ?? null)
-    const [rangeDays, setRangeDays] = useState<Date[]>([])
-    const [value, setValue] = useState(
-      calculateValue({ isRange, startDate, endDate, language }),
-    )
+    const [state, dispatch] = useReducer(datePickerReducer, {
+      startDate: initialStartDate ?? null,
+      endDate: initialEndDate ?? null,
+      modalOpen: false,
+      year: new Date().getFullYear(),
+      secondYear: new Date().getFullYear(),
+      month: new Date().getMonth(),
+      secondMonth: new Date().getMonth() + 1,
+      rangeDays: [],
+      value: getDateStringByLocale({
+        isRange,
+        startDate: initialStartDate ?? null,
+        endDate: initialEndDate ?? null,
+        language,
+      }),
+    })
+
     const datePickerRef = useRef<HTMLDivElement>(null)
 
     const color = getColor(colorScheme, colorShade)
@@ -359,16 +290,16 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     const datePickerClasses =
       `${styles.datepicker} ${disabled ? styles.disabled : ''}`.trim()
     const dateButtons = getCalendarDays(
-      year,
-      month,
+      state.year,
+      state.month,
       handleDateSelection,
       minDate,
       maxDate,
     )
     const secondDateButtons = isRange
       ? getCalendarDays(
-          year,
-          secondMonth,
+          state.year,
+          state.secondMonth,
           (day) => handleDateSelection(day, true),
           minDate,
           maxDate,
@@ -381,91 +312,102 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           datePickerRef.current &&
           !datePickerRef.current.contains(event.target as Node)
         ) {
-          setModalOpen(false)
+          dispatch({ type: 'TOGGLE_MODAL' })
         }
       }
 
-      if (modalOpen) {
+      if (state.modalOpen) {
         document.addEventListener('mousedown', handleOutsideClick)
       }
 
       return () => {
         document.removeEventListener('mousedown', handleOutsideClick)
       }
-    }, [modalOpen])
+    }, [state.modalOpen])
 
     useEffect(() => {
-      if (isRange && startDate && endDate) {
+      if (isRange && state.startDate && state.endDate) {
         const daysInRange = []
-        const currentDate = new Date(startDate)
-        while (currentDate <= endDate) {
+        const currentDate = new Date(state.startDate)
+        while (currentDate <= state.endDate) {
           daysInRange.push(new Date(currentDate))
           currentDate.setDate(currentDate.getDate() + 1)
         }
-        setRangeDays(daysInRange)
+        dispatch({ type: 'SET_RANGE_DAYS', payload: daysInRange })
       } else {
-        setRangeDays([])
+        dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
       }
-    }, [isRange, startDate, endDate])
+    }, [isRange, state.startDate, state.endDate])
 
     const handleToggleModal = () => {
-      setModalOpen((isOpen) => !isOpen)
+      dispatch({ type: 'TOGGLE_MODAL' })
     }
 
     const handleYearChange = (newYear: number) => {
-      if (newYear > secondYear) {
-        setYear(newYear)
-        setSecondYear(newYear)
+      if (newYear > state.secondYear) {
+        dispatch({ type: 'SET_YEAR', payload: newYear })
+        dispatch({ type: 'SET_SECOND_YEAR', payload: newYear })
       } else {
-        setYear(newYear)
+        dispatch({ type: 'SET_YEAR', payload: newYear })
       }
     }
 
     const handleMonthChange = (newMonth: number) => {
       if (
-        year < secondYear ||
-        (year === secondYear && newMonth < secondMonth)
+        state.year < state.secondYear ||
+        (state.year === state.secondYear && newMonth < state.secondMonth)
       ) {
-        setMonth(newMonth)
+        dispatch({ type: 'SET_MONTH', payload: newMonth })
       } else {
-        setMonth(newMonth)
+        dispatch({ type: 'SET_MONTH', payload: newMonth })
         if (newMonth === 11) {
-          setSecondMonth(0)
-          setSecondYear(secondYear + 1)
+          dispatch({ type: 'SET_SECOND_MONTH', payload: 0 })
+          dispatch({ type: 'SET_SECOND_YEAR', payload: state.secondYear + 1 })
         } else {
-          setSecondMonth(newMonth + 1)
+          dispatch({ type: 'SET_SECOND_MONTH', payload: newMonth + 1 })
         }
       }
     }
 
     const handleSecondYearChange = (newYear: number) => {
-      if (newYear < year) {
-        setSecondYear(newYear)
-        setYear(newYear)
+      if (newYear < state.year) {
+        dispatch({ type: 'SET_SECOND_YEAR', payload: newYear })
+        dispatch({ type: 'SET_YEAR', payload: newYear })
       } else {
-        setSecondYear(newYear)
+        dispatch({ type: 'SET_SECOND_YEAR', payload: newYear })
       }
     }
 
     const handleSecondMonthChange = (newMonth: number) => {
-      if (secondYear > year || (secondYear === year && newMonth > month)) {
-        setSecondMonth(newMonth)
+      if (
+        state.secondYear > state.year ||
+        (state.secondYear === state.year && newMonth > state.month)
+      ) {
+        dispatch({ type: 'SET_SECOND_MONTH', payload: newMonth })
       } else {
-        setSecondMonth(newMonth)
-        if (secondYear === year && newMonth === 0) {
-          setYear(year - 1)
-          setMonth(11)
+        dispatch({ type: 'SET_SECOND_MONTH', payload: newMonth })
+        if (state.secondYear === state.year && newMonth === 0) {
+          dispatch({ type: 'SET_YEAR', payload: state.year - 1 })
+          dispatch({ type: 'SET_MONTH', payload: 11 })
         } else {
-          setMonth(month - 1)
+          dispatch({ type: 'SET_MONTH', payload: state.month - 1 })
         }
       }
     }
 
     const handleApply = () => {
       if (onChange) {
-        onChange({ startDate, endDate })
+        onChange({ startDate: state.startDate!, ...state.endDate })
       }
-      setValue(calculateValue({ isRange, startDate, endDate, language }))
+      dispatch({
+        type: 'SET_VALUE',
+        payload: getDateStringByLocale({
+          isRange,
+          startDate: state.startDate,
+          endDate: state.endDate,
+          language,
+        }),
+      })
       handleToggleModal()
     }
 
@@ -510,42 +452,49 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 
     function handleDateSelection(day: number, isSecondCalendar?: boolean) {
       const selectedDate = new Date(
-        year,
-        isSecondCalendar ? secondMonth : month,
+        state.year,
+        isSecondCalendar ? state.secondMonth : state.month,
         day,
       )
 
       if (!isRange) {
-        setStartDate(selectedDate)
+        dispatch({ type: 'SET_START_DATE', payload: selectedDate })
         if (!showFooter) {
           if (onChange) {
             onChange({ startDate: selectedDate })
           }
-          setValue(
-            calculateValue({ isRange, startDate: selectedDate, language }),
-          )
+          dispatch({
+            type: 'SET_VALUE',
+            payload: getDateStringByLocale({
+              isRange,
+              startDate: selectedDate,
+              language,
+            }),
+          })
           handleToggleModal()
         }
-      } else if (!startDate || endDate) {
-        setStartDate(selectedDate)
-        setEndDate(null)
+      } else if (!state.startDate || state.endDate) {
+        dispatch({ type: 'SET_START_DATE', payload: selectedDate })
+        dispatch({ type: 'SET_END_DATE', payload: null })
         resetCalendarStyles()
-      } else if (selectedDate < startDate) {
-        setStartDate(selectedDate)
+      } else if (selectedDate < state.startDate) {
+        dispatch({ type: 'SET_START_DATE', payload: selectedDate })
       } else {
-        setEndDate(selectedDate)
+        dispatch({ type: 'SET_END_DATE', payload: selectedDate })
         if (!showFooter) {
           if (onChange) {
-            onChange({ startDate, endDate: selectedDate })
+            onChange({ startDate: state.startDate, endDate: selectedDate })
           }
-          setValue(
-            calculateValue({
+          dispatch({
+            type: 'SET_VALUE',
+            payload: getDateStringByLocale({
               isRange,
-              startDate,
+              startDate: state.startDate,
               endDate: selectedDate,
               language,
             }),
-          )
+          })
+
           handleToggleModal()
         }
       }
@@ -612,16 +561,16 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 
       return allDays.map(({ day, date, isCurrentMonth, isDisabled }) => {
         const isStartDate =
-          startDate &&
+          state.startDate &&
           isCurrentMonth &&
-          date.toDateString() === startDate.toDateString()
+          date.toDateString() === state.startDate.toDateString()
         const isEndDate =
-          endDate &&
+          state.endDate &&
           isCurrentMonth &&
-          date.toDateString() === endDate.toDateString()
+          date.toDateString() === state.endDate.toDateString()
         const isInRange =
-          rangeDays &&
-          rangeDays.some(
+          state.rangeDays &&
+          state.rangeDays.some(
             (rangeDate) => date.toDateString() === rangeDate.toDateString(),
           )
 
@@ -641,8 +590,8 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             onMouseEnter={() =>
               isRange &&
               isCurrentMonth &&
-              startDate &&
-              !endDate &&
+              state.startDate &&
+              !state.endDate &&
               handleHoverEffect(date.toString())
             }
             disabled={isDisabled}
@@ -654,17 +603,16 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     }
 
     return (
-      <>
+      <DatePickerContext.Provider value={{ state, dispatch }}>
         <DatePickerInput
-          placeholder={placeholder ?? getDateFormat(language)}
-          defaultValue={value}
+          placeholder={placeholder ?? getDateFormatByLocale(language)}
           onClick={handleToggleModal}
           className={datePickerClasses}
           style={datePickerStyles}
           disabled={disabled}
           ref={ref}
         />
-        {modalOpen && (
+        {state.modalOpen && (
           <div
             className=" mt-2 flex flex-col bg-white border shadow-lg rounded-xl overflow-hidden"
             style={datePickerStyles}
@@ -673,19 +621,15 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           >
             <div className="flex flex-row">
               <Calendar
-                language={language}
-                year={year}
-                month={month}
                 dateButtons={dateButtons}
+                language={language}
                 onMonthChange={handleMonthChange}
                 onYearChange={handleYearChange}
               />
               {isRange && (
                 <Calendar
-                  language={language}
-                  year={secondYear}
-                  month={secondMonth}
                   dateButtons={secondDateButtons}
+                  language={language}
                   onMonthChange={handleSecondMonthChange}
                   onYearChange={handleSecondYearChange}
                 />
@@ -700,7 +644,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             )}
           </div>
         )}
-      </>
+      </DatePickerContext.Provider>
     )
   },
 )
