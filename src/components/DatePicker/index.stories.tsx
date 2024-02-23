@@ -9,7 +9,6 @@ export default {
     colorScheme: 'primary',
     colorShade: 600,
     disabled: false,
-    // startDate: new Date(),
     isRange: false,
     showFooter: false,
   },
