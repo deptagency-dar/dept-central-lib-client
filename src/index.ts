@@ -10,6 +10,7 @@ export {
   TextField,
   SearchInput,
   Select,
+  UserInfo,
   type ButtonProps,
   type CheckboxProps,
   type DatePickerProps,
