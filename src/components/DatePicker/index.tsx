@@ -108,7 +108,7 @@ const DatePickerInput = ({
   } = useDatePicker()
 
   return (
-    <div className={`relative ${className}`} style={style}>
+    <div className={`relative bg-white ${className}`} style={style}>
       <input
         type="text"
         onClick={onClick}
