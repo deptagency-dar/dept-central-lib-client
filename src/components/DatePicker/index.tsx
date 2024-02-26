@@ -41,10 +41,10 @@ const DayOfWeek = ({ day }: { day: string }) => (
 )
 
 const MonthSelector = ({
-  language,
+  months,
   onChange,
 }: {
-  language: string
+  months: string[]
   onChange: ChangeEventHandler<HTMLSelectElement>
 }) => {
   const {
@@ -57,7 +57,7 @@ const MonthSelector = ({
       value={month}
       onChange={onChange}
     >
-      {getMonthsByLocale(language).map((month, index) => (
+      {months.map((month, index) => (
         <option key={index} value={index}>
           {month}
         </option>
@@ -174,7 +174,7 @@ const Calendar = ({
         <div className="flex justify-center mb-3">
           <div className="col-span-3 flex justify-center items-center gap-x-1">
             <MonthSelector
-              language={language}
+              months={getMonthsByLocale(language)}
               onChange={(e) => onMonthChange(parseInt(e.target.value))}
             />
             <YearSelector
