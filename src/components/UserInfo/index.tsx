@@ -10,6 +10,7 @@ type TUserInfo = 'normal' | 'compact' | 'image'
 
 type TProps = {
   user: Partial<User>
+  status?: 'online' | 'company' | 'verified'
   type?: TUserInfo
   className?: string
   onLogout?: () => void
@@ -17,6 +18,7 @@ type TProps = {
 
 export const UserInfo: React.FC<TProps> = ({
   user,
+  status,
   type = 'normal',
   className = '',
   onLogout,
@@ -27,16 +29,33 @@ export const UserInfo: React.FC<TProps> = ({
     onLogout?.()
   }
 
+  function renderStatus() {
+    if (status === 'company') return <div
+      className='block w-5 h-5 border-white rounded-full absolute bottom-0 right-0'
+    ><img src="https://i.imgur.com/RL2P2MV.png" alt="" /></div>
+
+    if (status === 'online') return <div
+      className='block w-4 h-4 border-white rounded-full absolute bottom-0 right-0'
+    ><img src="https://i.imgur.com/a1PY6vk.png" alt="" /></div>
+
+
+    if (status === 'verified') return <div
+      className='block w-5 h-5 border-white rounded-full absolute bottom-0 right-0'
+    ><img src="https://i.imgur.com/D7wjQ1U.png" alt="" /></div>
+
+  }
+
   function avatar() {
     if (!user.image) return null
     return (
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center relative">
         <img
-          className="rounded-full w-[60px]"
+          className="rounded-full w-[63px]"
           referrerPolicy="no-referrer"
           src={user.image || undefined}
           alt="Avatar"
         />
+        {renderStatus()}
       </div>
     )
   }
@@ -61,6 +80,9 @@ export const UserInfo: React.FC<TProps> = ({
         <div className="px-3 w-[80%]">
           <div className="font-bold text-xl text-ellipsis overflow-hidden">
             {user.name}
+          </div>
+          <div className="text-sm text-gray-400 text-ellipsis overflow-hidden">
+            {user.email}
           </div>
           {logoutLink()}
         </div>

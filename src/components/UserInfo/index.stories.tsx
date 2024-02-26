@@ -30,6 +30,15 @@ export default {
         type: { summary: `"normal" | "compact" | "image"` },
       },
     },
+    status: {
+      control: 'select',
+      description: 'Type of status: "online", "company" or "verified".',
+      options: ['default', 'online', 'company', 'verified'],
+      table: {
+        defaultValue: { type: 'default' },
+        type: { summary: `"online" | "company" | "verified"` },
+      },
+    },
     user: {
       control: 'select',
       description: 'User to display',
