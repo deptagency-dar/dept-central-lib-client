@@ -158,16 +158,162 @@ const FooterActions = ({
 }
 
 const Calendar = ({
-  dateButtons,
   language,
+  isRange,
+  isSecondCalendar,
+  minDate,
+  maxDate,
   onMonthChange,
+  onSelectDate,
   onYearChange,
+  resetCalendarStyles,
 }: {
-  dateButtons: JSX.Element[] | null
   language: string
+  isRange: boolean
   onMonthChange: (value: number) => void
+  onSelectDate: (day: number, isSecondCalendar?: boolean) => void
   onYearChange: (value: number) => void
+  resetCalendarStyles: () => void
+  maxDate?: Date
+  minDate?: Date
+  isSecondCalendar?: boolean
 }) => {
+  const { state } = useDatePicker()
+
+  const dateButtons = isSecondCalendar
+    ? getCalendarDays(
+        state.secondYear,
+        state.secondMonth,
+        (day) => onSelectDate(day, isSecondCalendar),
+        minDate,
+        maxDate,
+      )
+    : getCalendarDays(state.year, state.month, onSelectDate, minDate, maxDate)
+
+  const handleHoverEffect = (id: string) => {
+    resetCalendarStyles()
+    const buttons = document.querySelectorAll<HTMLButtonElement>(
+      `.${styles.day}:enabled`,
+    )
+    const selectedButton = Array.from(buttons).find((button) =>
+      button.classList.contains(`${styles.selected}`),
+    )
+    const hoveredIndex = Array.from(buttons).findIndex(
+      (button) => button.id === id,
+    )
+
+    if (selectedButton) {
+      const selectedIndex = Array.from(buttons).indexOf(selectedButton)
+
+      buttons.forEach((button, index) => {
+        if (index > selectedIndex && index < hoveredIndex) {
+          button.classList.contains(`${styles.selected}`) &&
+            button.classList.remove(`${styles.selected}`)
+          button.classList.add(`${styles.rangeItem}`)
+        } else if (index === hoveredIndex) {
+          button.classList.add(`${styles.selected}`)
+        } else {
+          index !== selectedIndex &&
+            button.classList.remove(`${styles.rangeItem}`, `${styles.selected}`)
+        }
+      })
+    }
+  }
+
+  function getCalendarDays(
+    year: number,
+    month: number,
+    onSelectDate: (day: number, isSecondCalendar?: boolean) => void,
+    minDate?: Date,
+    maxDate?: Date,
+  ) {
+    const firstDay = new Date(year, month, 1)
+    const lastDay = new Date(year, month + 1, 0)
+    const startDay = firstDay.getDay()
+    const lastDateOfMonth = lastDay.getDate()
+
+    minDate?.setHours(0, 0, 0)
+    maxDate?.setHours(0, 0, 0)
+    const minDateTime = minDate?.getTime() || Number.MIN_VALUE
+    const maxDateTime = maxDate?.getTime() || Number.MAX_VALUE
+
+    const days = Array.from({ length: lastDateOfMonth }, (_, i) => {
+      const day = i + 1
+      const date = new Date(year, month, day)
+      const isCurrentMonth = true
+      const dateTime = date.getTime()
+      const isDisabled = dateTime < minDateTime || dateTime > maxDateTime
+      return { day, date, isCurrentMonth, isDisabled }
+    })
+
+    const prevMonth = month === 0 ? 11 : month - 1
+    const prevYear = month === 0 ? year - 1 : year
+    const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate()
+    const daysFromPrevMonth = startDay === 0 ? 6 : startDay - 1
+
+    const prevMonthDays = Array.from({ length: daysFromPrevMonth }, (_, i) => {
+      const day = daysInPrevMonth - daysFromPrevMonth + i + 1
+      const date = new Date(prevYear, prevMonth, day)
+      const isCurrentMonth = false
+      const isDisabled = true
+      return { day, date, isCurrentMonth, isDisabled }
+    })
+
+    const nextMonth = month === 11 ? 0 : month + 1
+    const nextYear = month === 11 ? year + 1 : year
+    const daysFromNextMonth = 42 - lastDateOfMonth - daysFromPrevMonth
+
+    const nextMonthDays = Array.from({ length: daysFromNextMonth }, (_, i) => {
+      const day = i + 1
+      const date = new Date(nextYear, nextMonth, day)
+      const isCurrentMonth = false
+      const isDisabled = true
+      return { day, date, isCurrentMonth, isDisabled }
+    })
+
+    const allDays = [...prevMonthDays, ...days, ...nextMonthDays]
+
+    return allDays.map(({ day, date, isCurrentMonth, isDisabled }) => {
+      const isStartDate =
+        state.startDate &&
+        isCurrentMonth &&
+        date.toDateString() === state.startDate.toDateString()
+      const isEndDate =
+        state.endDate &&
+        isCurrentMonth &&
+        date.toDateString() === state.endDate.toDateString()
+      const isInRange =
+        state.rangeDays &&
+        state.rangeDays.some(
+          (rangeDate) => date.toDateString() === rangeDate.toDateString(),
+        )
+
+      return (
+        <button
+          key={date.toString()}
+          id={date.toString()}
+          type="button"
+          className={`${styles.day} ${
+            !isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''
+          } ${isStartDate || isEndDate ? `${styles.selected}` : ''} ${
+            isInRange && !isStartDate && !isEndDate ? `${styles.rangeItem}` : ''
+          } ${isCurrentMonth && isDisabled ? 'line-through' : ''}`}
+          onClick={() => isCurrentMonth && onSelectDate(day)}
+          onMouseEnter={() =>
+            isRange &&
+            isCurrentMonth &&
+            state.startDate &&
+            !state.endDate &&
+            handleHoverEffect(date.toString())
+          }
+          disabled={isDisabled}
+        >
+          <span className="text-sm">{day}</span>
+        </button>
+      )
+    })
+  }
+
   return (
     <div className="p-3">
       <div className="space-y-0.5">
@@ -277,22 +423,6 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     )
     const datePickerClasses =
       `${styles.datepicker} ${disabled ? styles.disabled : ''}`.trim()
-    const dateButtons = getCalendarDays(
-      state.year,
-      state.month,
-      handleDateSelection,
-      minDate,
-      maxDate,
-    )
-    const secondDateButtons = isRange
-      ? getCalendarDays(
-          state.year,
-          state.secondMonth,
-          (day) => handleDateSelection(day, true),
-          minDate,
-          maxDate,
-        )
-      : null
 
     useEffect(() => {
       const handleOutsideClick = (event: MouseEvent) => {
@@ -399,46 +529,13 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       handleToggleModal()
     }
 
-    const handleHoverEffect = (id: string) => {
-      resetCalendarStyles()
-      const buttons = document.querySelectorAll<HTMLButtonElement>(
-        `.${styles.day}:enabled`,
-      )
-      const selectedButton = Array.from(buttons).find((button) =>
-        button.classList.contains(`${styles.selected}`),
-      )
-      const hoveredIndex = Array.from(buttons).findIndex(
-        (button) => button.id === id,
-      )
-
-      if (selectedButton) {
-        const selectedIndex = Array.from(buttons).indexOf(selectedButton)
-
-        buttons.forEach((button, index) => {
-          if (index > selectedIndex && index < hoveredIndex) {
-            button.classList.contains(`${styles.selected}`) &&
-              button.classList.remove(`${styles.selected}`)
-            button.classList.add(`${styles.rangeItem}`)
-          } else if (index === hoveredIndex) {
-            button.classList.add(`${styles.selected}`)
-          } else {
-            index !== selectedIndex &&
-              button.classList.remove(
-                `${styles.rangeItem}`,
-                `${styles.selected}`,
-              )
-          }
-        })
-      }
-    }
-
     const resetCalendarStyles = () => {
       document
         .querySelectorAll<HTMLButtonElement>(`.${styles.day}:enabled`)
         .forEach((item) => item.classList.remove(`${styles.rangeItem}`))
     }
 
-    function handleDateSelection(day: number, isSecondCalendar?: boolean) {
+    const handleDateSelection = (day: number, isSecondCalendar?: boolean) => {
       const selectedDate = new Date(
         state.year,
         isSecondCalendar ? state.secondMonth : state.month,
@@ -488,108 +585,6 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       }
     }
 
-    function getCalendarDays(
-      year: number,
-      month: number,
-      onSelectDate: (day: number, isSecondCalendar?: boolean) => void,
-      minDate?: Date,
-      maxDate?: Date,
-    ) {
-      const firstDay = new Date(year, month, 1)
-      const lastDay = new Date(year, month + 1, 0)
-      const startDay = firstDay.getDay()
-      const lastDateOfMonth = lastDay.getDate()
-
-      minDate?.setHours(0, 0, 0)
-      maxDate?.setHours(0, 0, 0)
-      const minDateTime = minDate?.getTime() || Number.MIN_VALUE
-      const maxDateTime = maxDate?.getTime() || Number.MAX_VALUE
-
-      const days = Array.from({ length: lastDateOfMonth }, (_, i) => {
-        const day = i + 1
-        const date = new Date(year, month, day)
-        const isCurrentMonth = true
-        const dateTime = date.getTime()
-        const isDisabled = dateTime < minDateTime || dateTime > maxDateTime
-        return { day, date, isCurrentMonth, isDisabled }
-      })
-
-      const prevMonth = month === 0 ? 11 : month - 1
-      const prevYear = month === 0 ? year - 1 : year
-      const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate()
-      const daysFromPrevMonth = startDay === 0 ? 6 : startDay - 1
-
-      const prevMonthDays = Array.from(
-        { length: daysFromPrevMonth },
-        (_, i) => {
-          const day = daysInPrevMonth - daysFromPrevMonth + i + 1
-          const date = new Date(prevYear, prevMonth, day)
-          const isCurrentMonth = false
-          const isDisabled = true
-          return { day, date, isCurrentMonth, isDisabled }
-        },
-      )
-
-      const nextMonth = month === 11 ? 0 : month + 1
-      const nextYear = month === 11 ? year + 1 : year
-      const daysFromNextMonth = 42 - lastDateOfMonth - daysFromPrevMonth
-
-      const nextMonthDays = Array.from(
-        { length: daysFromNextMonth },
-        (_, i) => {
-          const day = i + 1
-          const date = new Date(nextYear, nextMonth, day)
-          const isCurrentMonth = false
-          const isDisabled = true
-          return { day, date, isCurrentMonth, isDisabled }
-        },
-      )
-
-      const allDays = [...prevMonthDays, ...days, ...nextMonthDays]
-
-      return allDays.map(({ day, date, isCurrentMonth, isDisabled }) => {
-        const isStartDate =
-          state.startDate &&
-          isCurrentMonth &&
-          date.toDateString() === state.startDate.toDateString()
-        const isEndDate =
-          state.endDate &&
-          isCurrentMonth &&
-          date.toDateString() === state.endDate.toDateString()
-        const isInRange =
-          state.rangeDays &&
-          state.rangeDays.some(
-            (rangeDate) => date.toDateString() === rangeDate.toDateString(),
-          )
-
-        return (
-          <button
-            key={date.toString()}
-            id={date.toString()}
-            type="button"
-            className={`${styles.day} ${
-              !isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''
-            } ${isStartDate || isEndDate ? `${styles.selected}` : ''} ${
-              isInRange && !isStartDate && !isEndDate
-                ? `${styles.rangeItem}`
-                : ''
-            } ${isCurrentMonth && isDisabled ? 'line-through' : ''}`}
-            onClick={() => isCurrentMonth && onSelectDate(day)}
-            onMouseEnter={() =>
-              isRange &&
-              isCurrentMonth &&
-              state.startDate &&
-              !state.endDate &&
-              handleHoverEffect(date.toString())
-            }
-            disabled={isDisabled}
-          >
-            <span className="text-sm">{day}</span>
-          </button>
-        )
-      })
-    }
-
     return (
       <DatePickerContext.Provider value={{ state, dispatch }}>
         <DatePickerInput
@@ -609,17 +604,26 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           >
             <div className="flex flex-row">
               <Calendar
-                dateButtons={dateButtons}
                 language={language}
+                isRange={isRange}
+                minDate={minDate}
+                maxDate={maxDate}
                 onMonthChange={handleMonthChange}
+                onSelectDate={handleDateSelection}
                 onYearChange={handleYearChange}
+                resetCalendarStyles={resetCalendarStyles}
               />
               {isRange && (
                 <Calendar
-                  dateButtons={secondDateButtons}
                   language={language}
+                  isRange={isRange}
+                  isSecondCalendar={true}
+                  minDate={minDate}
+                  maxDate={maxDate}
                   onMonthChange={handleSecondMonthChange}
+                  onSelectDate={handleDateSelection}
                   onYearChange={handleSecondYearChange}
+                  resetCalendarStyles={resetCalendarStyles}
                 />
               )}
             </div>
