@@ -63,7 +63,7 @@ export const UserInfo: React.FC<TProps> = ({
   function logoutLink() {
     if (!onLogout) return null
     return (
-      <a href="#" className="hover:underline text-ml" onClick={handleLogout} >
+      <a href="#" className="hover:underline text-sm" onClick={handleLogout} >
         Log out
       </a>
     )
@@ -77,11 +77,11 @@ export const UserInfo: React.FC<TProps> = ({
     return (
       <div className={`${className} flex items-center`}>
         {avatar()}
-        <div className="px-3 w-[80%]">
-          <div className="font-bold text-xl text-ellipsis overflow-hidden">
+        <div className="px-4 w-[80%]">
+          <div className="font-bold text-xl text-grayscale-700 text-ellipsis overflow-hidden">
             {user.name}
           </div>
-          <div className="text-sm text-gray-400 text-ellipsis overflow-hidden">
+          <div className="text-sm text-grayscale-600 text-ellipsis overflow-hidden">
             {user.email}
           </div>
           {logoutLink()}
@@ -100,10 +100,10 @@ export const UserInfo: React.FC<TProps> = ({
         )
       }
       <div className="px-2 pt-4 w-full">
-        <div className="font-bold text-xl text-ellipsis overflow-hidden">
+        <div className="font-bold text-xl text-grayscale-700 text-ellipsis overflow-hidden">
           {user.name}
         </div>
-        <div className="text-sm text-gray-400 text-ellipsis overflow-hidden">
+        <div className="text-sm text-grayscale-600 text-ellipsis overflow-hidden">
           {user.email}
         </div>
         {logoutLink()}
