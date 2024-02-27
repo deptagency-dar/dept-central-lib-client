@@ -1,4 +1,3 @@
-import React from 'react'
 import { StoryObj, Meta } from '@storybook/react'
 import { DatePicker } from '.'
 import { colors } from '../../constants'
@@ -10,9 +9,7 @@ export default {
     colorScheme: 'primary',
     colorShade: 600,
     disabled: false,
-    startDate: new Date(),
     isRange: false,
-    showShortcuts: false,
     showFooter: false,
   },
   argTypes: {
@@ -32,10 +29,6 @@ export default {
         defaultValue: { summary: 600 },
       },
     },
-    configs: {
-      control: 'object',
-      description: 'Additional configurations for the DatePicker.',
-    },
     disabled: {
       control: 'boolean',
       description: 'Indicates whether the datepicker is disabled.',
@@ -45,17 +38,13 @@ export default {
         type: { summary: 'boolean' },
       },
     },
-    displayFormat: {
-      control: 'text',
-      description: 'Display format of the selected date.',
-    },
     endDate: {
       control: 'date',
       description: 'End date selected in the DatePicker.',
     },
-    i18n: {
-      control: 'text',
-      description: 'Internationalization language you must used with configs',
+    config: {
+      control: 'object',
+      description: 'Internationalization config',
     },
     isRange: {
       control: 'boolean',
@@ -73,16 +62,11 @@ export default {
       control: 'boolean',
       description: 'Indicates whether to show a footer in the DatePicker.',
     },
-    showShortcuts: {
-      control: 'boolean',
-      description: 'Indicates whether to show shortcuts in the DatePicker.',
-    },
     startDate: {
       control: 'date',
       description: 'Start date selected in the DatePicker.',
     },
   },
-  decorators: [(Story) => <div className="pb-[26rem]">{Story()}</div>],
   parameters: {
     docs: {
       toc: {
@@ -120,7 +104,8 @@ export const GrayScaleColorScheme: Story = {
 export const RangeDatePicker: Story = {
   args: {
     ...Default,
-    endDate: new Date('2024-02-28'),
+    startDate: new Date('02-20-2024'),
+    endDate: new Date('02-26-2024'),
     isRange: true,
   },
 }
@@ -128,15 +113,8 @@ export const RangeDatePicker: Story = {
 export const WithMaxMinDates: Story = {
   args: {
     ...Default,
-    maxDate: new Date('2024-02-28'),
-    minDate: new Date('2022-01-01'),
-  },
-}
-
-export const WithCustomDisplayFormat: Story = {
-  args: {
-    ...Default,
-    displayFormat: 'MM/DD/YYYY',
+    maxDate: new Date(),
+    minDate: new Date(new Date().setDate(new Date().getDate() -10)),
   },
 }
 
@@ -146,16 +124,9 @@ export const Disabled: Story = {
   },
 }
 
-export const ReadOnly: Story = {
-  args: {
-    readOnly: true,
-  },
-}
-
-export const WithShortcutsAndFooter: Story = {
+export const WithFooter: Story = {
   args: {
     ...Default,
-    showShortcuts: true,
     showFooter: true,
   },
 }
@@ -163,18 +134,10 @@ export const WithShortcutsAndFooter: Story = {
 export const WithInternationalization: Story = {
   args: {
     ...Default,
-    showShortcuts: true,
     showFooter: true,
     isRange: true,
-    i18n: 'es',
-    configs: {
-      shortcuts: {
-        today: 'Hoy',
-        yesterday: 'Ayer',
-        past: (period) => `Los últimos ${period} días`,
-        currentMonth: 'Este mes',
-        pastMonth: 'Mes pasado',
-      },
+    config: {
+      language: 'es',
       footer: {
         cancel: 'Cancelar',
         apply: 'Aplicar',
