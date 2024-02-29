@@ -1,6 +1,4 @@
 import React from 'react'
-import VerifiedIcon from '../../assets/images/verified.png'
-import CompanyStatusIcon from '../../assets/images/company-status.png'
 
 interface User {
   name: string | null
@@ -34,7 +32,7 @@ export const Avatar: React.FC<TProps> = ({
     if (status === 'company')
       return (
         <div className="block w-5 h-5 rounded-full absolute bottom-0 right-0">
-          <img src={CompanyStatusIcon} alt="" />
+          <img src="images/company-status.png" alt="" />
         </div>
       )
 
@@ -46,7 +44,7 @@ export const Avatar: React.FC<TProps> = ({
     if (status === 'verified')
       return (
         <div className="block w-5 h-5 absolute bottom-0 right-0">
-          <img src={VerifiedIcon} alt="" />
+          <img src="images/verified.png" alt="" />
         </div>
       )
   }
