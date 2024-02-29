@@ -1,17 +1,17 @@
-# UserInfo Component
+# Avatar Component
 
-The `UserInfo` component is intended to display brief information about a user, giving the option to logout if needed.
+The `Avatar` component is intended to display brief information about a user, giving the option to logout if needed.
 
 ## Usage
 
 ```jsx
 // Import component
-import { UserInfo } from 'dept-central-lib-client'
+import { Avatar } from 'dept-central-lib-client'
 ```
 
 ```jsx
 // Example usage
-<UserInfo
+<Avatar
   user={user}
   type="normal"
   onLogout={() => console.log('Logging out user')}
@@ -32,6 +32,7 @@ interface User {
 | Prop        | Type                                                                    | Description                                | Default Value |
 | ----------- | ----------------------------------------------------------------------- | ------------------------------------------ | ------------- |
 | user        | User                                                                    | Specifies the user information.            | -             |
+| status      | 'online' | 'company' | 'verified'                                       | Specifies the avatar status.               | -             |
 | type        | 'normal' | 'compact' | 'image'                                          | Specifies the component type.              | "normal"      |
 | className   | string                                                                  | Custom CSS className.                      | ""            |
 | onLogout    | () => void                                                              | Logout action.                             | -             |
@@ -47,16 +48,19 @@ const user = {
   image: 'https://example.com/some-image.png'
 }
 // Type normal (default if non specified)
-<UserInfo user={user} type="normal" />
+<Avatar user={user} type="normal" />
 
 // Type normal with logout action
-<UserInfo user={user} type="normal" onLogout={() => console.log('logging user out')} />
+<Avatar user={user} type="normal" onLogout={() => console.log('logging user out')} />
 
 // Display only the user image
-<UserInfo user={user} type="image" />
+<Avatar user={user} type="image" />
 
 // Display in compact style
-<UserInfo user={user} type="compact" />
+<Avatar user={user} type="compact" />
+
+// Display status
+<Avatar user={user} status="online" type="compact" />
 ```
 
 ## Go main README

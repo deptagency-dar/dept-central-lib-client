@@ -1,5 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react'
-import { UserInfo } from '.'
+import { Avatar } from '.'
 
 const user = {
   name: 'John Doe',
@@ -8,8 +8,8 @@ const user = {
 }
 
 export default {
-  title: 'Components/UserInfo',
-  component: UserInfo,
+  title: 'Components/Avatar',
+  component: Avatar,
   parameters: {
     docs: {
       toc: {
@@ -56,9 +56,9 @@ export default {
     type: 'normal',
     user,
   }
-} satisfies Meta<typeof UserInfo>
+} satisfies Meta<typeof Avatar>
 
-type Story = StoryObj<typeof UserInfo>
+type Story = StoryObj<typeof Avatar>
 
 export const Default: Story = {
   args: {
@@ -75,7 +75,7 @@ export const Normal: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<UserInfo user={user} type="normal" />`,
+        code: `<Avatar user={user} type="normal" />`,
       },
     },
   },
@@ -92,7 +92,7 @@ export const NormalWithLogoutAction: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<UserInfo user={user} type="normal" />`,
+        code: `<Avatar user={user} type="normal" />`,
       },
     },
   },
@@ -109,7 +109,7 @@ export const Image: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<UserInfo user={user} type="image" />`,
+        code: `<Avatar user={user} type="image" />`,
       },
     },
   },
@@ -126,12 +126,13 @@ export const Compact: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<UserInfo user={user} type="compact" />`,
+        code: `<Avatar user={user} type="compact" />`,
       },
     },
   },
   args: {
     ...Default.args,
-    type: 'compact'
+    type: 'compact',
+
   }
 }
