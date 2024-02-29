@@ -18,7 +18,6 @@ describe('Avatar component', () => {
     expect(image).toBeInTheDocument()
     expect(image.src).toEqual('https://example.com/some-image.png')
     expect(getByText('John Doe')).toBeInTheDocument()
-    expect(getByText('john@example.com')).toBeInTheDocument()
     expect(queryByText('Log out')).not.toBeInTheDocument()
   })
 
@@ -50,7 +49,6 @@ describe('Avatar component', () => {
       expect(image).toBeInTheDocument()
       expect(image.src).toEqual('https://example.com/some-image.png')
       expect(getByText('John Doe')).toBeInTheDocument()
-      expect(getByText('john@example.com')).toBeInTheDocument()
       expect(getByText('Log out')).toBeInTheDocument()
 
       // logout action

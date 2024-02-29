@@ -68,7 +68,7 @@ export const Avatar: React.FC<TProps> = ({
   function logoutLink() {
     if (!onLogout) return null
     return (
-      <a href="#" className="hover:underline text-sm" onClick={handleLogout}>
+      <a href="#" className="hover:underline text-sm text-grayscale-600" onClick={handleLogout}>
         Log out
       </a>
     )
@@ -83,11 +83,8 @@ export const Avatar: React.FC<TProps> = ({
       <div className={`${className} flex items-center`}>
         {avatar()}
         <div className="px-4 w-[80%]">
-          <div className="font-bold text-xl text-grayscale-700 text-ellipsis overflow-hidden">
+          <div className="font-bold text-xl leading-6 text-grayscale-700 text-ellipsis overflow-hidden">
             {user.name}
-          </div>
-          <div className="text-sm text-grayscale-600 text-ellipsis overflow-hidden">
-            {user.email}
           </div>
           {logoutLink()}
         </div>
@@ -101,11 +98,8 @@ export const Avatar: React.FC<TProps> = ({
         <div className="flex flex-col items-center">{avatar()}</div>
       )}
       <div className="px-2 pt-4 w-full">
-        <div className="font-bold text-xl text-grayscale-700 text-ellipsis overflow-hidden">
+        <div className="font-bold text-xl leading-6 text-grayscale-700 text-ellipsis overflow-hidden">
           {user.name}
-        </div>
-        <div className="text-sm text-grayscale-600 text-ellipsis overflow-hidden">
-          {user.email}
         </div>
         {logoutLink()}
       </div>
