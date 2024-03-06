@@ -25,6 +25,13 @@ export default {
         type: { summary: 'boolean' },
       },
     },
+    errorMessage: {
+      control: 'text',
+      description: 'Error message to display below the text field.',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
     label: {
       control: 'text',
       description: 'Label for the Select  .',
@@ -37,6 +44,14 @@ export default {
       description: 'Placeholder for the Select  .',
       table: {
         type: { summary: 'string' },
+      },
+    },
+    isRequired: {
+      control: 'boolean',
+      description: 'Add asterisk after label to indicates the textfield is required',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
       },
     },
     onChange: {

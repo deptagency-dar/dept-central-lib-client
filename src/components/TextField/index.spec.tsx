@@ -37,7 +37,7 @@ describe('Test TextField component', () => {
         label="Test Label"
         value=""
         onChange={() => {}}
-        error="This is an error"
+        errorMessage="This is an error"
       />,
     )
     const errorText = getByText('This is an error')

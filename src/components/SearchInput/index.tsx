@@ -1,7 +1,7 @@
 // SearchInput.tsx
 import { forwardRef, ForwardedRef, InputHTMLAttributes } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { getLightenColor } from '../../utils'
+import { classNames, getLightenColor } from '../../utils'
 import { ColorShade, ColorPalette } from '../../types'
 import { getColor } from '../../utils'
 
@@ -28,6 +28,14 @@ type SearchInputRootAttributes = Pick<
 
 export type SearchInputProps = SearchInputRootAttributes & SearchInputOwnProps
 
+const createSearchStyles = (
+  color: string,
+  borderColor: string,
+): Record<string, unknown> => ({
+  '--search-scheme': color,
+  '--search-border-color': borderColor,
+})
+
 export const SearchInput = forwardRef<
   HTMLInputElement,
   SearchInputRootAttributes
@@ -36,6 +44,7 @@ export const SearchInput = forwardRef<
     {
       colorScheme = 'primary',
       colorShade = 500,
+      disabled,
       placeholder,
       ...rest
     }: SearchInputProps,
@@ -44,27 +53,37 @@ export const SearchInput = forwardRef<
     const color = getColor(colorScheme, colorShade)
     const borderColor = getLightenColor(color, 80)
 
-    const disabledClasses = rest.disabled
-      ? 'opacity-50 pointer-events-none'
-      : ''
+    const searchStyles = createSearchStyles(color, borderColor)
+    const disabledClasses = disabled ? 'opacity-50' : ''
 
     return (
-      <label htmlFor="search" className={`group relative ${disabledClasses}`}>
-        <MagnifyingGlassIcon
-          style={{ color }}
-          className="absolute left-3 top-3 h-6 w-6 "
-          aria-hidden="true"
-        />
-        <input
-          ref={ref}
-          type="search"
-          name="search"
-          style={{ borderColor }}
-          className="block w-full rounded-md border-0 focus:outline-none text-gray-500 placeholder-gray-500 p-4 gap-3 shadow group-hover:shadow-md pl-12 focus:border-b-2  focus:pb-[14px]"
-          placeholder={placeholder}
-          {...rest}
-        />
-      </label>
+      <>
+        <label
+          htmlFor="search"
+          className={`group relative ${disabledClasses}`}
+          style={searchStyles}
+        >
+          <MagnifyingGlassIcon
+            className={classNames(
+              !disabled ? 'text-[--search-scheme]' : 'opacity-50',
+              'absolute left-3 top-3 h-6 w-6',
+            )}
+            aria-hidden="true"
+          />
+          <input
+            ref={ref}
+            type="search"
+            name="search"
+            className={classNames(
+              disabled ? 'cursor-not-allowed' : '',
+              'block w-full h-[3rem] rounded-md focus:outline-none focus:border-[--search-border-color] text-gray-500 placeholder-gray-500 p-4 gap-3 shadow pl-12 group-hover:shadow-md disabled:cursor-not-allowed',
+            )}
+            placeholder={placeholder}
+            disabled={disabled}
+            {...rest}
+          />
+        </label>
+      </>
     )
   },
 )

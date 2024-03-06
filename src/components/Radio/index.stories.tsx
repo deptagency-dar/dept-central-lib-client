@@ -127,3 +127,15 @@ export const Disabled: Story = {
     disabled: true,
   },
 }
+
+/**
+ * This is a defaultChecked radio.
+ * Just adding the **defaultChecked** prop in true.
+ */
+export const DefaultChecked: Story = {
+  args: {
+    ...Default.args,
+    children: 'Default Checked Radio',
+    defaultChecked: true
+  },
+}

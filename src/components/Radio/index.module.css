@@ -11,7 +11,7 @@
 }
 
 .radio input:checked,
-.radio input:not(:disabled):hover {
+.radio input:enabled:hover {
   @apply outline-[--radio-scheme];
 }
 

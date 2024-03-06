@@ -1,14 +1,21 @@
 // Checkbox.tsx
-import React, { forwardRef, ForwardedRef, InputHTMLAttributes } from 'react'
+import React, {
+  forwardRef,
+  ForwardedRef,
+  InputHTMLAttributes,
+  useState,
+} from 'react'
 import { colors } from '../../constants'
 import { ColorShade, ColorPalette } from '../../types'
-import { getColor } from '../../utils'
+import { classNames, getColor } from '../../utils'
 import styles from './index.module.css'
 
 interface CheckboxOwnProps {
   colorScheme?: keyof ColorPalette
   colorShade?: keyof ColorShade
+  isRequired?: boolean
   variant?: 'check' | 'toggle'
+  onChange?: (isChecked: boolean) => void
 }
 
 type CheckboxRootAttributes = Pick<
@@ -18,8 +25,6 @@ type CheckboxRootAttributes = Pick<
   | 'disabled'
   | 'hidden'
   | 'id'
-  | 'onChange'
-  | 'onClick'
   | 'onFocus'
   | 'readOnly'
   | 'required'
@@ -47,6 +52,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       colorShade = 600,
       variant = 'check',
       children,
+      isRequired,
+      defaultChecked,
+      onChange,
       ...props
     }: CheckboxProps,
     ref: ForwardedRef<HTMLInputElement>,
@@ -59,11 +67,37 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       initialColor,
       disabledColor,
     )
-    const checkboxClasses = `${styles.checkbox} ${styles[variant]}`.trim()
+
+    const [isChecked, setIsChecked] = useState<boolean>(defaultChecked ?? false)
+
+    const handleCheckboxChange = (
+      event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+      const { checked } = event.target
+      setIsChecked(checked)
+      if (onChange) {
+        onChange(checked)
+      }
+    }
 
     return (
-      <label className={checkboxClasses} style={checkboxStyles}>
-        <input type="checkbox" ref={ref} {...props} />
+      <label
+        className={classNames(
+          styles.checkbox,
+          styles[variant],
+          isRequired
+            ? 'after:content-["*"] after:ml-0.5 after:text-red-500'
+            : '',
+        )}
+        style={checkboxStyles}
+      >
+        <input
+          type="checkbox"
+          ref={ref}
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          {...props}
+        />
         {variant === 'toggle' && <span className={styles.toggleSlider}></span>}
         {children && <span className={styles.label}>{children}</span>}
       </label>

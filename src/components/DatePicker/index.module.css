@@ -1,13 +1,29 @@
 .datepicker {
-  @apply border border-[--datepicker-scheme] rounded w-80 px-4 py-2;
+  @apply border rounded-md bg-white;
+}
+
+.datepicker:focus-within {
+  @apply border-[--datepicker-range-item-color] outline outline-offset-2 outline-2 outline-[--datepicker-scheme];
+}
+
+.datepickerInput {
+  @apply min-w-80 h-[3rem] px-4 py-2;
 }
 
 .day {
-  @apply w-10 h-10 flex justify-center items-center mx-px rounded-lg;
+  @apply w-10 h-10 flex justify-center items-center mx-px rounded-full;
 }
 
 .selected {
   @apply bg-[--datepicker-scheme] text-white;
+}
+
+.selectedHover {
+  @apply bg-[--datepicker-selected-hover-color];
+}
+
+.hovered {
+  @apply bg-[--datepicker-hover-color];
 }
 
 .rangeItem {
@@ -18,3 +34,19 @@
   @apply bg-[--datepicker-disabled-color] border border-gray-300;
 }
 
+.datepickerInput:disabled, .datepickerInput:disabled ~ * {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.label {
+  composes: baseBold from '../../styles/typography.module.css';
+}
+
+.errorMessage {
+  @apply border-b-2 border-b-[--datepicker-error-color];
+}
+
+.errorMessage  {
+  @apply absolute mt-1 text-[--datepicker-error-color];
+  composes: small from '../../styles/typography.module.css';
+}

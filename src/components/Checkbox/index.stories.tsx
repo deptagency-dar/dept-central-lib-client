@@ -146,10 +146,28 @@ export const Colors: Story = {
   ),
 }
 
+/**
+ * This is a disabled radio.
+ * Just adding the **disabled** prop in true.
+ * The disabled state add **.disabled** class,
+ * that contain **opacity: .5** and **cursor: not-allowed**.
+ */
 export const Disabled: Story = {
   args: {
     ...Default.args,
     children: 'Disabled Checkbox',
     disabled: true,
+  },
+}
+
+/**
+ * This is a defaultChecked radio.
+ * Just adding the **defaultChecked** prop in true.
+ */
+export const DefaultChecked: Story = {
+  args: {
+    ...Default.args,
+    children: 'Default Checked Checkbox',
+    defaultChecked: true
   },
 }

@@ -18,7 +18,7 @@
     "format": "prettier --write .",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:dev": "npm run test:coverage --watch",
+    "test:dev": "jest --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install"

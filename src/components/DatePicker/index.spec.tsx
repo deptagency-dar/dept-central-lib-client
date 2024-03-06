@@ -106,11 +106,13 @@ describe('Test DatePicker component', () => {
     const inputElement = screen.getByRole<HTMLInputElement>('textbox')
     fireEvent.click(inputElement)
 
-    const currentDayButton = screen.getByRole('button', {
-      name: `${today.getDate()}`,
-    })
+    const currentDayButton = screen
+      .getAllByRole('button', {
+        name: `${today.getDate()}`,
+      })
+      .find((item) => !item.classList.contains('text-gray-400'))
 
-    fireEvent.click(currentDayButton)
+    fireEvent.click(currentDayButton!)
 
     const selectedDate = new Date(inputElement.value)
     expect(selectedDate.getTime()).toBeGreaterThanOrEqual(minDate.getTime())
