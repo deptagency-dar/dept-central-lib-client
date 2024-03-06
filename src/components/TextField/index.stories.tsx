@@ -37,8 +37,32 @@ export default {
     },
     disabled: {
       control: 'boolean',
-      description: 'Indicates whether the button is disabled.',
-      if: { arg: 'busy', truthy: false },
+      description: 'Indicates whether the textfield is disabled.',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
+      },
+    },
+    readOnly: {
+      control: 'boolean',
+      description: 'Indicates whether the textfield is readOnly.',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
+      },
+    },
+    isRequired: {
+      control: 'boolean',
+      description:
+        'Add asterisk after label to indicates the textfield is required',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
+      },
+    },
+    isMultiLine: {
+      control: 'boolean',
+      description: 'Indicates whether the textfield is textarea.',
       table: {
         defaultValue: { summary: false },
         type: { summary: 'boolean' },
@@ -65,16 +89,16 @@ export default {
         type: { summary: 'string' },
       },
     },
-    onChange: {
-      description: 'Event triggered when the text field value changes.',
-      action: 'changed',
-    },
-    error: {
+    errorMessage: {
       control: 'text',
       description: 'Error message to display below the text field.',
       table: {
         type: { summary: 'string' },
       },
+    },
+    onChange: {
+      description: 'Event triggered when the text field value changes.',
+      action: 'changed',
     },
   },
 } as Meta<typeof TextField>
@@ -117,7 +141,7 @@ export const Colors: Story = {
 
 /**
  * This is an example of a text field with an error message.
- * Just adding the **error** prop with an error message.
+ * Just adding the **errorMessage** prop with an error message.
  */
 export const WithError: Story = {
   parameters: {
@@ -125,14 +149,14 @@ export const WithError: Story = {
       source: {
         code: `<TextField 
   label="Text Field with Error" 
-  error="This is an error message" 
+  errorMessage="This is an errorMessage message" 
 />`,
       },
     },
   },
   args: {
     ...Default.args,
-    error: 'This is an error message',
+    errorMessage: 'This is an errorMessage message',
   },
 }
 

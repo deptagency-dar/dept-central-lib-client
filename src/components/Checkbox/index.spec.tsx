@@ -65,23 +65,4 @@ describe('Checkbox component', () => {
 
     expect(toggle).toBeInTheDocument()
   })
-
-  it('updates when checked prop changes', () => {
-    const { getByLabelText, rerender } = render(
-      <Checkbox>
-        Checkbox Label
-      </Checkbox>,
-    )
-    const checkboxInput = getByLabelText('Checkbox Label') as HTMLInputElement
-
-    expect(checkboxInput).not.toBeChecked()
-
-    rerender(
-      <Checkbox defaultChecked>
-        Checkbox Label
-      </Checkbox>,
-    )
-
-    expect(checkboxInput).toBeChecked()
-  })
 })

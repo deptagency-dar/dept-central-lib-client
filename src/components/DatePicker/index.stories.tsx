@@ -1,3 +1,4 @@
+import React from 'react'
 import { StoryObj, Meta } from '@storybook/react'
 import { DatePicker } from '.'
 import { colors } from '../../constants'
@@ -42,6 +43,13 @@ export default {
       control: 'date',
       description: 'End date selected in the DatePicker.',
     },
+    errorMessage: {
+      control: 'text',
+      description: 'Error message to display below the text field.',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
     config: {
       control: 'object',
       description: 'Internationalization config',
@@ -49,6 +57,21 @@ export default {
     isRange: {
       control: 'boolean',
       description: 'Indicates if the DatePicker is being used in range mode.',
+    },
+    isRequired: {
+      control: 'boolean',
+      description: 'Add asterisk after label to indicates the textfield is required',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
+      },
+    },
+    placeholder: {
+      control: 'text',
+      description: 'Placeholder for the DatePicker  .',
+      table: {
+        type: { summary: 'string' },
+      },
     },
     maxDate: {
       control: 'date',
@@ -67,6 +90,7 @@ export default {
       description: 'Start date selected in the DatePicker.',
     },
   },
+  decorators: [(Story) => <div className="pb-[22rem]">{Story()}</div>],
   parameters: {
     docs: {
       toc: {
@@ -114,7 +138,7 @@ export const WithMaxMinDates: Story = {
   args: {
     ...Default,
     maxDate: new Date(),
-    minDate: new Date(new Date().setDate(new Date().getDate() -10)),
+    minDate: new Date(new Date().setDate(new Date().getDate() - 10)),
   },
 }
 

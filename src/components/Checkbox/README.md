@@ -34,15 +34,11 @@ import { Checkbox } from 'dept-central-lib-client'
 | hidden         | boolean                                                                 | Hides the checkbox if set to `true`.                 | false         |
 | id             | string                                                                  | Specifies the id for the checkbox.                   | -             |
 | onChange       | (e: ChangeEvent<HTMLInputElement>) => void                              | Function triggered on checkbox change.               | -             |
-| onClick        | (e: MouseEvent<HTMLInputElement>) => void                               | Function triggered on checkbox click.                | -             |
-| onFocus        | (e: FocusEvent<HTMLInputElement>) => void                               | Function triggered on checkbox focus.                | -             |
 | readOnly       | boolean                                                                 | Makes the checkbox read-only if set to `true`.       | false         |
 | required       | boolean                                                                 | Makes the checkbox required if set to `true`.        | false         |
 | tabIndex       | number                                                                  | Specifies the tab order of the checkbox.             | -             |
 | value          | string                                                                  | Specifies the value of the checkbox.                 | -             |
 | name           | string                                                                  | Specifies the name of the checkbox.                  | -             |
-
-_Note: Other standard HTML input attributes can also be applied._
 
 ## Styling
 

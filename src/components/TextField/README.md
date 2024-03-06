@@ -22,26 +22,27 @@ import { TextField } from 'dept-central-lib-client'
 
 ## Props
 
-| Prop        | Type                                                                    | Description                                                 | Default Value |
-| ----------- | ----------------------------------------------------------------------- | ----------------------------------------------------------- | ------------- |
-| label       | string                                                                  | The label for the text input field.                         | -             |
-| colorScheme | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | Specifies the color scheme for the text field.              | "primary"     |
-| colorShade  | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | Specifies the color shade for the text field.               | 600           |
-| error       | string                                                                  | Displays an error message below the input field.            | -             |
-| disabled    | boolean                                                                 | Disables the text input field if set to `true`.             | false         |
-| value       | string                                                                  | Specifies the value of the text input field.                | -             |
-| onChange    | (e: ChangeEvent<HTMLInputElement>) => void                              | Function triggered on input change.                         | -             |
-| placeholder | string                                                                  | The placeholder text for the input field.                   | -             |
-| id          | string                                                                  | Specifies the id for the input field.                       | -             |
-| name        | string                                                                  | Specifies the name of the input field.                      | -             |
-| min         | string                                                                  | Specifies the minimum value for the input field.            | -             |
-| max         | string                                                                  | Specifies the maximum value for the input field.            | -             |
-| minLength   | number                                                                  | Specifies the minimum length for the input field.           | -             |
-| maxLength   | number                                                                  | Specifies the maximum length for the input field.           | -             |
-| pattern     | string                                                                  | Specifies a regular expression pattern for the input field. | -             |
-| size        | number                                                                  | Specifies the size of the input field.                      | -             |
-
-_Note: Other standard HTML input attributes can also be applied._
+| Prop          | Type                                                                    | Description                                                 | Default Value |
+| ------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------- | ------------- |
+| label         | string                                                                  | The label for the text input field.                         | -             |
+| internalLabel | string                                                                  | An internal label for the text input field.                 | -             |
+| colorScheme   | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | Specifies the color scheme for the text field.              | "primary"     |
+| colorShade    | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | Specifies the color shade for the text field.               | 600           |
+| errorMessage         | string                                                                  | Displays an errorMessage message below the input field.            | -             |
+| disabled      | boolean                                                                 | Disables the text input field if set to `true`.             | false         |
+| readOnly      | boolean                                                                 | Makes the text input field read-only if set to `true`.      | false         |
+| value         | string                                                                  | Specifies the value of the text input field.                | -             |
+| onChange      | (value: string) => void                                                 | Function triggered on input change.                         | -             |
+| onBlur        | (value: string) => void                                                 | Function triggered on input blur.                         | -             |
+| placeholder   | string                                                                  | The placeholder text for the input field.                   | -             |
+| id            | string                                                                  | Specifies the id for the input field.                       | -             |
+| name          | string                                                                  | Specifies the name of the input field.                      | -             |
+| min           | string                                                                  | Specifies the minimum value for the input field.            | -             |
+| max           | string                                                                  | Specifies the maximum value for the input field.            | -             |
+| minLength     | number                                                                  | Specifies the minimum length for the input field.           | -             |
+| maxLength     | number                                                                  | Specifies the maximum length for the input field.           | -             |
+| pattern       | string                                                                  | Specifies a regular expression pattern for the input field. | -             |
+| size          | number                                                                  | Specifies the size of the input field.                      | -             |
 
 ## Styling
 

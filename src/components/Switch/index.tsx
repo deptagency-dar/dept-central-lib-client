@@ -14,7 +14,7 @@ export interface SwitchOwnProps {
   selectedOption?: string
 }
 
-export type SwitchProps = SwitchOwnProps & React.HTMLAttributes<HTMLDivElement>
+export type SwitchProps = SwitchOwnProps
 
 const createSwitchStyles = (color: string): Record<string, unknown> => ({
   '--switch-scheme': color,

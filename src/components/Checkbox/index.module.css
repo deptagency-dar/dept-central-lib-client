@@ -11,7 +11,7 @@
   appearance: auto;
 }
 
-.checkbox input:not(:disabled):hover {
+.checkbox input:enabled:hover {
   @apply border-[--checkbox-scheme];
 }
 
