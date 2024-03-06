@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
-import { UserInfo } from '.'
+import { Avatar } from '.'
 
 const user = {
   name: 'John Doe',
@@ -10,22 +10,21 @@ const user = {
   image: 'https://example.com/some-image.png',
 }
 
-describe('UserInfo component', () => {
+describe('Avatar component', () => {
   it('renders correctly with default props', () => {
-    const { getByAltText, getByText, queryByText } = render(<UserInfo user={user} />)
+    const { getByAltText, getByText, queryByText } = render(<Avatar user={user} />)
 
     const image = getByAltText('Avatar') as HTMLImageElement
     expect(image).toBeInTheDocument()
     expect(image.src).toEqual('https://example.com/some-image.png')
     expect(getByText('John Doe')).toBeInTheDocument()
-    expect(getByText('john@example.com')).toBeInTheDocument()
     expect(queryByText('Log out')).not.toBeInTheDocument()
   })
 
   describe('"image" type', () => {
     it('renders the image only', () => {
       const { getByAltText, queryByText } = render(
-        <UserInfo user={user} type="image" />
+        <Avatar user={user} type="image" />
       )
       const image = getByAltText('Avatar') as HTMLImageElement
       expect(image).toBeInTheDocument()
@@ -40,7 +39,7 @@ describe('UserInfo component', () => {
     it('renders the image only', async () => {
       const onLogoutMock = jest.fn()
       const { getByAltText, getByText } = render(
-        <UserInfo
+        <Avatar
           user={user}
           type="normal"
           onLogout={onLogoutMock}
@@ -50,7 +49,6 @@ describe('UserInfo component', () => {
       expect(image).toBeInTheDocument()
       expect(image.src).toEqual('https://example.com/some-image.png')
       expect(getByText('John Doe')).toBeInTheDocument()
-      expect(getByText('john@example.com')).toBeInTheDocument()
       expect(getByText('Log out')).toBeInTheDocument()
 
       // logout action
@@ -65,7 +63,7 @@ describe('UserInfo component', () => {
     it('renders the image only', async () => {
       const onLogoutMock = jest.fn()
       const { getByAltText, getByText, queryByText } = render(
-        <UserInfo user={user} type="compact" onLogout={onLogoutMock} />
+        <Avatar user={user} type="compact" onLogout={onLogoutMock} />
       )
       const image = getByAltText('Avatar') as HTMLImageElement
       expect(image).toBeInTheDocument()
