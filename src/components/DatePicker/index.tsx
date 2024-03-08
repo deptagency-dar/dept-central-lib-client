@@ -462,6 +462,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     })
 
     const datePickerRef = useRef<HTMLDivElement>(null)
+    const isFirstRender = useRef(true)
 
     const color = getColor(colorScheme, colorShade)
     const disabledColor = getColor('grayscale', 100)
@@ -500,27 +501,32 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }, [state.modalOpen])
 
     useEffect(() => {
-      if (isRange && state.startDate && state.endDate) {
-        const daysInRange = []
-        const currentDate = new Date(state.startDate)
-        while (currentDate <= state.endDate) {
-          daysInRange.push(new Date(currentDate))
-          currentDate.setDate(currentDate.getDate() + 1)
+      if(!state.modalOpen) return
+        if (isRange && state.startDate && state.endDate) {
+          const daysInRange = []
+          const currentDate = new Date(state.startDate)
+          while (currentDate <= state.endDate) {
+            daysInRange.push(new Date(currentDate))
+            currentDate.setDate(currentDate.getDate() + 1)
+          }
+          dispatch({ type: 'SET_RANGE_DAYS', payload: daysInRange })
+        } else {
+          dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
         }
-        dispatch({ type: 'SET_RANGE_DAYS', payload: daysInRange })
-      } else {
-        dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
-      }
-    }, [isRange, state.startDate, state.endDate])
+    }, [isRange, state.endDate, state.modalOpen, state.startDate])
 
     useEffect(() => {
-      const startDate = initialStartDate ?? null
-      const endDate = initialEndDate ?? null
-      if (onChange) {
-        onChange({ startDate: initialStartDate!, endDate: initialEndDate })
+      if (isFirstRender.current) {
+        isFirstRender.current = false
+        return
       }
-      dispatch({ type: 'SET_START_DATE', payload: startDate })
-      dispatch({ type: 'SET_END_DATE', payload: endDate })
+        const startDate = initialStartDate ?? null
+        const endDate = initialEndDate ?? null
+        if (onChange) {
+          onChange({ startDate: initialStartDate!, endDate: initialEndDate })
+        }
+        dispatch({ type: 'SET_START_DATE', payload: startDate })
+        dispatch({ type: 'SET_END_DATE', payload: endDate })
     }, [initialStartDate, initialEndDate, isRange, language, onChange, onBlur])
 
     const handleToggleModal = () => {
