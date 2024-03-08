@@ -20,7 +20,7 @@
   @apply text-[--textfield-placeholder-color];
 }
 
-.errorMessage {
+.error {
   @apply border-b-2 border-[--textfield-error-color] rounded-b-[0.375rem];
 }
 

@@ -42,7 +42,7 @@
   composes: baseBold from '../../styles/typography.module.css';
 }
 
-.errorMessage {
+.error {
   @apply border-b-2 border-b-[--datepicker-error-color];
 }
 

@@ -109,7 +109,7 @@ export const TextField = forwardRef<
       errorColor,
     )
     const textFieldClasses = `${styles.textField} ${
-      errorMessage ? styles.errorMessage : ''
+      errorMessage ? styles.error : ''
     } ${disabled ? styles.disabled : ''} ${readOnly ? styles.readOnly : ''}`.trim()
 
     return (

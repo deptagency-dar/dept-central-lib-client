@@ -647,7 +647,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         )}
         <div
           className={classNames(
-            errorMessage ? styles.errorMessage : '',
+            errorMessage ? styles.error : '',
             'relative',
             styles.datepicker,
           )}
@@ -702,12 +702,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               )}
             </div>
           )}
+          {errorMessage && (
+            <small className={styles.errorMessage} style={datePickerStyles}>
+              {errorMessage}
+            </small>
+          )}
         </div>
-        {errorMessage && (
-          <small className={styles.errorMessage} style={datePickerStyles}>
-            {errorMessage}
-          </small>
-        )}
       </DatePickerContext.Provider>
     )
   },
