@@ -192,6 +192,7 @@ const FooterActions = ({
 const Calendar = ({
   language,
   isSecondCalendar,
+  isRage,
   minDate,
   maxDate,
   onMonthChange,
@@ -205,6 +206,7 @@ const Calendar = ({
   maxDate?: Date
   minDate?: Date
   isSecondCalendar?: boolean
+  isRage?: boolean
 }) => {
   const { state } = useDatePicker()
 
@@ -229,7 +231,7 @@ const Calendar = ({
       (button) => button.id === id,
     )
 
-    if (state.startDate && !state.endDate && selectedButtons[0]) {
+    if (isRage && state.startDate && !state.endDate && selectedButtons[0]) {
       const selectedIndex = Array.from(buttons).indexOf(selectedButtons[0])
       buttons.forEach((button, index) => {
         if (index > selectedIndex && index < hoveredIndex) {
@@ -671,6 +673,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               <div className="flex flex-row">
                 <Calendar
                   language={language}
+                  isRage={isRange}
                   minDate={minDate}
                   maxDate={maxDate}
                   onMonthChange={handleMonthChange}
@@ -680,6 +683,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 {isRange && (
                   <Calendar
                     language={language}
+                    isRage={isRange}
                     isSecondCalendar={true}
                     minDate={minDate}
                     maxDate={maxDate}
@@ -700,7 +704,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           )}
         </div>
         {errorMessage && (
-          <small className={styles.errorMessage } style={datePickerStyles}>
+          <small className={styles.errorMessage} style={datePickerStyles}>
             {errorMessage}
           </small>
         )}
