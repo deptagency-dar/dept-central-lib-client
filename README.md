@@ -40,7 +40,13 @@ To use this design system in your React project, follow these steps:
      Click me
    </Button>
    ```
+## Commits
 
+- We follow Conventional Commits syntax, and use `commitlint` to enforce its appliance.
+  - It's recommended to install any `commitlint` extension in your IDE/editor.
+- We will spell check our commits so that they look good in our change log.
+- We will start our commits with a present tense verb.
+    - (e.g): feature(repo): Adds Users module.
 ## Components
 
 - [Button](src/components/Button/README.md)
