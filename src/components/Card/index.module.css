@@ -1,0 +1,18 @@
+/* card.module.css */
+.card {
+  @apply flex flex-col items-start max-w-fit bg-white border border-gray-200 rounded-2xl;
+}
+
+.header {
+  composes: h4 from '../../styles/typography.module.css';
+  @apply flex p-8 items-center gap-4 self-stretch border-b border-b-gray-200;
+}
+
+.body {
+  @apply flex flex-col content-center items-start gap-2 self-stretch p-8;
+}
+
+.footer {
+  @apply flex flex-col items-start self-stretch p-2;
+  composes: small from '../../styles/typography.module.css';
+}

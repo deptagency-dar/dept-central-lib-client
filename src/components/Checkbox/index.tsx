@@ -4,6 +4,7 @@ import React, {
   ForwardedRef,
   InputHTMLAttributes,
   useState,
+  ChangeEvent,
 } from 'react'
 import { colors } from '../../constants'
 import { ColorShade, ColorPalette } from '../../types'
@@ -71,7 +72,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const [isChecked, setIsChecked] = useState<boolean>(defaultChecked ?? false)
 
     const handleCheckboxChange = (
-      event: React.ChangeEvent<HTMLInputElement>,
+      event: ChangeEvent<HTMLInputElement>,
     ) => {
       const { checked } = event.target
       setIsChecked(checked)

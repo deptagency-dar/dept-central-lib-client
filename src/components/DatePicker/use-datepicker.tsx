@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { Dispatch, createContext, useContext } from 'react'
 
 export interface DatePickerState {
   startDate: Date | null
@@ -50,7 +50,7 @@ export const datePickerReducer = (
 export const DatePickerContext = createContext<
   | {
       state: DatePickerState
-      dispatch: React.Dispatch<Action>
+      dispatch: Dispatch<Action>
     }
   | undefined
 >(undefined)
