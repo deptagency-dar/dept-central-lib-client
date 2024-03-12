@@ -49,7 +49,9 @@ To use this design system in your React project, follow these steps:
     - (e.g): feature(repo): Adds Users module.
 ## Components
 
+- [Avatar](src/components/Avatar/README.md)
 - [Button](src/components/Button/README.md)
+- [Card](src/components/Card/README.md)
 - [Checkbox](src/components/Checkbox/README.md)
 - [DatePicker](src/components/DatePicker/README.md)
 - [Radio](src/components/Radio/README.md)

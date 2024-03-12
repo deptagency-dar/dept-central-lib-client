@@ -3,9 +3,8 @@
 @value buttonTextColor: white;
 
 .button {
-  @apply inline-flex items-center justify-center flex-shrink-0 border-none outline-none select-none cursor-pointer gap-2 transition-colors p-4 rounded-full;
+  @apply inline-flex items-center justify-center flex-shrink-0 border-none outline-none select-none cursor-pointer gap-2 transition-colors p-4 rounded-full h-[2.8125rem;];
   composes: largeBold from '../../styles/typography.module.css';
-  height: 2.8125rem;
 }
 
 .solid {

@@ -32,8 +32,6 @@ import { Button } from 'dept-central-lib-client'
 | disabled    | boolean                                                                 | Disables the button if set to `true`.      | false         |
 | children    | ReactNode                                                               | Content to be displayed within the button. | -             |
 
-_Note: Other standard HTML button attributes can also be applied._
-
 ## Styling
 
 The button's appearance is determined by its color scheme and variant. You can further customize the button's style by modifying the CSS module.
