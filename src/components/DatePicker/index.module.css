@@ -1,13 +1,14 @@
 .datepicker {
-  @apply border rounded-md bg-white;
+  @apply border rounded-md bg-white w-full;
+  composes: shadowXSmall from '../../styles/shadows.module.css';
 }
 
 .datepicker:focus-within {
-  @apply border-[--datepicker-range-item-color] outline outline-offset-2 outline-2 outline-[--datepicker-scheme];
+  @apply border-2 border-[--datepicker-scheme];
 }
 
 .datepickerInput {
-  @apply min-w-80 h-[3rem] px-4 py-2;
+  @apply min-w-80 h-[3rem] px-4 py-3;
 }
 
 .day {
@@ -39,14 +40,14 @@
 }
 
 .label {
-  composes: baseBold from '../../styles/typography.module.css';
+  composes: smallBold from '../../styles/typography.module.css';
 }
 
 .error {
-  @apply border-b-2 border-b-[--datepicker-error-color];
+  @apply border-2 border-[--datepicker-error-color];
 }
 
 .errorMessage  {
-  @apply absolute mt-1 text-[--datepicker-error-color];
+  @apply text-[--datepicker-error-color];
   composes: small from '../../styles/typography.module.css';
 }

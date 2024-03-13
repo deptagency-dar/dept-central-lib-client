@@ -501,18 +501,18 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }, [state.modalOpen])
 
     useEffect(() => {
-      if(!state.modalOpen) return
-        if (isRange && state.startDate && state.endDate) {
-          const daysInRange = []
-          const currentDate = new Date(state.startDate)
-          while (currentDate <= state.endDate) {
-            daysInRange.push(new Date(currentDate))
-            currentDate.setDate(currentDate.getDate() + 1)
-          }
-          dispatch({ type: 'SET_RANGE_DAYS', payload: daysInRange })
-        } else {
-          dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
+      if (!state.modalOpen) return
+      if (isRange && state.startDate && state.endDate) {
+        const daysInRange = []
+        const currentDate = new Date(state.startDate)
+        while (currentDate <= state.endDate) {
+          daysInRange.push(new Date(currentDate))
+          currentDate.setDate(currentDate.getDate() + 1)
         }
+        dispatch({ type: 'SET_RANGE_DAYS', payload: daysInRange })
+      } else {
+        dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
+      }
     }, [isRange, state.endDate, state.modalOpen, state.startDate])
 
     useEffect(() => {
@@ -520,13 +520,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         isFirstRender.current = false
         return
       }
-        const startDate = initialStartDate ?? null
-        const endDate = initialEndDate ?? null
-        if (onChange) {
-          onChange({ startDate: initialStartDate!, endDate: initialEndDate })
-        }
-        dispatch({ type: 'SET_START_DATE', payload: startDate })
-        dispatch({ type: 'SET_END_DATE', payload: endDate })
+      const startDate = initialStartDate ?? null
+      const endDate = initialEndDate ?? null
+      if (onChange) {
+        onChange({ startDate: initialStartDate!, endDate: initialEndDate })
+      }
+      dispatch({ type: 'SET_START_DATE', payload: startDate })
+      dispatch({ type: 'SET_END_DATE', payload: endDate })
     }, [initialStartDate, initialEndDate, isRange, language, onChange, onBlur])
 
     const handleToggleModal = () => {
@@ -638,76 +638,78 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     return (
       <DatePickerContext.Provider value={{ state, dispatch }}>
-        {label && (
-          <label
-            htmlFor="datepicker"
-            className={classNames(
-              isRequired
-                ? 'after:content-["*"] after:ml-0.5 after:text-red-500'
-                : '',
-              styles.label,
-            )}
-          >
-            {label}
-          </label>
-        )}
-        <div
-          className={classNames(
-            errorMessage ? styles.error : '',
-            'relative',
-            styles.datepicker,
-          )}
-          style={datePickerStyles}
-          id="datepicker"
-          ref={ref}
-        >
-          <DatePickerInput
-            language={language}
-            isRange={isRange}
-            placeholder={placeholder ?? getDefaultPlaceholder()}
-            onClick={handleToggleModal}
-            onBlur={onBlur}
-            className={datePickerInputClasses}
-            disabled={disabled}
-          />
-          {state.modalOpen && (
-            <div
-              className="absolute z-10 mt-1 flex flex-col bg-white border shadow-lg rounded-xl overflow-hidden"
-              ref={datePickerRef}
-              role="dialog"
+        <div className="flex flex-col gap-2 items-start w-[24.5rem] h-[4.125rem]">
+          {label && (
+            <label
+              htmlFor="datepicker"
+              className={classNames(
+                isRequired
+                  ? 'after:content-["*"] after:ml-0.5 after:text-red-500'
+                  : '',
+                styles.label,
+              )}
             >
-              <div className="flex flex-row">
-                <Calendar
-                  language={language}
-                  isRage={isRange}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  onMonthChange={handleMonthChange}
-                  onSelectDate={handleDateSelection}
-                  onYearChange={handleYearChange}
-                />
-                {isRange && (
+              {label}
+            </label>
+          )}
+          <div
+            className={classNames(
+              errorMessage ? styles.error : '',
+              'relative',
+              styles.datepicker,
+            )}
+            style={datePickerStyles}
+            id="datepicker"
+            ref={ref}
+          >
+            <DatePickerInput
+              language={language}
+              isRange={isRange}
+              placeholder={placeholder ?? getDefaultPlaceholder()}
+              onClick={handleToggleModal}
+              onBlur={onBlur}
+              className={datePickerInputClasses}
+              disabled={disabled}
+            />
+            {state.modalOpen && (
+              <div
+                className="absolute z-10 mt-1 flex flex-col bg-white border shadow-lg rounded-xl overflow-hidden"
+                ref={datePickerRef}
+                role="dialog"
+              >
+                <div className="flex flex-row">
                   <Calendar
                     language={language}
                     isRage={isRange}
-                    isSecondCalendar={true}
                     minDate={minDate}
                     maxDate={maxDate}
-                    onMonthChange={handleSecondMonthChange}
+                    onMonthChange={handleMonthChange}
                     onSelectDate={handleDateSelection}
-                    onYearChange={handleSecondYearChange}
+                    onYearChange={handleYearChange}
+                  />
+                  {isRange && (
+                    <Calendar
+                      language={language}
+                      isRage={isRange}
+                      isSecondCalendar={true}
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      onMonthChange={handleSecondMonthChange}
+                      onSelectDate={handleDateSelection}
+                      onYearChange={handleSecondYearChange}
+                    />
+                  )}
+                </div>
+                {showFooter && (
+                  <FooterActions
+                    labels={footerLabels}
+                    onApply={handleApply}
+                    onCancel={handleToggleModal}
                   />
                 )}
               </div>
-              {showFooter && (
-                <FooterActions
-                  labels={footerLabels}
-                  onApply={handleApply}
-                  onCancel={handleToggleModal}
-                />
-              )}
-            </div>
-          )}
+            )}
+          </div>
           {errorMessage && (
             <small className={styles.errorMessage} style={datePickerStyles}>
               {errorMessage}

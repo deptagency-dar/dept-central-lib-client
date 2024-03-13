@@ -1,15 +1,19 @@
 .textField {
-  @apply flex justify-between items-center w-[20.5rem] min-h-[3rem] py-[1rem] px-[1.25rem] gap-4 flex-shrink-0 rounded-[0.375rem] bg-white;
-  composes: shadowSmall from '../../styles/shadows.module.css';
+  @apply flex justify-between items-center w-full gap-4 flex-shrink-0 rounded-[0.375rem] bg-white  border border-gray-300;
+  composes: shadowXSmall from '../../styles/shadows.module.css';
 }
 
 .label {
-  composes: baseBold from '../../styles/typography.module.css';
+  composes: smallBold from '../../styles/typography.module.css';
 }
 
 .textField input,
 .textField textarea {
-  @apply outline-none self-stretch bg-transparent w-full;
+  @apply outline-none self-stretch bg-transparent w-full px-4 py-3;
+}
+
+.textField input {
+  @apply h-[3rem];
 }
 
 .textField label:not(.label) {
@@ -21,16 +25,16 @@
 }
 
 .error {
-  @apply border-b-2 border-[--textfield-error-color] rounded-b-[0.375rem];
+  @apply border-2 border-[--textfield-error-color];
 }
 
 .errorMessage  {
-  @apply absolute mt-1 text-[--textfield-error-color];
+  @apply text-[--textfield-error-color];
   composes: small from '../../styles/typography.module.css';
 }
 
 .textField:focus-within:not(.error, .readOnly) {
-  @apply border-b-2 border-[--textfield-scheme] rounded-b-[0.375rem];
+  @apply border-2 border-[--textfield-scheme];
 }
 
 .disabled {
@@ -42,7 +46,7 @@
 }
 
 .readOnly:not(.disabled) {
-  @apply bg-[--textfield-readonly-color];
+  @apply bg-[--textfield-readonly-color] border-gray-200;
 }
 
 .readOnly input {
