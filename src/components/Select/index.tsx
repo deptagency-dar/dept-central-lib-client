@@ -119,7 +119,8 @@ export const Select: FC<SelectProps> = ({
           className={classNames(
             disabled ? 'cursor-not-allowed opacity-50' : '',
             errorMessage ? 'border-2 border-[--select-error-color]' : '',
-            'relative w-full min-w-[18rem] h-[3rem] bg-white border rounded-md shadow-sm py-3 px-4 text-left cursor-default focus:border-[--select-scheme] focus:border-2 sm:text-sm',
+            'relative w-full min-w-[18rem] h-[3rem] bg-white border rounded-md shadow-sm py-3 px-4 text-left cursor-default focus:border-[--select-scheme] focus:border-2',
+            typography.base,
           )}
           onClick={() => setOpen(!open)}
         >
@@ -132,7 +133,7 @@ export const Select: FC<SelectProps> = ({
             <Icon
               className={classNames(
                 open ? 'text-[--select-scheme]' : '',
-                'h-5 w-5 text-gray-400',
+                'h-6 w-6 text-black',
               )}
               aria-hidden="true"
             />
@@ -149,7 +150,10 @@ export const Select: FC<SelectProps> = ({
             tabIndex={-1}
             role="listbox"
             aria-labelledby="listbox-label"
-            className="max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto sm:text-sm"
+            className={classNames(
+              'max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto sm:text-sm',
+              typography.base,
+            )}
           >
             {options.map((option) => (
               <li

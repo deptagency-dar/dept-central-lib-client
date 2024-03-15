@@ -5,8 +5,8 @@
 }
 
 .button {
-  @apply flex-1 border-2 border-[--switch-scheme] py-2 px-4 cursor-pointer transition duration-300 ease-in-out flex justify-center items-center;
-  composes: baseBold from '../../styles/typography.module.css';
+  @apply flex-1 border-2 gap-2 border-[--switch-scheme] py-2 px-5 cursor-pointer transition duration-300 ease-in-out flex justify-center items-center;
+  composes: largeBold from '../../styles/typography.module.css';
 }
 
 .button:not(.selected) {
@@ -22,5 +22,5 @@
 }
 
 .selected {
-  @apply text-white bg-[--switch-scheme];
+  @apply text-white bg-[--switch-scheme] border-none;
 }

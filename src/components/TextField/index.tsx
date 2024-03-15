@@ -129,7 +129,9 @@ export const TextField = forwardRef<
           </label>
         )}
         <div className={textFieldClasses} style={textFieldStyles}>
-          {internalLabel && <label className="pl-4">{internalLabel}</label>}
+          {internalLabel && !isMultiLine && readOnly && (
+            <label className="pl-4">{internalLabel}</label>
+          )}
           {isMultiLine ? (
             <textarea
               disabled={disabled}

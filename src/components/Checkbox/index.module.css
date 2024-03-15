@@ -20,11 +20,11 @@
 }
 
 .toggleSlider {
-  @apply w-[2.03125rem] h-5 bg-gray-400 rounded-full relative transition-colors ease-in duration-300;
+  @apply w-10 h-6 bg-gray-400 rounded-full relative transition-colors ease-in duration-300;
 }
 
 .toggleSlider::before {
-  @apply content-[''] w-[1.09375rem] h-[1.09375rem] bg-white rounded-[50%] absolute top-[0.0625rem] left-[0.0625rem] transition transform ease-in duration-300;
+  @apply content-[''] w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition transform ease-in duration-300;
 }
 
 .toggle input:checked + .toggleSlider {
@@ -32,7 +32,7 @@
 }
 
 .toggle input:checked + .toggleSlider::before {
-  @apply translate-x-[0.8125rem];
+  @apply translate-x-[1rem];
 }
 
 .checkbox input:disabled,

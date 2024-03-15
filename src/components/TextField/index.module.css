@@ -20,7 +20,8 @@
   min-width: fit-content;
 }
 
-.textField input::placeholder {
+.textField input::placeholder,
+.textField textarea::placeholder {
   @apply text-[--textfield-placeholder-color];
 }
 
@@ -28,7 +29,7 @@
   @apply border-2 border-[--textfield-error-color];
 }
 
-.errorMessage  {
+.errorMessage {
   @apply text-[--textfield-error-color];
   composes: small from '../../styles/typography.module.css';
 }
@@ -47,6 +48,11 @@
 
 .readOnly:not(.disabled) {
   @apply bg-[--textfield-readonly-color] border-gray-200;
+}
+
+.readOnly {
+  @apply text-gray-500;
+  composes: baseBold from '../../styles/typography.module.css';
 }
 
 .readOnly input {
