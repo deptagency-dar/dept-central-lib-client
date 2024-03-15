@@ -1,5 +1,5 @@
 .datepicker {
-  @apply border rounded-md bg-white w-full;
+  @apply border rounded-md bg-white w-full h-[3rem];
   composes: shadowXSmall from '../../styles/shadows.module.css';
 }
 

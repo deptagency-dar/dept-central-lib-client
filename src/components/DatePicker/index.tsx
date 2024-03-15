@@ -651,7 +651,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     return (
       <DatePickerContext.Provider value={{ state, dispatch }}>
-        <div className="flex flex-col gap-2 items-start w-[24.5rem] h-[4.125rem]">
+        <div className="flex flex-col gap-2 items-start w-[24.5rem]">
           {label && (
             <label
               htmlFor="datepicker"

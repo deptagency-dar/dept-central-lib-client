@@ -33,11 +33,11 @@
 }
 
 .smallBold {
-  @apply font-semibold text-sm leading-4 tracking-tight;
+  @apply font-semibold text-sm leading-[1.125rem] tracking-[0.00875rem];
 }
 
 .small {
-  @apply font-normal text-sm leading-4 tracking-tight;
+  @apply font-normal text-sm leading-[1.125rem] tracking-[0.00875rem];
 }
 
 .label {

@@ -114,7 +114,7 @@ export const TextField = forwardRef<
 
     return (
       <div
-        className={`flex flex-col items-start gap-2 w-[24.5rem] ${!isMultiLine ? 'h-[4.125rem]' : ''}`}
+        className={`flex flex-col items-start gap-2 w-[24.5rem]`}
       >
         {label && (
           <label

@@ -91,7 +91,7 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div
-      className="relative flex flex-col gap-2 items-start w-[24.5rem] h-[4.125rem]"
+      className="relative flex flex-col gap-2 items-start w-[24.5rem]"
       style={createSelectStyles(color, borderColor, errorColor)}
     >
       {label && (
