@@ -8,11 +8,16 @@
 }
 
 .datepickerInput {
-  @apply min-w-80 h-[3rem] px-4 py-3;
+  @apply min-w-[18rem] h-[3rem] px-4 py-3;
+}
+
+.datePickerModal {
+  @apply absolute z-10 mt-1 flex flex-col bg-white border shadow-lg rounded-xl items-center overflow-y-scroll lg:flex-row;
+  composes: smallBold from '../../styles/typography.module.css';
 }
 
 .day {
-  @apply w-10 h-10 flex justify-center items-center mx-px rounded-full;
+  @apply w-8 h-8 flex justify-center items-center mx-px rounded-full;
 }
 
 .selected {
@@ -35,7 +40,8 @@
   @apply bg-[--datepicker-disabled-color] border border-gray-300;
 }
 
-.datepickerInput:disabled, .datepickerInput:disabled ~ * {
+.datepickerInput:disabled,
+.datepickerInput:disabled ~ * {
   @apply cursor-not-allowed opacity-50;
 }
 
@@ -47,7 +53,7 @@
   @apply border-2 border-[--datepicker-error-color];
 }
 
-.errorMessage  {
+.errorMessage {
   @apply text-[--datepicker-error-color];
   composes: small from '../../styles/typography.module.css';
 }

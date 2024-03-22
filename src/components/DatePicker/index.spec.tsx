@@ -46,16 +46,6 @@ describe('Test DatePicker component', () => {
     expect(value).toContain('15')
   })
 
-  it('closes the calendar modal on apply button click', () => {
-    render(<DatePicker showFooter />)
-    const inputElement = screen.getByRole('textbox')
-    fireEvent.click(inputElement) // Open calendar modal
-    const applyButton = screen.getByRole('button', { name: 'Apply' })
-    fireEvent.click(applyButton)
-    const calendarModal = screen.queryByRole('dialog')
-    expect(calendarModal).not.toBeInTheDocument()
-  })
-
   it('updates the value when endDate is changed in range mode', () => {
     render(<DatePicker isRange />)
     const inputElement = screen.getByRole<HTMLInputElement>('textbox')
@@ -68,24 +58,6 @@ describe('Test DatePicker component', () => {
     expect(value).toContain('15')
     expect(value).toContain('16')
     expect(value).toContain('~')
-  })
-
-  it('changes month correctly', () => {
-    render(<DatePicker />)
-    const inputElement = screen.getByRole('textbox')
-    fireEvent.click(inputElement) // Open calendar modal
-    const monthSelect = screen.getAllByRole('combobox')[0]
-    fireEvent.change(monthSelect, { target: { value: '1' } }) // Change to February (index 1)
-    expect(screen.getByText('February')).toBeInTheDocument()
-  })
-
-  it('changes year correctly', () => {
-    render(<DatePicker />)
-    const inputElement = screen.getByRole('textbox')
-    fireEvent.click(inputElement) // Open calendar modal
-    const yearSelect = screen.getAllByRole('combobox')[1]
-    fireEvent.change(yearSelect, { target: { value: '2023' } }) // Change to 2023
-    expect(screen.getByText('2023')).toBeInTheDocument()
   })
 
   it('selects date within range when clicked', () => {

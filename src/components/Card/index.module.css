@@ -1,6 +1,6 @@
 /* card.module.css */
 .card {
-  @apply flex flex-col items-start max-w-fit bg-white border border-gray-200 rounded-2xl;
+  @apply flex flex-col items-start w-full min-w-fit bg-white border border-gray-200 rounded-2xl;
 }
 
 .header {

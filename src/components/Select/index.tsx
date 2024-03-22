@@ -91,7 +91,7 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div
-      className="relative flex flex-col gap-2 items-start w-[24.5rem]"
+      className="relative flex flex-col gap-2 items-start w-full"
       style={createSelectStyles(color, borderColor, errorColor)}
     >
       {label && (
@@ -119,7 +119,7 @@ export const Select: FC<SelectProps> = ({
           className={classNames(
             disabled ? 'cursor-not-allowed opacity-50' : '',
             errorMessage ? 'border-2 border-[--select-error-color]' : '',
-            'relative w-full min-w-[18rem] h-[3rem] bg-white border rounded-md shadow-sm py-3 px-4 text-left cursor-default focus:border-[--select-scheme] focus:border-2',
+            'relative w-full h-[3rem] bg-white border rounded-md shadow-sm py-3 px-4 text-left cursor-default focus:border-[--select-scheme] focus:border-2',
             typography.base,
           )}
           onClick={() => setOpen(!open)}

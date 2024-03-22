@@ -113,9 +113,7 @@ export const TextField = forwardRef<
     } ${disabled ? styles.disabled : ''} ${readOnly ? styles.readOnly : ''} ${isMultiLine ? 'min-h-[3rem]' : 'max-h-[3rem]'}`.trim()
 
     return (
-      <div
-        className={`flex flex-col items-start gap-2 w-[24.5rem]`}
-      >
+      <div className="flex flex-col items-start gap-2 w-full">
         {label && (
           <label
             className={classNames(
