@@ -50,9 +50,13 @@ export default {
         type: { summary: 'string' },
       },
     },
-    config: {
-      control: 'object',
+    i18n: {
+      control: 'text',
       description: 'Internationalization config',
+      table: {
+        defaultValue: { summary: 'en' },
+        type: { summary: 'string' },
+      },
     },
     isRange: {
       control: 'boolean',
@@ -60,7 +64,8 @@ export default {
     },
     isRequired: {
       control: 'boolean',
-      description: 'Add asterisk after label to indicates the textfield is required',
+      description:
+        'Add asterisk after label to indicates the textfield is required',
       table: {
         defaultValue: { summary: false },
         type: { summary: 'boolean' },
@@ -148,24 +153,10 @@ export const Disabled: Story = {
   },
 }
 
-export const WithFooter: Story = {
-  args: {
-    ...Default,
-    showFooter: true,
-  },
-}
-
 export const WithInternationalization: Story = {
   args: {
     ...Default,
-    showFooter: true,
     isRange: true,
-    config: {
-      language: 'es',
-      footer: {
-        cancel: 'Cancelar',
-        apply: 'Aplicar',
-      },
-    },
+    i18n: 'es',
   },
 }

@@ -34,7 +34,6 @@ Aquí está la tabla de propiedades actualizada para el componente `DatePicker`:
 | config      | DatePickerConfig                                                        | Additional configurations for the date picker.            | -             |
 | maxDate     | Date                                                                    | Maximum allowed date for selection in the date picker.    | -             |
 | minDate     | Date                                                                    | Minimum allowed date for selection in the date picker.    | -             |
-| showFooter  | boolean                                                                 | Indicates whether to display a footer in the date picker. | false         |
 | placeholder | string                                                                  | Placeholder text for the date picker input.               | -             |
 | onChange    | (value: { startDate: Date; endDate?: Date }) => void                    | Function triggered on date selection.                     | -             |
 | onBlur      | (value?: { startDate?: Date; endDate?: Date }) => void                  | Function triggered when the date picker loses focus.      | -             |
@@ -53,9 +52,6 @@ The appearance of the date picker is determined by its color scheme, shade, and 
 
 // Range date picker
 <DatePicker startDate={new Date()} endDate={new Date('2024-02-28')} isRange />
-
-// Date picker with footer
-<DatePicker startDate={new Date()} showFooter />
 ```
 
 ### Customization

@@ -110,10 +110,10 @@ export const TextField = forwardRef<
     )
     const textFieldClasses = `${styles.textField} ${
       errorMessage ? styles.error : ''
-    } ${disabled ? styles.disabled : ''} ${readOnly ? styles.readOnly : ''}`.trim()
+    } ${disabled ? styles.disabled : ''} ${readOnly ? styles.readOnly : ''} ${isMultiLine ? 'min-h-[3rem]' : 'max-h-[3rem]'}`.trim()
 
     return (
-      <>
+      <div className="flex flex-col items-start gap-2 w-full">
         {label && (
           <label
             className={classNames(
@@ -127,7 +127,9 @@ export const TextField = forwardRef<
           </label>
         )}
         <div className={textFieldClasses} style={textFieldStyles}>
-          {internalLabel && <label>{internalLabel}</label>}
+          {internalLabel && !isMultiLine && readOnly && (
+            <label className="pl-4">{internalLabel}</label>
+          )}
           {isMultiLine ? (
             <textarea
               disabled={disabled}
@@ -150,11 +152,11 @@ export const TextField = forwardRef<
           )}
         </div>
         {errorMessage && (
-          <small className={styles.errorMessage } style={textFieldStyles}>
+          <small className={styles.errorMessage} style={textFieldStyles}>
             {errorMessage}
           </small>
         )}
-      </>
+      </div>
     )
   },
 )

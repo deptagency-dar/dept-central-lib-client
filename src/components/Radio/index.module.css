@@ -1,5 +1,5 @@
 .radio {
-  @apply flex items-stretch cursor-pointer select-none;
+  @apply flex items-center gap-3 cursor-pointer select-none;
 }
 
 .radio input {

@@ -83,7 +83,7 @@ export const Avatar: React.FC<TProps> = ({
       <div className={`${className} flex items-center`}>
         {avatar()}
         <div className="px-4 w-[80%]">
-          <div className="font-bold text-xl leading-6 text-grayscale-700 text-ellipsis overflow-hidden">
+          <div className="font-bold text-base text-grayscale-700 text-ellipsis overflow-hidden">
             {user.name}
           </div>
           {logoutLink()}
@@ -98,7 +98,7 @@ export const Avatar: React.FC<TProps> = ({
         <div className="flex flex-col items-center">{avatar()}</div>
       )}
       <div className="px-2 pt-4 w-full">
-        <div className="font-bold text-xl leading-6 text-grayscale-700 text-ellipsis overflow-hidden">
+        <div className="font-bold text-lg text-grayscale-700 text-ellipsis overflow-hidden">
           {user.name}
         </div>
         {logoutLink()}

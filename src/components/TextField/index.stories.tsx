@@ -89,6 +89,14 @@ export default {
         type: { summary: 'string' },
       },
     },
+    rows: {
+      control: 'number',
+      description: 'Rows of the text field.',
+      if: { arg: 'isMultiLine', truthy: true },
+      table: {
+        type: { summary: 'number' },
+      },
+    },
     errorMessage: {
       control: 'text',
       description: 'Error message to display below the text field.',

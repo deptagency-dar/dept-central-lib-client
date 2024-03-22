@@ -3,12 +3,11 @@ import {
   ForwardedRef,
   InputHTMLAttributes,
   CSSProperties,
-  ChangeEventHandler,
   useEffect,
   useRef,
   useReducer,
+  useState,
 } from 'react'
-import { CalendarDaysIcon } from '@heroicons/react/16/solid'
 import { ColorShade, ColorPalette } from '../../types'
 import {
   classNames,
@@ -45,10 +44,109 @@ const createDatePickerStyles = (
   '--datepicker-error-color': errorColor,
 })
 
+interface Option {
+  value: string
+  label: string
+}
+
+interface DropdownProps {
+  options: Option[]
+  onChange: (selectedValue: string) => void
+  selectedValue: string
+}
+
+function getSelectedIndex(
+  options: Option[],
+  selectedValue: string,
+): number | null {
+  const index = options.findIndex((option) => option.value === selectedValue)
+  return index !== -1 ? index : null
+}
+
+const Dropdown = ({ options, onChange, selectedValue }: DropdownProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedPosition, setSelectedPosition] = useState<number | null>(
+    getSelectedIndex(options, selectedValue),
+  )
+
+  const ref = useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    setSelectedPosition(getSelectedIndex(options, selectedValue))
+  }, [options, selectedValue])
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutsideClick)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (isOpen && selectedPosition !== null && ref.current) {
+      const selectedItem = ref.current.children[
+        selectedPosition
+      ] as HTMLUListElement
+      if (selectedItem) {
+        const scrollOffset = selectedItem.offsetTop - ref.current.offsetTop
+        ref.current.scrollTop = scrollOffset
+      }
+    }
+  }, [isOpen, selectedPosition])
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen)
+    setSelectedPosition(getSelectedIndex(options, selectedValue))
+  }
+
+  const handleSelect = (value: string, index: number) => {
+    onChange(value)
+    setIsOpen(false)
+    setSelectedPosition(index)
+  }
+
+  return (
+    <div className="relative">
+      <button
+        className="bg-white rounded-md px-2 py-1 text-gray-800 hover:bg-gray-300 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-600 dark:focus:bg-gray-600"
+        onClick={handleToggle}
+      >
+        {options.find((option) => option.value === selectedValue)?.label ||
+          'Select an option'}
+      </button>
+      {isOpen && (
+        <ul
+          ref={ref}
+          className="absolute max-h-40 min-w-fit overflow-y-auto z-10 mt-1 bg-white border border-gray-300 rounded shadow-lg"
+        >
+          {options.map((option, index) => (
+            <li
+              key={option.value}
+              className={`px-4 py-2 cursor-pointer ${
+                selectedValue === option.value ? 'bg-gray-200' : ''
+              }`}
+              onClick={() => handleSelect(option.value, index)}
+            >
+              {option.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 const DayOfWeek = ({ day }: { day: string }) => (
-  <span className="m-px w-10 block text-center text-sm text-gray-500">
-    {day}
-  </span>
+  <span className="m-px w-8 block text-center text-gray-500">{day}</span>
 )
 
 const MonthSelector = ({
@@ -58,20 +156,18 @@ const MonthSelector = ({
 }: {
   selectedMonth: number
   months: string[]
-  onChange: ChangeEventHandler<HTMLSelectElement>
+  onChange: (value: string) => void
 }) => {
+  const monthOptions: Option[] = months.map((month, index) => ({
+    label: month,
+    value: index.toString(),
+  }))
   return (
-    <select
-      className="mr-2 px-2 py-1 border border-gray-300 rounded-md"
-      value={selectedMonth}
+    <Dropdown
+      options={monthOptions}
       onChange={onChange}
-    >
-      {months.map((month, index) => (
-        <option key={index} value={index}>
-          {month}
-        </option>
-      ))}
-    </select>
+      selectedValue={selectedMonth.toString()}
+    />
   )
 }
 
@@ -80,20 +176,23 @@ const YearSelector = ({
   onChange,
 }: {
   selectedYear: number
-  onChange: ChangeEventHandler<HTMLSelectElement>
+  onChange: (value: string) => void
 }) => {
+  const currentYear = new Date().getFullYear()
+  const minYear = 1900
+  const maxYear = currentYear + 5
+
+  const yearOptions: Option[] = []
+  for (let year = minYear; year <= maxYear; year++) {
+    yearOptions.push({ label: year?.toString(), value: year?.toString() })
+  }
+
   return (
-    <select
-      className="px-2 py-1 border border-gray-300 rounded-md"
-      value={selectedYear}
+    <Dropdown
+      options={yearOptions}
       onChange={onChange}
-    >
-      {Array.from({ length: 10 }, (_, index) => (
-        <option key={index} value={selectedYear - 5 + index}>
-          {selectedYear - 5 + index}
-        </option>
-      ))}
-    </select>
+      selectedValue={selectedYear.toString()}
+    />
   )
 }
 
@@ -156,36 +255,23 @@ const DatePickerInput = ({
         onClick={handleButtonClick}
         disabled={disabled}
       >
-        <CalendarDaysIcon className="h-6 w-6 text-gray-400" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z"
+            stroke="#101828"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
     </>
-  )
-}
-
-const FooterActions = ({
-  labels: { cancel, apply },
-  onApply,
-  onCancel,
-}: {
-  labels: FooterLabels
-  onApply: () => void
-  onCancel: () => void
-}) => {
-  return (
-    <div className="flex justify-end p-3 bg-gray-100 dark:bg-slate-800 border-t dark:border-gray-700">
-      <button
-        className="px-4 py-2 border rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
-        onClick={onCancel}
-      >
-        {cancel}
-      </button>
-      <button
-        className="ml-2 px-4 py-2 bg-[--datepicker-scheme] text-white rounded-md hover:opacity-80"
-        onClick={onApply}
-      >
-        {apply}
-      </button>
-    </div>
   )
 }
 
@@ -356,7 +442,7 @@ const Calendar = ({
           }
           disabled={isDisabled}
         >
-          <span className="text-sm">{day}</span>
+          <span>{day}</span>
         </button>
       )
     })
@@ -365,15 +451,16 @@ const Calendar = ({
   return (
     <div className="p-3">
       <div className="flex justify-center mb-3">
-        <div className="col-span-3 flex justify-center items-center gap-x-1">
+        <div className="relative col-span-3 flex justify-center items-center gap-x-1">
           <MonthSelector
             selectedMonth={isSecondCalendar ? state.secondMonth : state.month}
             months={getMonthsByLocale(language)}
-            onChange={(e) => onMonthChange(parseInt(e.target.value))}
+            onChange={(value) => onMonthChange(parseInt(value))}
           />
+          <span className="text-gray-800 dark:text-gray-200">/</span>
           <YearSelector
             selectedYear={isSecondCalendar ? state.secondYear : state.year}
-            onChange={(e) => onYearChange(parseInt(e.target.value))}
+            onChange={(value) => onYearChange(parseInt(value))}
           />
         </div>
       </div>
@@ -397,21 +484,10 @@ interface DatePickerOwnProps {
   colorShade?: keyof ColorShade
   maxDate?: Date
   minDate?: Date
-  showFooter?: boolean
-  config?: DatePickerConfig
+  i18n?: string
   errorMessage?: string
   onChange?: (value: { startDate: Date; endDate?: Date }) => void
   onBlur?: (value?: { startDate?: Date; endDate?: Date }) => void
-}
-
-type DatePickerConfig = {
-  language: string
-  footer: FooterLabels
-}
-
-type FooterLabels = {
-  cancel: string
-  apply: string
 }
 
 type DatePickerRootAttributes = Pick<
@@ -426,19 +502,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     {
       colorScheme = 'primary',
       colorShade = 600,
-      config = {
-        language: 'en',
-        footer: {
-          cancel: 'Cancel',
-          apply: 'Apply',
-        },
-      },
+      i18n = 'en',
       isRange = false,
       startDate: initialStartDate,
       endDate: initialEndDate,
       disabled,
       label,
-      showFooter,
       minDate,
       maxDate,
       placeholder,
@@ -449,7 +518,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
-    const { language, footer: footerLabels } = config
     const [state, dispatch] = useReducer(datePickerReducer, {
       startDate: initialStartDate ?? null,
       endDate: initialEndDate ?? null,
@@ -501,18 +569,18 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }, [state.modalOpen])
 
     useEffect(() => {
-      if(!state.modalOpen) return
-        if (isRange && state.startDate && state.endDate) {
-          const daysInRange = []
-          const currentDate = new Date(state.startDate)
-          while (currentDate <= state.endDate) {
-            daysInRange.push(new Date(currentDate))
-            currentDate.setDate(currentDate.getDate() + 1)
-          }
-          dispatch({ type: 'SET_RANGE_DAYS', payload: daysInRange })
-        } else {
-          dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
+      if (!state.modalOpen) return
+      if (isRange && state.startDate && state.endDate) {
+        const daysInRange = []
+        const currentDate = new Date(state.startDate)
+        while (currentDate <= state.endDate) {
+          daysInRange.push(new Date(currentDate))
+          currentDate.setDate(currentDate.getDate() + 1)
         }
+        dispatch({ type: 'SET_RANGE_DAYS', payload: daysInRange })
+      } else {
+        dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
+      }
     }, [isRange, state.endDate, state.modalOpen, state.startDate])
 
     useEffect(() => {
@@ -520,14 +588,14 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         isFirstRender.current = false
         return
       }
-        const startDate = initialStartDate ?? null
-        const endDate = initialEndDate ?? null
-        if (onChange) {
-          onChange({ startDate: initialStartDate!, endDate: initialEndDate })
-        }
-        dispatch({ type: 'SET_START_DATE', payload: startDate })
-        dispatch({ type: 'SET_END_DATE', payload: endDate })
-    }, [initialStartDate, initialEndDate, isRange, language, onChange, onBlur])
+      const startDate = initialStartDate ?? null
+      const endDate = initialEndDate ?? null
+      if (onChange) {
+        onChange({ startDate: initialStartDate!, endDate: initialEndDate })
+      }
+      dispatch({ type: 'SET_START_DATE', payload: startDate })
+      dispatch({ type: 'SET_END_DATE', payload: endDate })
+    }, [initialStartDate, initialEndDate, isRange, i18n, onChange, onBlur])
 
     const handleToggleModal = () => {
       dispatch({ type: 'TOGGLE_MODAL' })
@@ -585,13 +653,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
     }
 
-    const handleApply = () => {
-      if (onChange) {
-        onChange({ startDate: state.startDate!, ...state.endDate })
-      }
-      handleToggleModal()
-    }
-
     const resetCalendarStyles = () => {
       document
         .querySelectorAll<HTMLButtonElement>(`.${styles.day}:enabled`)
@@ -600,19 +661,17 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     const handleDateSelection = (day: number, isSecondCalendar?: boolean) => {
       const selectedDate = new Date(
-        state.year,
+        isSecondCalendar ? state.secondYear : state.year,
         isSecondCalendar ? state.secondMonth : state.month,
         day,
       )
 
       if (!isRange) {
         dispatch({ type: 'SET_START_DATE', payload: selectedDate })
-        if (!showFooter) {
-          if (onChange) {
-            onChange({ startDate: selectedDate })
-          }
-          handleToggleModal()
+        if (onChange) {
+          onChange({ startDate: selectedDate })
         }
+        handleToggleModal()
       } else if (!state.startDate || state.endDate) {
         dispatch({ type: 'SET_START_DATE', payload: selectedDate })
         dispatch({ type: 'SET_END_DATE', payload: null })
@@ -621,64 +680,64 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         dispatch({ type: 'SET_START_DATE', payload: selectedDate })
       } else {
         dispatch({ type: 'SET_END_DATE', payload: selectedDate })
-        if (!showFooter) {
-          if (onChange) {
-            onChange({ startDate: state.startDate, endDate: selectedDate })
-          }
-
-          handleToggleModal()
+        if (onChange) {
+          onChange({ startDate: state.startDate, endDate: selectedDate })
         }
+
+        handleToggleModal()
       }
     }
 
     const getDefaultPlaceholder = (): string => {
-      const displayFormat = getDateFormatByLocale(language)
+      const displayFormat = getDateFormatByLocale(i18n)
       return isRange ? `${displayFormat} - ${displayFormat}` : displayFormat
     }
 
     return (
       <DatePickerContext.Provider value={{ state, dispatch }}>
-        {label && (
-          <label
-            htmlFor="datepicker"
-            className={classNames(
-              isRequired
-                ? 'after:content-["*"] after:ml-0.5 after:text-red-500'
-                : '',
-              styles.label,
-            )}
-          >
-            {label}
-          </label>
-        )}
-        <div
-          className={classNames(
-            errorMessage ? styles.error : '',
-            'relative',
-            styles.datepicker,
-          )}
-          style={datePickerStyles}
-          id="datepicker"
-          ref={ref}
-        >
-          <DatePickerInput
-            language={language}
-            isRange={isRange}
-            placeholder={placeholder ?? getDefaultPlaceholder()}
-            onClick={handleToggleModal}
-            onBlur={onBlur}
-            className={datePickerInputClasses}
-            disabled={disabled}
-          />
-          {state.modalOpen && (
-            <div
-              className="absolute z-10 mt-1 flex flex-col bg-white border shadow-lg rounded-xl overflow-hidden"
-              ref={datePickerRef}
-              role="dialog"
+        <div className="flex flex-col gap-2 items-start w-full">
+          {label && (
+            <label
+              htmlFor="datepicker"
+              className={classNames(
+                isRequired
+                  ? 'after:content-["*"] after:ml-0.5 after:text-red-500'
+                  : '',
+                styles.label,
+              )}
             >
-              <div className="flex flex-row">
+              {label}
+            </label>
+          )}
+          <div
+            className={classNames(
+              errorMessage ? styles.error : '',
+              'relative',
+              styles.datepicker,
+            )}
+            style={datePickerStyles}
+            id="datepicker"
+            ref={ref}
+          >
+            <DatePickerInput
+              language={i18n}
+              isRange={isRange}
+              placeholder={placeholder ?? getDefaultPlaceholder()}
+              onClick={handleToggleModal}
+              onBlur={(e) => {
+                !state.modalOpen && onBlur && onBlur(e)
+              }}
+              className={datePickerInputClasses}
+              disabled={disabled}
+            />
+            {state.modalOpen && (
+              <div
+                className={styles.datePickerModal}
+                ref={datePickerRef}
+                role="dialog"
+              >
                 <Calendar
-                  language={language}
+                  language={i18n}
                   isRage={isRange}
                   minDate={minDate}
                   maxDate={maxDate}
@@ -688,7 +747,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 />
                 {isRange && (
                   <Calendar
-                    language={language}
+                    language={i18n}
                     isRage={isRange}
                     isSecondCalendar={true}
                     minDate={minDate}
@@ -699,15 +758,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   />
                 )}
               </div>
-              {showFooter && (
-                <FooterActions
-                  labels={footerLabels}
-                  onApply={handleApply}
-                  onCancel={handleToggleModal}
-                />
-              )}
-            </div>
-          )}
+            )}
+          </div>
           {errorMessage && (
             <small className={styles.errorMessage} style={datePickerStyles}>
               {errorMessage}

@@ -1,6 +1,6 @@
 /* card.module.css */
 .card {
-  @apply flex flex-col items-start max-w-fit bg-white border border-gray-200 rounded-2xl;
+  @apply flex flex-col items-start w-full min-w-fit bg-white border border-gray-200 rounded-2xl;
 }
 
 .header {
@@ -9,10 +9,9 @@
 }
 
 .body {
-  @apply flex flex-col content-center items-start gap-2 self-stretch p-8;
+  @apply flex flex-col justify-center items-start gap-8 self-stretch p-8;
 }
 
 .footer {
-  @apply flex flex-col items-start self-stretch p-2;
-  composes: small from '../../styles/typography.module.css';
+  @apply flex flex-col items-start self-stretch pt-2;
 }
