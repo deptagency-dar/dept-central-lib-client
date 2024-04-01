@@ -43,7 +43,3 @@
 .label {
   @apply font-semibold text-base leading-5 uppercase tracking-wide;
 }
-
-.link {
-  @apply font-normal text-base leading-5 underline;
-}
