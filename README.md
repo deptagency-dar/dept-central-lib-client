@@ -1,10 +1,14 @@
 # DEPT Central Lib Client
 
-Repo owner: @dario.gonzalez
+Repo owner: @juampy.araneta
 
 ## Introduction
 
 This repository contains a React design system with TypeScript support that utilizes Webpack for compilation. The design system includes ui components, as well as styles for shadows, color palettes, typography, etc.
+
+## Components
+
+[Storybook site](https://deptagency-dar.github.io/dept-central-lib-client/?path=/docs/theme-colors--docs)
 
 ## Documentation
 
@@ -52,19 +56,6 @@ To use this design system in your React project, follow these steps:
 | fix(pencil): stop graphite breaking when too much pressure applied	| Patch Fix Release |
 | feat(pencil): add 'graphiteWidth' option | Minor Feature Release |
 | perf(pencil): remove graphiteWidth option <br/><br/> BREAKING CHANGE: The graphiteWidth option has been removed. <br/> The default graphite width of 10mm is always used for performance reasons.	| Major Breaking Release <br/><br/> (Note that the BREAKING CHANGE:  token must be in the footer of the commit) |
-
-## Components
-
-- [Avatar](src/components/Avatar/README.md)
-- [Button](src/components/Button/README.md)
-- [Card](src/components/Card/README.md)
-- [Checkbox](src/components/Checkbox/README.md)
-- [DatePicker](src/components/DatePicker/README.md)
-- [Radio](src/components/Radio/README.md)
-- [SearchInput](src/components/SearchInput/README.md)
-- [Select](src/components/Select/README.md)
-- [Switch](src/components/Switch/README.md)
-- [TextField](src/components/TextField/README.md)
 
 ## Color Palette
 
