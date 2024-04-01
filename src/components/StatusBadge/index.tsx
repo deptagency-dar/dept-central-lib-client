@@ -11,7 +11,7 @@ interface StatusBadgeOwnProps {
 
 type StatusBadgeProps = StatusBadgePropsRootAttributes & StatusBadgeOwnProps
 
-const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
+export const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
   ({ className = '', type, ...rest }, ref) => {
     return (
       <div

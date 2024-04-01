@@ -1,7 +1,7 @@
 // TextField.stories.tsx
 import { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
-import StatusBadge from '.'
+import { StatusBadge } from '.'
 
 export default {
   title: 'Components/StatusBadge',
