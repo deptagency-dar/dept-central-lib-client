@@ -1,0 +1,35 @@
+.pending {
+  @apply bg-warning-100;
+}
+
+.dot-pending {
+  @apply bg-warning-500;
+}
+
+.text-pending {
+  @apply text-warning-700;
+}
+
+.approved {
+  @apply bg-success-100;
+}
+
+.dot-approved {
+  @apply bg-success-500;
+}
+
+.text-approved {
+  @apply text-success-700;
+}
+
+.denied {
+  @apply bg-error-100;
+}
+
+.dot-denied {
+  @apply bg-error-500;
+}
+
+.text-denied {
+  @apply text-error-700;
+}

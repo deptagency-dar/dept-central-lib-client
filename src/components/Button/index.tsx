@@ -1,7 +1,7 @@
 // Button.tsx
 
 import { ButtonHTMLAttributes, ForwardedRef, forwardRef } from 'react'
-import { ColorShade, ColorPalette } from '../../types'
+import { ColorPalette, ColorShade } from '../../types'
 import { getColor, getContrastColor, getDarkenColor } from '../../utils'
 import styles from './index.module.css'
 
@@ -9,6 +9,7 @@ interface ButtonOwnProps {
   colorScheme?: keyof ColorPalette
   colorShade?: keyof ColorShade
   variant?: ButtonVariant
+  className?: string
 }
 
 type ButtonVariant = 'solid' | 'outline' | 'link'
@@ -49,6 +50,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type = 'button',
       disabled = false,
       children,
+      className = '',
       ...rest
     }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement>,
@@ -66,7 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        className={`${styles[variant]} ${disabled ? styles.disabled : ''}`}
+        className={`${styles[variant]} ${disabled ? styles.disabled : ''} ${className}`}
         disabled={disabled}
         ref={ref}
         style={buttonStyles}
