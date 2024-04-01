@@ -45,8 +45,14 @@ To use this design system in your React project, follow these steps:
 - We follow Conventional Commits syntax, and use `commitlint` to enforce its appliance.
   - It's recommended to install any `commitlint` extension in your IDE/editor.
 - We will spell check our commits so that they look good in our change log.
-- We will start our commits with a present tense verb.
-    - (e.g): feature(repo): Adds Users module.
+- Depending on the verb in the commit a new release will be created and the package will publish it
+
+| Commit message | Release type |
+| ------- | --- |
+| fix(pencil): stop graphite breaking when too much pressure applied	| Patch Fix Release |
+| feat(pencil): add 'graphiteWidth' option | Minor Feature Release |
+| perf(pencil): remove graphiteWidth option <br/><br/> BREAKING CHANGE: The graphiteWidth option has been removed. <br/> The default graphite width of 10mm is always used for performance reasons.	| Major Breaking Release <br/><br/> (Note that the BREAKING CHANGE:  token must be in the footer of the commit) |
+
 ## Components
 
 - [Avatar](src/components/Avatar/README.md)
