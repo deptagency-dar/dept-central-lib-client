@@ -1,9 +1,9 @@
 // Select .stories.tsx
-import { StoryObj, Meta } from '@storybook/react'
-import { Select } from '.'
+import { StoryObj, Meta } from '@storybook/react';
+import { Select } from '.';
 
 export default {
-  title: 'Components/Select ',
+  title: 'Components/Select',
   component: Select,
   parameters: {
     docs: {
@@ -18,7 +18,7 @@ export default {
   argTypes: {
     disabled: {
       control: 'boolean',
-      description: 'If `true`, the Select  will be disabled.',
+      description: 'If `true`, the Select will be disabled.',
       if: { arg: 'busy', truthy: false },
       table: {
         defaultValue: { summary: false },
@@ -34,14 +34,14 @@ export default {
     },
     label: {
       control: 'text',
-      description: 'Label for the Select  .',
+      description: 'Label for the Select.',
       table: {
         type: { summary: 'string' },
       },
     },
     placeholder: {
       control: 'text',
-      description: 'Placeholder for the Select  .',
+      description: 'Placeholder for the Select.',
       table: {
         type: { summary: 'string' },
       },
@@ -55,13 +55,20 @@ export default {
       },
     },
     onChange: {
-      description: 'Event triggered when the Select  value changes.',
+      description: 'Event triggered when the Select value changes.',
       action: 'changed',
     },
+    hint: {
+      control: 'text',
+      description: 'Hint text displayed below the Select.',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
   },
-} as Meta<typeof Select>
+} as Meta<typeof Select>;
 
-type Story = StoryObj<typeof Select>
+type Story = StoryObj<typeof Select>;
 
 export const Default: Story = {
   args: {
@@ -75,7 +82,14 @@ export const Default: Story = {
     ],
     disabled: false,
   },
-}
+  decorators: [
+    (Story) => (
+      <div style={{ width: '500px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
 
 /**
  * This is an example of a Select without a label.
@@ -95,7 +109,7 @@ export const WithoutLabel: Story = {
     ...Default.args,
     label: '',
   },
-}
+};
 
 /**
  * This is an example of a disabled Select .
@@ -119,4 +133,18 @@ export const Disabled: Story = {
     ...Default.args,
     disabled: true,
   },
-}
+};
+
+export const WithHint: Story = {
+  args: {
+    ...Default.args,
+    hint: 'This is a helpful hint for the select.',
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '500px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
