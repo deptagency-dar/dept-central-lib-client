@@ -16,14 +16,14 @@ export const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
     return (
       <div
         ref={ref}
-        className={`flex flex-row items-center pl-2 py-2 pr-3 rounded-full h-6 ${className} ${styles[type.toLowerCase()]}`}
+        className={`flex flex-row items-center pl-2 py-2 pr-3 rounded-full h-6 w-fit ${className} ${styles[type]}`}
         {...rest}
       >
         <div
-          className={`bg-red w-2 h-2 mr-2 rounded-full dot-${type} ${styles[`dot-${type.toLowerCase()}`]}`}
+          className={`bg-red w-2 h-2 mr-2 rounded-full dot-${type} ${styles[`dot-${type}`]}`}
         ></div>
-        <span className={`text-sm ${styles[`text-${type.toLowerCase()}`]}`}>
-          {type}
+        <span className={`text-sm ${styles[`text-${type}`]}`}>
+          {type.toUpperCase()}
         </span>
       </div>
     )
