@@ -25,25 +25,21 @@
 }
 
 .baseBold {
-  @apply font-semibold text-base leading-5;
+  @apply font-semibold text-base leading-[1.375rem];
 }
 
 .base {
-  @apply font-normal text-base leading-5;
+  @apply font-normal text-base leading-[1.375rem];
 }
 
 .smallBold {
-  @apply font-semibold text-sm leading-4 tracking-tight;
+  @apply font-semibold text-sm leading-[1.125rem] tracking-[0.00875rem];
 }
 
 .small {
-  @apply font-normal text-sm leading-4 tracking-tight;
+  @apply font-normal text-sm leading-[1.125rem] tracking-[0.00875rem];
 }
 
 .label {
   @apply font-semibold text-base leading-5 uppercase tracking-wide;
-}
-
-.link {
-  @apply font-normal text-base leading-5 underline;
 }

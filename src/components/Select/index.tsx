@@ -23,6 +23,7 @@ export interface SelectProps {
   errorMessage?: string
   disabled?: boolean
   isRequired?: boolean
+  hint?: string;
   onChange: (option: SelectOption) => void
   onBlur?: (option?: SelectOption) => void
 }
@@ -46,6 +47,7 @@ export const Select: FC<SelectProps> = ({
   placeholder,
   disabled,
   isRequired,
+  hint,
   onChange,
   onBlur,
 }) => {
@@ -55,11 +57,14 @@ export const Select: FC<SelectProps> = ({
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
+      const selectContent = document.querySelector('.select-content');
       if (ref.current && !ref.current.contains(event.target as Node)) {
         if (onBlur) {
           onBlur(selected)
         }
-        setOpen(false)
+        if (selectContent && !selectContent.contains(event.target as Node)) {
+          setOpen(false);
+        }
       }
     }
 
@@ -91,7 +96,7 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div
-      className="relative"
+      className="relative flex flex-col gap-2 items-start w-full"
       style={createSelectStyles(color, borderColor, errorColor)}
     >
       {label && (
@@ -102,13 +107,13 @@ export const Select: FC<SelectProps> = ({
             isRequired
               ? 'after:content-["*"] after:ml-0.5 after:text-red-500'
               : '',
-            typography.baseBold,
+            typography.smallBold,
           )}
         >
           {label}
         </label>
       )}
-      <div className="mt-1 relative">
+      <div className="relative w-full select-content">
         <button
           type="button"
           disabled={disabled}
@@ -118,21 +123,22 @@ export const Select: FC<SelectProps> = ({
           aria-labelledby="listbox-label"
           className={classNames(
             disabled ? 'cursor-not-allowed opacity-50' : '',
-            errorMessage ? 'border-b-2 border-b-[--select-error-color]' : '',
-            'relative w-full min-w-[18rem] h-[3rem] bg-white border rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:border-[--select-border-color] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[--select-scheme] focus:ring-1 sm:text-sm',
+            errorMessage ? 'border-2 border-[--select-error-color]' : '',
+            'relative w-full h-[3rem] bg-white border rounded-md shadow-sm py-3 px-4 text-left cursor-default focus:border-[--select-scheme] focus:border-2',
+            typography.base,
           )}
           onClick={() => setOpen(!open)}
         >
-          <span className="flex items-center">
-            <span className="ml-3 block truncate">
+          <span className="flex items-center mr-6">
+            <span className="block truncate">
               {selected ? selected.label : placeholder}
             </span>
           </span>
-          <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+          <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
             <Icon
               className={classNames(
                 open ? 'text-[--select-scheme]' : '',
-                'h-5 w-5 text-gray-400',
+                'h-6 w-6 text-black',
               )}
               aria-hidden="true"
             />
@@ -149,7 +155,10 @@ export const Select: FC<SelectProps> = ({
             tabIndex={-1}
             role="listbox"
             aria-labelledby="listbox-label"
-            className="max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+            className={classNames(
+              'max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto sm:text-sm',
+              typography.base,
+            )}
           >
             {options.map((option) => (
               <li
@@ -183,10 +192,11 @@ export const Select: FC<SelectProps> = ({
           </ul>
         </div>
       </div>
+      {hint && <span className="font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">{hint}</span>}
       {errorMessage && (
         <small
           className={classNames(
-            'absolute mt-1 text-[--select-error-color]',
+            'text-[--select-error-color]',
             typography.small,
           )}
         >

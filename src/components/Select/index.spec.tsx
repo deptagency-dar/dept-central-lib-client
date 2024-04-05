@@ -84,4 +84,34 @@ describe('Select', () => {
 
     expect(onChange).toHaveBeenCalledTimes(1)
   })
+
+  it('displays hint text when the hint prop is provided', () => {
+    const hintMessage = "This is a hint";
+
+    const { getByText } = render(
+      <Select
+        label="Select label"
+        placeholder="Choose..."
+        options={options}
+        onChange={() => {}}
+        hint={hintMessage}
+      />,
+    );
+
+    expect(getByText(hintMessage)).toBeInTheDocument();
+  });
+
+  it('does not display hint text when the hint prop is not provided', () => {
+    const { queryByText } = render(
+      <Select
+        label="Select label"
+        placeholder="Choose..."
+        options={options}
+        onChange={() => {}}
+      />,
+    );
+
+    const hintMessage = "This is a hint";
+    expect(queryByText(hintMessage)).not.toBeInTheDocument();
+  });
 })
