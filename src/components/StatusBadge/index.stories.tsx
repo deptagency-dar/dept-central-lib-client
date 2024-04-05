@@ -30,7 +30,7 @@ type Story = StoryObj<typeof StatusBadge>
 
 export const Default: Story = {
   args: {
-    type: 'APPROVED',
+    type: 'aprroved',
   },
 }
 
@@ -42,31 +42,31 @@ export const Approved: Story = {
   parameters: {
     docs: {
       source: {
-        code: ` <StatusBadge type="APPROVED" /> `,
+        code: ` <StatusBadge type="aprroved" /> `,
       },
     },
   },
-  render: () => <StatusBadge type="APPROVED" />,
+  render: () => <StatusBadge type="aprroved" />,
 }
 
 export const Pending: Story = {
   parameters: {
     docs: {
       source: {
-        code: ` <StatusBadge type="PENDING" /> `,
+        code: ` <StatusBadge type="pending" /> `,
       },
     },
   },
-  render: () => <StatusBadge type="PENDING" />,
+  render: () => <StatusBadge type="pending" />,
 }
 
 export const Denied: Story = {
   parameters: {
     docs: {
       source: {
-        code: ` <StatusBadge type="DENIED" /> `,
+        code: ` <StatusBadge type="denied" /> `,
       },
     },
   },
-  render: () => <StatusBadge type="DENIED" />,
+  render: () => <StatusBadge type="denied" />,
 }

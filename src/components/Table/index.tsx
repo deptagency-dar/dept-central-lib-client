@@ -1,4 +1,4 @@
-import { Fragment, HTMLAttributes, ReactElement, forwardRef } from 'react'
+import { Fragment, HTMLAttributes, forwardRef } from 'react'
 
 interface TableOwnProps {
   head: HeadProps
@@ -8,11 +8,11 @@ interface TableOwnProps {
 interface HeadProps {
   headers?: Array<string>
   className?: string
-  headersComponent?: Array<ReactElement>
+  headersComponent?: Array<JSX.Element>
 }
 
 interface BodyProps {
-  bodyComponent: Array<Array<ReactElement | string | (ReactElement & string)>>
+  bodyComponent: Array<Array<JSX.Element | string | (JSX.Element & string)>>
   className?: string
 }
 
