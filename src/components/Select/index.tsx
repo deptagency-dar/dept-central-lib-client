@@ -23,6 +23,7 @@ export interface SelectProps {
   errorMessage?: string
   disabled?: boolean
   isRequired?: boolean
+  hint?: string;
   onChange: (option: SelectOption) => void
   onBlur?: (option?: SelectOption) => void
 }
@@ -46,6 +47,7 @@ export const Select: FC<SelectProps> = ({
   placeholder,
   disabled,
   isRequired,
+  hint,
   onChange,
   onBlur,
 }) => {
@@ -55,11 +57,14 @@ export const Select: FC<SelectProps> = ({
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
+      const selectContent = document.querySelector('.select-content');
       if (ref.current && !ref.current.contains(event.target as Node)) {
         if (onBlur) {
           onBlur(selected)
         }
-        setOpen(false)
+        if (selectContent && !selectContent.contains(event.target as Node)) {
+          setOpen(false);
+        }
       }
     }
 
@@ -108,7 +113,7 @@ export const Select: FC<SelectProps> = ({
           {label}
         </label>
       )}
-      <div className="relative w-full">
+      <div className="relative w-full select-content">
         <button
           type="button"
           disabled={disabled}
@@ -124,7 +129,7 @@ export const Select: FC<SelectProps> = ({
           )}
           onClick={() => setOpen(!open)}
         >
-          <span className="flex items-center">
+          <span className="flex items-center mr-6">
             <span className="block truncate">
               {selected ? selected.label : placeholder}
             </span>
@@ -187,6 +192,7 @@ export const Select: FC<SelectProps> = ({
           </ul>
         </div>
       </div>
+      {hint && <span className="font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">{hint}</span>}
       {errorMessage && (
         <small
           className={classNames(
