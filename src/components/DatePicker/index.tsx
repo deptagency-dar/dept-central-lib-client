@@ -485,6 +485,7 @@ interface DatePickerOwnProps {
   maxDate?: Date
   minDate?: Date
   i18n?: string
+  hint?: string;
   errorMessage?: string
   onChange?: (value: { startDate: Date; endDate?: Date }) => void
   onBlur?: (value?: { startDate?: Date; endDate?: Date }) => void
@@ -513,6 +514,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       placeholder,
       isRequired,
       errorMessage,
+      hint,
       onChange,
       onBlur,
     }: DatePickerProps,
@@ -759,6 +761,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 )}
               </div>
             )}
+            {hint && <span className="pt-1 fixed font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">{hint}</span>}
           </div>
           {errorMessage && (
             <small className={styles.errorMessage} style={datePickerStyles}>

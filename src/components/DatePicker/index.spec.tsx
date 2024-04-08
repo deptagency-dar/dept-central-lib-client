@@ -90,4 +90,23 @@ describe('Test DatePicker component', () => {
     expect(selectedDate.getTime()).toBeGreaterThanOrEqual(minDate.getTime())
     expect(selectedDate.getTime()).toBeLessThanOrEqual(maxDate.getTime())
   })
+
+  it('displays hint text when the hint prop is provided', () => {
+    const hintMessage = "This is a hint for the date picker";
+    render(
+      <DatePicker
+        hint={hintMessage}
+        onChange={() => {}}
+      />
+    );
+    const hintElement = screen.getByText(hintMessage);
+    expect(hintElement).toBeInTheDocument();
+    expect(hintElement).toHaveClass('text-gray-500');
+  });
+
+  it('does not display hint text when the hint prop is not provided', () => {
+    render(<DatePicker onChange={() => {}} />);
+    const hintElements = screen.queryAllByText(/This is a hint for the date picker/i);
+    expect(hintElements).toHaveLength(0);
+  });
 })
