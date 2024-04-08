@@ -160,3 +160,17 @@ export const WithInternationalization: Story = {
     i18n: 'es',
   },
 }
+
+export const WithHint: Story = {
+  args: {
+    ...Default.args,
+    hint: 'This is a helpful hint for the select.',
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '500px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
