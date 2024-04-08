@@ -26,7 +26,7 @@ type TableProps = TablePropsRootAttributes & TableOwnProps
 export const Table = forwardRef<HTMLTableElement, TableProps>(
   ({ className = '', body, head, ...rest }, ref) => {
     return (
-      <table className={`table-fixed ${className}`} ref={ref} {...rest}>
+      <table className={`table-auto ${className}`} ref={ref} {...rest}>
         <thead>
           <tr>
             {head.headers &&
