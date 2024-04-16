@@ -17,7 +17,7 @@ export const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
     return (
       <div
         ref={ref}
-        className={`flex flex-row items-center pl-2 py-2 pr-3 rounded-full h-6 w-fit ${className} ${styles[type]}`}
+        className={`flex flex-row items-center pl-2 py-2 pr-3 rounded-full h-6 w-fit text-nowrap ${className} ${styles[type]}`}
         {...rest}
       >
         <div
