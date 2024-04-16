@@ -66,4 +66,20 @@ describe('Pagination', () => {
     const nextButton = screen.getByRole('button', { name: /Next/ });
     expect(nextButton).toBeDisabled();
   });
+
+  it('applies the className prop correctly', () => {
+    const customClass = 'my-custom-class';
+    render(
+      <Pagination
+        currentPage={1}
+        itemsPerPage={10}
+        totalItems={100}
+        onPageChange={onPageChangeMock}
+        className={customClass}
+      />
+    );
+  
+    const paginationContainer = screen.getByTestId('pagination-container');
+    expect(paginationContainer).toHaveClass(customClass);
+  });
 });
