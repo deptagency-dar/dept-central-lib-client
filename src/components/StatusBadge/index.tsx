@@ -23,7 +23,7 @@ export const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
         <div
           className={`bg-red w-2 h-2 mr-2 rounded-full dot-${type} ${styles[`dot-${type}`]}`}
         ></div>
-        <span className={`text-sm ${styles[`text-${type}`]}`}>
+        <span className={`text-sm font-semibold ${styles[`text-${type}`]}`}>
           {text || type.toUpperCase()}
         </span>
       </div>
