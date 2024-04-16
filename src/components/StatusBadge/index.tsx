@@ -7,12 +7,13 @@ type StatusBadgePropsRootAttributes = Pick<
 
 interface StatusBadgeOwnProps {
   type: 'pending' | 'denied' | 'approved'
+  text: string
 }
 
 type StatusBadgeProps = StatusBadgePropsRootAttributes & StatusBadgeOwnProps
 
 export const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
-  ({ className = '', type, ...rest }, ref) => {
+  ({ className = '', type, text = null, ...rest }, ref) => {
     return (
       <div
         ref={ref}
@@ -23,7 +24,7 @@ export const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
           className={`bg-red w-2 h-2 mr-2 rounded-full dot-${type} ${styles[`dot-${type}`]}`}
         ></div>
         <span className={`text-sm ${styles[`text-${type}`]}`}>
-          {type.toUpperCase()}
+          {text || type.toUpperCase()}
         </span>
       </div>
     )
