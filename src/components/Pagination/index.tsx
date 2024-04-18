@@ -18,7 +18,7 @@ export const Pagination: FC<PaginationProps> = ({
 }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const totalPages = Math.ceil(totalItems / itemsPerPage)
-  
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth)
@@ -79,7 +79,7 @@ export const Pagination: FC<PaginationProps> = ({
           typeof page === 'number' ? (
             <button
               key={index}
-              className={`w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-base font-semibold ${page === currentPage ? 'text-indigo-600 bg-violet-200' : 'text-gray-700 hover:text-white hover:bg-indigo-500'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
+              className={`w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-base font-semibold ${page === currentPage ? 'text-indigo-600 bg-violet-200' : 'text-gray-700 hover:bg-indigo-100'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
               onClick={() => onPageChange(page)}
               disabled={page === currentPage}
             >
