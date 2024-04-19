@@ -34,7 +34,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
                 return (
                   <th
                     key={`header-${index}`}
-                    className="px-4 py-6 border-b border-b-gray-200 text-left"
+                    className="px-4 py-6 border-b border-b-gray-200 text-left text-nowrap"
                   >
                     <span className="text-gray-500 font-normal ">{header}</span>
                   </th>
