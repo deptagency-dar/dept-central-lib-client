@@ -7,7 +7,7 @@ type StatusBadgePropsRootAttributes = Pick<
 
 interface StatusBadgeOwnProps {
   type: 'pending' | 'denied' | 'approved'
-  text: string
+  text?: string | null
 }
 
 type StatusBadgeProps = StatusBadgePropsRootAttributes & StatusBadgeOwnProps
