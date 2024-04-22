@@ -485,7 +485,7 @@ interface DatePickerOwnProps {
   maxDate?: Date
   minDate?: Date
   i18n?: string
-  hint?: string;
+  hint?: string
   errorMessage?: string
   onChange?: (value: { startDate: Date; endDate?: Date }) => void
   onBlur?: (value?: { startDate?: Date; endDate?: Date }) => void
@@ -597,7 +597,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
       dispatch({ type: 'SET_START_DATE', payload: startDate })
       dispatch({ type: 'SET_END_DATE', payload: endDate })
-    }, [initialStartDate, initialEndDate, isRange, i18n, onChange, onBlur])
+    }, [initialStartDate, initialEndDate, onChange])
 
     const handleToggleModal = () => {
       dispatch({ type: 'TOGGLE_MODAL' })
@@ -761,7 +761,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 )}
               </div>
             )}
-            {hint && <span className="pt-1 fixed font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">{hint}</span>}
+            {hint && (
+              <span className="pt-1 fixed font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">
+                {hint}
+              </span>
+            )}
           </div>
           {errorMessage && (
             <small className={styles.errorMessage} style={datePickerStyles}>

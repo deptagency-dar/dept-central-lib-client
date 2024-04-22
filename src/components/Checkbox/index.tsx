@@ -3,7 +3,6 @@ import React, {
   forwardRef,
   ForwardedRef,
   InputHTMLAttributes,
-  useState,
   ChangeEvent,
 } from 'react'
 import { colors } from '../../constants'
@@ -17,6 +16,7 @@ interface CheckboxOwnProps {
   isRequired?: boolean
   variant?: 'check' | 'toggle'
   onChange?: (isChecked: boolean) => void
+  checked: boolean
 }
 
 type CheckboxRootAttributes = Pick<
@@ -54,8 +54,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       variant = 'check',
       children,
       isRequired,
-      defaultChecked,
       onChange,
+      checked,
       ...props
     }: CheckboxProps,
     ref: ForwardedRef<HTMLInputElement>,
@@ -69,13 +69,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       disabledColor,
     )
 
-    const [isChecked, setIsChecked] = useState<boolean>(defaultChecked ?? false)
-
     const handleCheckboxChange = (
       event: ChangeEvent<HTMLInputElement>,
     ) => {
       const { checked } = event.target
-      setIsChecked(checked)
       if (onChange) {
         onChange(checked)
       }
@@ -95,7 +92,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         <input
           type="checkbox"
           ref={ref}
-          checked={isChecked}
+          checked={checked}
           onChange={handleCheckboxChange}
           {...props}
         />

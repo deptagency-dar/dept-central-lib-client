@@ -23,9 +23,10 @@ export interface SelectProps {
   errorMessage?: string
   disabled?: boolean
   isRequired?: boolean
-  hint?: string;
+  hint?: string
   onChange: (option: SelectOption) => void
   onBlur?: (option?: SelectOption) => void
+  selectedOption?: SelectOption
 }
 
 const createSelectStyles = (
@@ -50,20 +51,27 @@ export const Select: FC<SelectProps> = ({
   hint,
   onChange,
   onBlur,
+  selectedOption,
 }) => {
-  const [selected, setSelected] = useState<SelectOption>()
+  const [selected, setSelected] = useState<SelectOption | undefined>(
+    selectedOption,
+  )
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    setSelected(selectedOption)
+  }, [selectedOption])
+
+  useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      const selectContent = document.querySelector('.select-content');
+      const selectContent = document.querySelector('.select-content')
       if (ref.current && !ref.current.contains(event.target as Node)) {
         if (onBlur) {
           onBlur(selected)
         }
         if (selectContent && !selectContent.contains(event.target as Node)) {
-          setOpen(false);
+          setOpen(false)
         }
       }
     }
@@ -192,7 +200,11 @@ export const Select: FC<SelectProps> = ({
           </ul>
         </div>
       </div>
-      {hint && <span className="font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">{hint}</span>}
+      {hint && (
+        <span className="font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">
+          {hint}
+        </span>
+      )}
       {errorMessage && (
         <small
           className={classNames(
