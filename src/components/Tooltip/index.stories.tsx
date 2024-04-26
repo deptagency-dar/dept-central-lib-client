@@ -24,6 +24,9 @@ export default {
       type: { summary: 'string' },
     },
   },
+  decorators: (Story) => <div className='grid items-center min-h-48'>
+    <Story />
+  </div>
 } as Meta<typeof Tooltip>
 
 type Story = StoryObj<typeof Tooltip>
