@@ -26,9 +26,9 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         {textComponent && (
           <>
             <div
-              className={`${triangleStyle} ${transitioStyle} absolute rounded-lg left-1/2 bottom-8 min-w-40 transform -translate-x-1/2 border mt-2 border-gray-700 w-125 text-center rounded-tiny p-2 z-50 bg-gray-700`}
+              className={`${triangleStyle} ${transitioStyle} absolute rounded-lg left-1/2 bottom-8 min-w-52	transform -translate-x-1/2 border mt-2 border-gray-700 text-center rounded-tiny p-2 z-50 bg-gray-700`}
             >
-              <div className="text-nowrap">{textComponent}</div>
+              <div>{textComponent}</div>
             </div>
           </>
         )}

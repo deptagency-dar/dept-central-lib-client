@@ -16,7 +16,7 @@ interface CheckboxOwnProps {
   isRequired?: boolean
   variant?: 'check' | 'toggle'
   onChange?: (isChecked: boolean) => void
-  checked: boolean
+  checked?: boolean
 }
 
 type CheckboxRootAttributes = Pick<

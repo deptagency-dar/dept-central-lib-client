@@ -24,6 +24,9 @@ export default {
       type: { summary: 'string' },
     },
   },
+  decorators: (Story) => <div className='grid items-center min-h-48'>
+    <Story />
+  </div>
 } as Meta<typeof Tooltip>
 
 type Story = StoryObj<typeof Tooltip>
@@ -33,7 +36,7 @@ export const Default: Story = {
     children: <button>Tooltip Button</button>,
     textComponent: (
       <div className="flex flex-col">
-        <span className="text-white">Tooltip Text</span>
+        <span className="text-white">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula.</span>
       </div>
     ),
   },
