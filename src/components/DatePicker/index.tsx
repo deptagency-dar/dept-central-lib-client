@@ -117,6 +117,7 @@ const Dropdown = ({ options, onChange, selectedValue }: DropdownProps) => {
   return (
     <div className="relative">
       <button
+        type="button"
         className="bg-white rounded-md px-2 py-1 text-gray-800 hover:bg-gray-300 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-600 dark:focus:bg-gray-600"
         onClick={handleToggle}
       >
@@ -251,6 +252,7 @@ const DatePickerInput = ({
         {...rest}
       />
       <button
+        type="button"
         className="absolute inset-y-0 right-0 flex items-center px-4 bg-transparent border-transparent"
         onClick={handleButtonClick}
         disabled={disabled}
