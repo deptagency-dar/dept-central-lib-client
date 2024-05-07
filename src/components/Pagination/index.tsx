@@ -16,17 +16,21 @@ export const Pagination: FC<PaginationProps> = ({
   onPageChange,
   className = '',
 }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(0)
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   useEffect(() => {
-    const handleResize = () => {
+    if (typeof window !== 'undefined') {
       setWindowWidth(window.innerWidth)
-    }
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth)
+      }
+
+      window.addEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize)
+    }
+  }, [windowWidth])
 
   const getPageRange = () => {
     const pages = []
@@ -68,7 +72,7 @@ export const Pagination: FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
-        className="inline-flex gap-1 items-center justify-center min-sm:w-20 h-6 sm:w-28 sm:h-8 rounded-full text-sm sm:text-base font-semibold cursor-pointer text-indigo-600 hover:text-white bg-white hover:bg-indigo-500 border-violet-700 hover:border-transparent focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400 disabled:bg-white disabled:border-gray-300"
+        className="inline-flex gap-1 items-center justify-center min-sm:w-20 h-6 sm:w-28 sm:h-8 rounded-full text-sm sm:text-base font-semibold cursor-pointer text-violet-700 hover:text-white bg-white hover:bg-indigo-500 border-violet-700 hover:border-transparent focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400 disabled:bg-white disabled:border-gray-300"
       >
         <ArrowLeftIcon className="w-4 h-4" aria-hidden="true" />
         <span className="hidden sm:inline">Previous</span>
@@ -79,7 +83,7 @@ export const Pagination: FC<PaginationProps> = ({
           typeof page === 'number' ? (
             <button
               key={index}
-              className={`w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-base font-semibold ${page === currentPage ? 'text-indigo-600 bg-violet-200' : 'text-gray-700 hover:bg-indigo-100'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
+              className={`w-8 h-8 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-base font-semibold ${page === currentPage ? 'text-violet-700 bg-violet-200' : 'text-gray-700 hover:bg-indigo-100'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
               onClick={() => onPageChange(page)}
               disabled={page === currentPage}
             >
@@ -99,7 +103,7 @@ export const Pagination: FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
-        className="inline-flex items-center justify-center min-sm:w-20 h-6 sm:w-28 sm:h-8 rounded-full text-sm sm:text-base font-semibold cursor-pointer text-indigo-600 hover:text-white bg-white hover:bg-indigo-500 border-violet-700 hover:border-transparent focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400 disabled:bg-white disabled:border-gray-300"
+        className="inline-flex items-center justify-center min-sm:w-20 h-6 sm:w-28 sm:h-8 rounded-full text-sm sm:text-base font-semibold cursor-pointer text-violet-700 hover:text-white bg-white hover:bg-indigo-500 border-violet-700 hover:border-transparent focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400 disabled:bg-white disabled:border-gray-300"
       >
         <span className="hidden sm:inline">Next</span>
         <ArrowRightIcon className="w-4 h-4 ml-2" aria-hidden="true" />
