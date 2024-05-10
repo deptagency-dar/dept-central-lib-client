@@ -22,14 +22,13 @@ export const Pagination: FC<PaginationProps> = ({
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setWindowWidth(window.innerWidth)
-
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth)
-      }
-
-      window.addEventListener('resize', handleResize)
-      return () => window.removeEventListener('resize', handleResize)
     }
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [windowWidth])
 
   const getPageRange = () => {
@@ -75,7 +74,7 @@ export const Pagination: FC<PaginationProps> = ({
         className="inline-flex gap-1 items-center justify-center min-sm:w-20 h-6 sm:w-28 sm:h-8 rounded-full text-sm sm:text-base font-semibold cursor-pointer text-violet-700 hover:text-white bg-white hover:bg-indigo-500 border-violet-700 hover:border-transparent focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400 disabled:bg-white disabled:border-gray-300"
       >
         <ArrowLeftIcon className="w-4 h-4" aria-hidden="true" />
-        <span className="hidden sm:inline">Previous</span>
+        <span className="max-sm:hidden sm:inline">Previous</span>
       </button>
 
       <div className="flex gap-1 sm:gap-2 items-center">
@@ -105,7 +104,7 @@ export const Pagination: FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         className="inline-flex items-center justify-center min-sm:w-20 h-6 sm:w-28 sm:h-8 rounded-full text-sm sm:text-base font-semibold cursor-pointer text-violet-700 hover:text-white bg-white hover:bg-indigo-500 border-violet-700 hover:border-transparent focus:outline-none disabled:cursor-not-allowed disabled:text-gray-400 disabled:bg-white disabled:border-gray-300"
       >
-        <span className="hidden sm:inline">Next</span>
+        <span className="max-sm:hidden sm:inline">Next</span>
         <ArrowRightIcon className="w-4 h-4 ml-2" aria-hidden="true" />
       </button>
     </div>
