@@ -16,6 +16,10 @@
   composes: smallBold from '../../styles/typography.module.css';
 }
 
+.calendar {
+  composes: smallBold from '../../styles/typography.module.css';
+}
+
 .day {
   @apply w-8 h-8 flex justify-center items-center mx-px rounded-full;
 }
