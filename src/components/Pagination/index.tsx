@@ -67,7 +67,7 @@ export const Pagination: FC<PaginationProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-center gap-1 justify-between sm:gap-4 ${className}`}
+      className={`flex items-center gap-1 justify-between sm:gap-4 ${className}`}
       data-testid="pagination-container"
     >
       <button
