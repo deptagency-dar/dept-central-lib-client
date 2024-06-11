@@ -173,4 +173,22 @@ export const WithHint: Story = {
       </div>
     ),
   ],
-};
+}
+
+export const WidthDateValidation: Story = {
+  args: {
+    ...Default.args,
+    shouldDisableDate: (date) => {
+      const dayOfTheWeek = date.getDay() // 0 Sun, 1 Mon, 2 Tue, 3 Wed, 4 Thu, 5 Fri, 6 Sat
+      return dayOfTheWeek === 0 || dayOfTheWeek === 6
+    },
+    hint: 'Weekdays only',
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '500px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+}
