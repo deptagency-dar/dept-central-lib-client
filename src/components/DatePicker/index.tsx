@@ -313,7 +313,7 @@ const Calendar = ({
     : getCalendarDays(state.year, state.month, onSelectDate, minDate, maxDate)
 
   const handleHoverEffect = (id: string) => {
-    if (!state.modalOpen) return;
+    if (!state.modalOpen) return
 
     const buttons = document.querySelectorAll<HTMLButtonElement>(
       `.${styles.day}:enabled`,
@@ -421,47 +421,47 @@ const Calendar = ({
     const allDays = [...prevMonthDays, ...days, ...nextMonthDays]
 
     return allDays.map(({ day, date, isCurrentMonth, isDisabled, isToday }) => {
+      const startDate = state.startDate ? new Date(state.startDate) : null;
+      const endDate = state.endDate ? new Date(state.endDate) : null;
+    
       const isStartDate =
-        state.startDate &&
+        startDate instanceof Date &&
         isCurrentMonth &&
-        date.toDateString() === state.startDate.toDateString()
+        date.toDateString() === startDate.toDateString();
       const isEndDate =
-        state.endDate &&
+        endDate instanceof Date &&
         isCurrentMonth &&
-        date.toDateString() === state.endDate.toDateString()
+        date.toDateString() === endDate.toDateString();
       const isInRange =
         state.rangeDays &&
         state.rangeDays.some(
-          (rangeDate) => date.toDateString() === rangeDate.toDateString(),
-        )
-
+          (rangeDate) =>
+            rangeDate instanceof Date &&
+            date.toDateString() === rangeDate.toDateString()
+        );
+    
       return (
         <button
           key={date.toString()}
           id={date.toString()}
           type="button"
           className={`
-            ${styles.day} ${
-            !isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''
-          } ${isStartDate || isEndDate ? `${styles.selected}` : ''} ${
-            isInRange && !isStartDate && !isEndDate && isCurrentMonth
-              ? `${styles.rangeItem}`
-              : ''
-          } ${isCurrentMonth && isDisabled ? 'line-through' : ''} ${
-            isToday ? 'text-[--datepicker-scheme]' : ''
-          } ${
-            alwaysOpen ? '' : 'hover:bg-[--datepicker-hover-color]'
-          }`}
+            ${styles.day} ${!isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''} 
+            ${isStartDate || isEndDate ? `${styles.selected}` : ''} 
+            ${isInRange && !isStartDate && !isEndDate && isCurrentMonth ? `${styles.rangeItem}` : ''}
+            ${isCurrentMonth && isDisabled ? 'line-through' : ''} 
+            ${isToday ? 'text-[--datepicker-scheme]' : ''}
+            ${alwaysOpen ? '' : 'hover:bg-[--datepicker-hover-color]'}
+          `}
           onClick={() => isCurrentMonth && onSelectDate(day)}
-          onMouseEnter={() =>
-            isCurrentMonth && handleHoverEffect(date.toString())
-          }
+          onMouseEnter={() => isCurrentMonth && handleHoverEffect(date.toString())}
           disabled={isDisabled}
         >
           <span>{day}</span>
         </button>
-      )
-    })
+      );
+    });
+    
   }
 
   return (
@@ -540,14 +540,23 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
+    const startDateObj = initialStartDate ? new Date(initialStartDate) : null
+    const endDateObj = initialEndDate ? new Date(initialEndDate) : null
+
     const [state, dispatch] = useReducer(datePickerReducer, {
       startDate: initialStartDate ?? null,
       endDate: initialEndDate ?? null,
       modalOpen: alwaysOpen,
-      year: initialStartDate ? initialStartDate.getFullYear() : new Date().getFullYear(),
-      secondYear: initialEndDate ? initialEndDate.getFullYear() : new Date().getFullYear(),
-      month: initialStartDate ? initialStartDate.getMonth() : new Date().getMonth(),
-      secondMonth: initialEndDate ? initialEndDate.getMonth() : new Date().getMonth() + 1,
+      year: startDateObj
+        ? startDateObj.getFullYear()
+        : new Date().getFullYear(),
+      secondYear: endDateObj
+        ? endDateObj.getFullYear()
+        : new Date().getFullYear(),
+      month: startDateObj ? startDateObj.getMonth() : new Date().getMonth(),
+      secondMonth: endDateObj
+        ? endDateObj.getMonth()
+        : new Date().getMonth() + 1,
       rangeDays: [],
     })
 
@@ -572,7 +581,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       `${styles.datepickerInput} ${disabled ? styles.disabled : ''}`.trim()
 
     useEffect(() => {
-      if (alwaysOpen) return;
+      if (alwaysOpen) return
 
       const handleOutsideClick = (event: MouseEvent) => {
         if (
@@ -721,14 +730,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       return (
         <DatePickerContext.Provider value={{ state, dispatch }}>
           <div className="flex flex-col gap-2 items-start w-full">
-            <div
-              style={datePickerStyles}
-              id="datepicker"
-              ref={ref}
-            >
-              <div 
-                className={styles.calendar}
-              >
+            <div style={datePickerStyles} id="datepicker" ref={ref}>
+              <div className={styles.calendar}>
                 <Calendar
                   language={i18n}
                   isRage={isRange}

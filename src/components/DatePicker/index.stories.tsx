@@ -210,43 +210,12 @@ export const AlwaysOpenCalendar: Story = {
   },
 }
 
-export const AlwaysOpen: Story = {
-  parameters: {
-    docs: {
-      source: {
-        code: `<DatePicker alwaysOpen />`,
-      },
-    },
-  },
-  render: () => (
-    <DatePicker
-      alwaysOpen
-      startDate={new Date()}
-      isRange={false}
-      colorScheme="primary"
-      colorShade={600}
-      i18n="en"
-    />
-  ),
-}
-
 export const AlwaysOpenRangeDatePicker: Story = {
-  parameters: {
-    docs: {
-      source: {
-        code: `<DatePicker alwaysOpen isRange startDate={new Date('2024-02-20')} endDate={new Date('2024-02-26')} />`,
-      },
-    },
+  args: {
+    ...Default.args,
+    alwaysOpen: true,
+    startDate: new Date('2024-02-20'),
+    endDate: new Date('2024-02-26'),
+    isRange: true,
   },
-  render: () => (
-    <DatePicker
-      alwaysOpen
-      isRange
-      startDate={new Date('2024-02-20')}
-      endDate={new Date('2024-05-26')}
-      colorScheme="primary"
-      colorShade={600}
-      i18n="en"
-    />
-  ),
 }
