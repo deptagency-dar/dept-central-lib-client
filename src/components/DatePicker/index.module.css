@@ -17,6 +17,7 @@
 }
 
 .calendar {
+  @apply z-10 mt-1 flex flex-col bg-white border rounded-xl items-center overflow-y-scroll lg:flex-row pointer-events-none;
   composes: smallBold from '../../styles/typography.module.css';
 }
 

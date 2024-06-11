@@ -288,7 +288,6 @@ const Calendar = ({
   onYearChange,
   shouldDisableDate = () => false,
   alwaysOpen,
-  className
 }: {
   language: string
   onMonthChange: (value: number) => void
@@ -300,7 +299,6 @@ const Calendar = ({
   isRage?: boolean
   shouldDisableDate?: (date: Date) => boolean
   alwaysOpen?: boolean
-  className?: string
 }) => {
   const { state } = useDatePicker()
 
@@ -442,7 +440,7 @@ const Calendar = ({
           key={date.toString()}
           id={date.toString()}
           type="button"
-          className={`${className}
+          className={`
             ${styles.day} ${
             !isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''
           } ${isStartDate || isEndDate ? `${styles.selected}` : ''} ${
@@ -724,26 +722,24 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         <DatePickerContext.Provider value={{ state, dispatch }}>
           <div className="flex flex-col gap-2 items-start w-full">
             <div
-              className={classNames(
-                errorMessage ? styles.error : '',
-                'relative',
-                styles.datepicker,
-              )}
               style={datePickerStyles}
               id="datepicker"
               ref={ref}
             >
-              <Calendar
+              <div 
                 className={styles.calendar}
-                language={i18n}
-                isRage={isRange}
-                minDate={minDate}
-                maxDate={maxDate}
-                onMonthChange={handleMonthChange}
-                onSelectDate={handleDateSelection}
-                onYearChange={handleYearChange}
-                alwaysOpen={alwaysOpen}
-              />
+              >
+                <Calendar
+                  language={i18n}
+                  isRage={isRange}
+                  minDate={minDate}
+                  maxDate={maxDate}
+                  onMonthChange={handleMonthChange}
+                  onSelectDate={handleDateSelection}
+                  onYearChange={handleYearChange}
+                  alwaysOpen={alwaysOpen}
+                />
+              </div>
             </div>
             {errorMessage && (
               <small className={styles.errorMessage} style={datePickerStyles}>
