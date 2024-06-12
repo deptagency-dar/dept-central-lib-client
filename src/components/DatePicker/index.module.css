@@ -12,7 +12,7 @@
 }
 
 .datePickerModal {
-  @apply absolute z-10 mt-1 flex flex-col bg-white border shadow-lg rounded-xl items-center overflow-y-scroll lg:flex-row;
+  @apply absolute z-10 mt-1 flex flex-col bg-white border shadow-lg rounded-xl items-center lg:flex-row;
   composes: smallBold from '../../styles/typography.module.css';
 }
 
