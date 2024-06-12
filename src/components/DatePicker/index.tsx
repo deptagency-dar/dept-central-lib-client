@@ -286,6 +286,7 @@ const Calendar = ({
   onMonthChange,
   onSelectDate,
   onYearChange,
+  shouldDisableDate = () => false,
 }: {
   language: string
   onMonthChange: (value: number) => void
@@ -295,6 +296,7 @@ const Calendar = ({
   minDate?: Date
   isSecondCalendar?: boolean
   isRage?: boolean
+  shouldDisableDate?: (date: Date) => boolean
 }) => {
   const { state } = useDatePicker()
 
@@ -377,7 +379,10 @@ const Calendar = ({
       const date = new Date(year, month, day)
       const isCurrentMonth = true
       const dateTime = date.getTime()
-      const isDisabled = dateTime < minDateTime || dateTime > maxDateTime
+      const isDisabled =
+        dateTime < minDateTime ||
+        dateTime > maxDateTime ||
+        shouldDisableDate(date)
       const isToday = day === new Date().getDate() && !isSecondCalendar
       return { day, date, isCurrentMonth, isDisabled, isToday }
     })
@@ -491,6 +496,7 @@ interface DatePickerOwnProps {
   errorMessage?: string
   onChange?: (value: { startDate: Date; endDate?: Date }) => void
   onBlur?: (value?: { startDate?: Date; endDate?: Date }) => void
+  shouldDisableDate?: (date: Date) => boolean
 }
 
 type DatePickerRootAttributes = Pick<
@@ -519,6 +525,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       hint,
       onChange,
       onBlur,
+      shouldDisableDate,
     }: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
@@ -748,6 +755,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   onMonthChange={handleMonthChange}
                   onSelectDate={handleDateSelection}
                   onYearChange={handleYearChange}
+                  shouldDisableDate={shouldDisableDate}
                 />
                 {isRange && (
                   <Calendar
