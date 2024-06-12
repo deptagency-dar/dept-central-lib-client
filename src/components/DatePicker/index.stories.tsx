@@ -12,6 +12,7 @@ export default {
     disabled: false,
     isRange: false,
     showFooter: false,
+    alwaysOpen: false,
   },
   argTypes: {
     colorScheme: {
@@ -73,7 +74,7 @@ export default {
     },
     placeholder: {
       control: 'text',
-      description: 'Placeholder for the DatePicker  .',
+      description: 'Placeholder for the DatePicker.',
       table: {
         type: { summary: 'string' },
       },
@@ -93,6 +94,14 @@ export default {
     startDate: {
       control: 'date',
       description: 'Start date selected in the DatePicker.',
+    },
+    alwaysOpen: {
+      control: 'boolean',
+      description: 'Indicates whether the calendar is always open.',
+      table: {
+        defaultValue: { summary: false },
+        type: { summary: 'boolean' },
+      },
     },
   },
   decorators: [(Story) => <div className="pb-[22rem]">{Story()}</div>],
@@ -118,30 +127,30 @@ export const Default: Story = {
 
 export const WithEndDate: Story = {
   args: {
-    ...Default,
+    ...Default.args,
     endDate: new Date('2024-02-28'),
   },
 }
 
 export const GrayScaleColorScheme: Story = {
   args: {
-    ...Default,
+    ...Default.args,
     colorScheme: 'grayscale',
   },
 }
 
 export const RangeDatePicker: Story = {
   args: {
-    ...Default,
-    startDate: new Date('02-20-2024'),
-    endDate: new Date('02-26-2024'),
+    ...Default.args,
+    startDate: new Date('2024-02-20'),
+    endDate: new Date('2024-02-26'),
     isRange: true,
   },
 }
 
 export const WithMaxMinDates: Story = {
   args: {
-    ...Default,
+    ...Default.args,
     maxDate: new Date(),
     minDate: new Date(new Date().setDate(new Date().getDate() - 10)),
   },
@@ -155,7 +164,7 @@ export const Disabled: Story = {
 
 export const WithInternationalization: Story = {
   args: {
-    ...Default,
+    ...Default.args,
     isRange: true,
     i18n: 'es',
   },
@@ -191,4 +200,22 @@ export const WidthDateValidation: Story = {
       </div>
     ),
   ],
+}
+
+export const AlwaysOpenCalendar: Story = {
+  args: {
+    startDate: new Date(),
+    isRange: false,
+    alwaysOpen: true,
+  },
+}
+
+export const AlwaysOpenRangeDatePicker: Story = {
+  args: {
+    ...Default.args,
+    alwaysOpen: true,
+    startDate: new Date('2024-02-20'),
+    endDate: new Date('2024-02-26'),
+    isRange: true,
+  },
 }

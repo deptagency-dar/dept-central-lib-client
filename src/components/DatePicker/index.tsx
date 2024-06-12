@@ -287,6 +287,7 @@ const Calendar = ({
   onSelectDate,
   onYearChange,
   shouldDisableDate = () => false,
+  alwaysOpen,
 }: {
   language: string
   onMonthChange: (value: number) => void
@@ -297,6 +298,7 @@ const Calendar = ({
   isSecondCalendar?: boolean
   isRage?: boolean
   shouldDisableDate?: (date: Date) => boolean
+  alwaysOpen?: boolean
 }) => {
   const { state } = useDatePicker()
 
@@ -311,6 +313,8 @@ const Calendar = ({
     : getCalendarDays(state.year, state.month, onSelectDate, minDate, maxDate)
 
   const handleHoverEffect = (id: string) => {
+    if (!state.modalOpen) return
+
     const buttons = document.querySelectorAll<HTMLButtonElement>(
       `.${styles.day}:enabled`,
     )
@@ -417,42 +421,47 @@ const Calendar = ({
     const allDays = [...prevMonthDays, ...days, ...nextMonthDays]
 
     return allDays.map(({ day, date, isCurrentMonth, isDisabled, isToday }) => {
+      const startDate = state.startDate ? new Date(state.startDate) : null;
+      const endDate = state.endDate ? new Date(state.endDate) : null;
+    
       const isStartDate =
-        state.startDate &&
+        startDate instanceof Date &&
         isCurrentMonth &&
-        date.toDateString() === state.startDate.toDateString()
+        date.toDateString() === startDate.toDateString();
       const isEndDate =
-        state.endDate &&
+        endDate instanceof Date &&
         isCurrentMonth &&
-        date.toDateString() === state.endDate.toDateString()
+        date.toDateString() === endDate.toDateString();
       const isInRange =
         state.rangeDays &&
         state.rangeDays.some(
-          (rangeDate) => date.toDateString() === rangeDate.toDateString(),
-        )
-
+          (rangeDate) =>
+            rangeDate instanceof Date &&
+            date.toDateString() === rangeDate.toDateString()
+        );
+    
       return (
         <button
           key={date.toString()}
           id={date.toString()}
           type="button"
-          className={`${styles.day} ${
-            !isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''
-          } ${isStartDate || isEndDate ? `${styles.selected}` : ''} ${
-            isInRange && !isStartDate && !isEndDate && isCurrentMonth
-              ? `${styles.rangeItem}`
-              : ''
-          } ${isCurrentMonth && isDisabled ? 'line-through' : ''} ${isToday ? 'text-[--datepicker-scheme]' : ''}`}
+          className={`
+            ${styles.day} ${!isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''} 
+            ${isStartDate || isEndDate ? `${styles.selected}` : ''} 
+            ${isInRange && !isStartDate && !isEndDate && isCurrentMonth ? `${styles.rangeItem}` : ''}
+            ${isCurrentMonth && isDisabled ? 'line-through' : ''} 
+            ${isToday ? 'text-[--datepicker-scheme]' : ''}
+            ${alwaysOpen ? '' : 'hover:bg-[--datepicker-hover-color]'}
+          `}
           onClick={() => isCurrentMonth && onSelectDate(day)}
-          onMouseEnter={() =>
-            isCurrentMonth && handleHoverEffect(date.toString())
-          }
+          onMouseEnter={() => isCurrentMonth && handleHoverEffect(date.toString())}
           disabled={isDisabled}
         >
           <span>{day}</span>
         </button>
-      )
-    })
+      );
+    });
+    
   }
 
   return (
@@ -487,6 +496,7 @@ interface DatePickerOwnProps {
   endDate?: Date
   isRange?: boolean
   isRequired?: boolean
+  alwaysOpen?: boolean
   colorScheme?: keyof ColorPalette
   colorShade?: keyof ColorShade
   maxDate?: Date
@@ -523,20 +533,30 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       isRequired,
       errorMessage,
       hint,
+      alwaysOpen = false,
       onChange,
       onBlur,
       shouldDisableDate,
     }: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
+    const startDateObj = initialStartDate ? new Date(initialStartDate) : null
+    const endDateObj = initialEndDate ? new Date(initialEndDate) : null
+
     const [state, dispatch] = useReducer(datePickerReducer, {
       startDate: initialStartDate ?? null,
       endDate: initialEndDate ?? null,
-      modalOpen: false,
-      year: new Date().getFullYear(),
-      secondYear: new Date().getFullYear(),
-      month: new Date().getMonth(),
-      secondMonth: new Date().getMonth() + 1,
+      modalOpen: alwaysOpen,
+      year: startDateObj
+        ? startDateObj.getFullYear()
+        : new Date().getFullYear(),
+      secondYear: endDateObj
+        ? endDateObj.getFullYear()
+        : new Date().getFullYear(),
+      month: startDateObj ? startDateObj.getMonth() : new Date().getMonth(),
+      secondMonth: endDateObj
+        ? endDateObj.getMonth()
+        : new Date().getMonth() + 1,
       rangeDays: [],
     })
 
@@ -561,6 +581,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       `${styles.datepickerInput} ${disabled ? styles.disabled : ''}`.trim()
 
     useEffect(() => {
+      if (alwaysOpen) return
+
       const handleOutsideClick = (event: MouseEvent) => {
         if (
           datePickerRef.current &&
@@ -577,7 +599,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       return () => {
         document.removeEventListener('mousedown', handleOutsideClick)
       }
-    }, [state.modalOpen])
+    }, [state.modalOpen, alwaysOpen])
 
     useEffect(() => {
       if (!state.modalOpen) return
@@ -702,6 +724,34 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const getDefaultPlaceholder = (): string => {
       const displayFormat = getDateFormatByLocale(i18n)
       return isRange ? `${displayFormat} - ${displayFormat}` : displayFormat
+    }
+
+    if (alwaysOpen) {
+      return (
+        <DatePickerContext.Provider value={{ state, dispatch }}>
+          <div className="flex flex-col gap-2 items-start w-full">
+            <div style={datePickerStyles} id="datepicker" ref={ref}>
+              <div className={styles.calendar}>
+                <Calendar
+                  language={i18n}
+                  isRage={isRange}
+                  minDate={minDate}
+                  maxDate={maxDate}
+                  onMonthChange={handleMonthChange}
+                  onSelectDate={handleDateSelection}
+                  onYearChange={handleYearChange}
+                  alwaysOpen={alwaysOpen}
+                />
+              </div>
+            </div>
+            {errorMessage && (
+              <small className={styles.errorMessage} style={datePickerStyles}>
+                {errorMessage}
+              </small>
+            )}
+          </div>
+        </DatePickerContext.Provider>
+      )
     }
 
     return (
