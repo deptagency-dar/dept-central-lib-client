@@ -451,7 +451,7 @@ const Calendar = ({
             ${isInRange && !isStartDate && !isEndDate && isCurrentMonth ? `${styles.rangeItem}` : ''}
             ${isCurrentMonth && isDisabled ? 'line-through' : ''} 
             ${isToday ? 'text-[--datepicker-scheme]' : ''}
-            ${alwaysOpen ? '' : 'hover:bg-[--datepicker-hover-color]'}
+            ${alwaysOpen || isDisabled ? '' : 'hover:bg-[--datepicker-hover-color]'}
           `}
           onClick={() => isCurrentMonth && onSelectDate(day)}
           onMouseEnter={() =>
