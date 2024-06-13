@@ -421,25 +421,25 @@ const Calendar = ({
     const allDays = [...prevMonthDays, ...days, ...nextMonthDays]
 
     return allDays.map(({ day, date, isCurrentMonth, isDisabled, isToday }) => {
-      const startDate = state.startDate ? new Date(state.startDate) : null;
-      const endDate = state.endDate ? new Date(state.endDate) : null;
-    
+      const startDate = state.startDate ? new Date(state.startDate) : null
+      const endDate = state.endDate ? new Date(state.endDate) : null
+
       const isStartDate =
         startDate instanceof Date &&
         isCurrentMonth &&
-        date.toDateString() === startDate.toDateString();
+        date.toDateString() === startDate.toDateString()
       const isEndDate =
         endDate instanceof Date &&
         isCurrentMonth &&
-        date.toDateString() === endDate.toDateString();
+        date.toDateString() === endDate.toDateString()
       const isInRange =
         state.rangeDays &&
         state.rangeDays.some(
           (rangeDate) =>
             rangeDate instanceof Date &&
-            date.toDateString() === rangeDate.toDateString()
-        );
-    
+            date.toDateString() === rangeDate.toDateString(),
+        )
+
       return (
         <button
           key={date.toString()}
@@ -454,14 +454,15 @@ const Calendar = ({
             ${alwaysOpen ? '' : 'hover:bg-[--datepicker-hover-color]'}
           `}
           onClick={() => isCurrentMonth && onSelectDate(day)}
-          onMouseEnter={() => isCurrentMonth && handleHoverEffect(date.toString())}
+          onMouseEnter={() =>
+            isCurrentMonth && handleHoverEffect(date.toString())
+          }
           disabled={isDisabled}
         >
           <span>{day}</span>
         </button>
-      );
-    });
-    
+      )
+    })
   }
 
   return (
@@ -805,7 +806,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   onMonthChange={handleMonthChange}
                   onSelectDate={handleDateSelection}
                   onYearChange={handleYearChange}
-                  shouldDisableDate={shouldDisableDate}
+                  {...(!isRange ? { shouldDisableDate } : {})}
                 />
                 {isRange && (
                   <Calendar
