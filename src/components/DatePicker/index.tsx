@@ -806,7 +806,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   onMonthChange={handleMonthChange}
                   onSelectDate={handleDateSelection}
                   onYearChange={handleYearChange}
-                  {...(!isRange ? { shouldDisableDate } : {})}
+                  shouldDisableDate={shouldDisableDate}
                 />
                 {isRange && (
                   <Calendar
@@ -818,6 +818,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     onMonthChange={handleSecondMonthChange}
                     onSelectDate={handleDateSelection}
                     onYearChange={handleSecondYearChange}
+                    shouldDisableDate={shouldDisableDate}
                   />
                 )}
               </div>
