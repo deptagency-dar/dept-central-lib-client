@@ -7,12 +7,12 @@ interface User {
 }
 
 type TAvatar = 'normal' | 'compact' | 'image'
-
 type TProps = {
   user: Partial<User>
   status?: 'online' | 'company' | 'verified'
   type?: TAvatar
   className?: string
+  imageWidth?: string
   onLogout?: () => void
 }
 
@@ -21,6 +21,7 @@ export const Avatar: React.FC<TProps> = ({
   status,
   type = 'normal',
   className = '',
+  imageWidth = '63px',
   onLogout,
 }) => {
   function handleLogout(e: React.MouseEvent<HTMLAnchorElement>) {
@@ -55,7 +56,7 @@ export const Avatar: React.FC<TProps> = ({
     return (
       <div className="flex flex-col items-center relative">
         <img
-          className="rounded-full w-[63px]"
+          className={`rounded-full w-[${imageWidth}]`}
           referrerPolicy="no-referrer"
           src={user.image || undefined}
           alt="Avatar"

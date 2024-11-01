@@ -47,6 +47,14 @@ export default {
         type: { summary: 'User' },
       },
     },
+    imageWidth: {
+      control: 'text',
+      description: 'Width of the avatar image',
+      table: {
+        defaultValue: { summary: '63px' },
+        type: { summary: 'string' },
+      },
+    },
     onLogout: {
       description: 'Event triggered when the checkbox changes its state.',
       action: 'clicked',
@@ -64,6 +72,7 @@ export const Default: Story = {
   args: {
     type: 'normal',
     user,
+    imageWidth: '63px',
     onLogout: () => alert('Logging user out'),
   },
 }
@@ -99,6 +108,23 @@ export const NormalWithLogoutAction: Story = {
   args: {
     ...Default.args,
     onLogout: () => alert('Logging user out'),
+  }
+}
+
+/**
+ * With **normal** type (with imageWidth property)
+ */
+export const NormalWithImageWidth: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<Avatar user={user} type="normal" imageWidth="40px" />`,
+      },
+    },
+  },
+  args: {
+    ...Default.args,
+    imageWidth: '40px'
   }
 }
 
