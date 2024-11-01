@@ -34,7 +34,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
                 return (
                   <th
                     key={`header-${index}`}
-                    className="px-4 py-6 border-b border-b-gray-200 text-left text-nowrap"
+                    className="px-4 py-3 border-b border-b-gray-200 text-left text-nowrap"
                   >
                     <span className="text-gray-500 font-normal ">{header}</span>
                   </th>
@@ -56,7 +56,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
                 {items.map((item, subIndex) => {
                   return (
                     <td
-                      className="px-4 py-8 text-left"
+                      className="px-4 py-5 text-left"
                       key={`item-${subIndex}`}
                     >
                       {item}
