@@ -21,6 +21,16 @@ describe('Avatar component', () => {
     expect(queryByText('Log out')).not.toBeInTheDocument()
   })
 
+  it('applies image width correctly', () => {
+    const width = '40px';
+    const { getByAltText } = render(<Avatar user={user} imageWidth={width} />)
+
+    const image = getByAltText('Avatar') as HTMLImageElement
+    expect(image).toBeInTheDocument()
+    expect(image.src).toEqual('https://example.com/some-image.png')
+    expect(image.className).toEqual(`rounded-full w-[${width}]`)
+  })
+
   describe('"image" type', () => {
     it('renders the image only', () => {
       const { getByAltText, queryByText } = render(
