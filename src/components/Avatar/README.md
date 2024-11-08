@@ -35,6 +35,7 @@ interface User {
 | status      | 'online' | 'company' | 'verified'                                       | Specifies the avatar status.               | -             |
 | type        | 'normal' | 'compact' | 'image'                                          | Specifies the component type.              | "normal"      |
 | className   | string                                                                  | Custom CSS className.                      | ""            |
+| imageWidth  | string                                                                  | Specifies the image width.                 | "63px"        |
 | onLogout    | () => void                                                              | Logout action.                             | -             |
 
 
@@ -61,6 +62,9 @@ const user = {
 
 // Display status
 <Avatar user={user} status="online" type="compact" />
+
+// Specify image width
+<Avatar user={user} status="online" type="compact" width="40px"/>
 ```
 
 ## Go main README
