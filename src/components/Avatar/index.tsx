@@ -56,7 +56,8 @@ export const Avatar: React.FC<TProps> = ({
     return (
       <div className="flex flex-col items-center relative">
         <img
-          className={`rounded-full w-[${imageWidth}]`}
+          className="rounded-full"
+          style={{ width: imageWidth }}
           referrerPolicy="no-referrer"
           src={user.image || undefined}
           alt="Avatar"
