@@ -28,7 +28,8 @@ describe('Avatar component', () => {
     const image = getByAltText('Avatar') as HTMLImageElement
     expect(image).toBeInTheDocument()
     expect(image.src).toEqual('https://example.com/some-image.png')
-    expect(image.className).toEqual(`rounded-full w-[${width}]`)
+    expect(image.className).toEqual(`rounded-full`)
+    expect(image.style.width).toEqual(width)
   })
 
   describe('"image" type', () => {
