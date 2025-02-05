@@ -24,19 +24,19 @@ export default {
         type: { summary: 'boolean' },
       },
     },
-    lines: {
-      control: 'number',
-      description: 'Number of skeleton lines shown when access is denied.',
-      table: {
-        defaultValue: { summary: 4 },
-        type: { summary: 'number' },
-      },
-    },
     text: {
       control: 'text',
       description: 'Text to display when the user doesn’t have access.',
       table: {
         defaultValue: { summary: "You don't have access" },
+        type: { summary: 'string' },
+      },
+    },
+    minHeight: {
+      control: 'text',
+      description: 'Minimum height of the restricted section.',
+      table: {
+        defaultValue: { summary: '75px' },
         type: { summary: 'string' },
       },
     },
@@ -50,7 +50,7 @@ export default {
   },
   args: {
     hasAccess: false,
-    lines: 4,
+    minHeight: "75px",
     text: "You don't have access",
     children: (
       <div className="p-4">
@@ -62,17 +62,17 @@ export default {
 
 type Story = StoryObj<typeof RestrictedSection>;
 
+const globalDecorator = (Story: React.ComponentType) => (
+  <div style={{ width: '500px' }}>
+    <Story />
+  </div>
+);
+
 export const Default: Story = {
   args: {
     hasAccess: false
   },
-  decorators: [
-    (RestrictedSection) => (
-      <div style={{ width: '500px' }}>
-        <RestrictedSection />
-      </div>
-    ),
-  ],
+  decorators: [globalDecorator],
 };
 
 /**
@@ -82,13 +82,7 @@ export const WithAccess: Story = {
   args: {
     hasAccess: true,
   },
-  decorators: [
-    (RestrictedSection) => (
-      <div style={{ width: '500px' }}>
-        <RestrictedSection />
-      </div>
-    ),
-  ],
+  decorators: [globalDecorator],
 };
 
 /**
@@ -99,28 +93,16 @@ export const WithCustomText: Story = {
     hasAccess: false,
     text: 'You need to be a member to access',
   },
-  decorators: [
-    (RestrictedSection) => (
-      <div style={{ width: '500px' }}>
-        <RestrictedSection />
-      </div>
-    ),
-  ],
+  decorators: [globalDecorator],
 };
 
 /**
- * **Custom Skeleton Lines** - Showing a specific number of skeleton placeholders.
+ * **With Custom Min Height** - Setting a custom minimum height for the restricted section.
  */
-export const CustomSkeletonLines: Story = {
+export const WithCustomMinHeight: Story = {
   args: {
     hasAccess: false,
-    lines: 7,
+    minHeight: '250px',
   },
-  decorators: [
-    (RestrictedSection) => (
-      <div style={{ width: '500px' }}>
-        <RestrictedSection />
-      </div>
-    ),
-  ],
+  decorators: [globalDecorator],
 };

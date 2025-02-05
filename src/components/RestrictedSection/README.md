@@ -28,7 +28,7 @@ import { RestrictedSection } from 'dept-central-lib-client'
 | --------- | ----------- | -------------------------------------------------------- | ----------------------- | 
 | hasAccess | boolean     | Determines if the user has access to the content.        | -                       |
 | children  | JSX.Element | Content that will be displayed when the user has access. | -                       |
-| lines     | number      | Number of lines of the skeleton placeholder.             | 4                       |
+| minHeight | string      | Minimum height of the restricted section.                | "75px"                  |
 | className | string      | Custom CSS className.                                    | ""                      |
 | text      | string      | Text to display when the user doesn’t have access.       | "You don't have access" |
 
@@ -57,10 +57,10 @@ import { RestrictedSection } from 'dept-central-lib-client'
   {children}
 </RestrictedSection>
 
-// With custom skeleton lines
+// With custom minimum height
 <RestrictedSection
   hasAccess={false}
-  lines={7}
+  minHeight="250px"
 >
   {children}
 </RestrictedSection>

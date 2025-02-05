@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import { RestrictedSection } from '.'
@@ -15,7 +15,7 @@ describe('RestrictedSection component', () => {
     expect(getByText('Restricted Content')).toBeInTheDocument()
   })
 
-  it('renders the default skeleton when user has no access', () => {
+  it('renders the default "access denied" message when no custom text is provided', () => {
     const { getByText, queryByText } = render(
       <RestrictedSection hasAccess={false}>
         <p>Restricted Content</p>
@@ -27,7 +27,7 @@ describe('RestrictedSection component', () => {
   })
 
   describe('Custom text', () => {
-    it('renders the skeleton with custom restricted message', () => {
+    it('renders the custom "access denied" message when a custom text is provided', () => {
       const { getByText } = render(
         <RestrictedSection hasAccess={false} text="You need to be a member to access" >
           <p>Restricted Content</p>
@@ -38,16 +38,27 @@ describe('RestrictedSection component', () => {
     })
   })
 
-  describe('Skeleton lines', () => {
-    it('renders the correct number of skeleton lines based on the "lines" prop', () => {
-      render(
-        <RestrictedSection hasAccess={false} lines={7}>
+  describe('MinHeight', () => {
+    it('applies the default minHeight when no custom minHeight is provided', () => {
+      const { container } = render(
+        <RestrictedSection hasAccess={false}>
           <p>Restricted Content</p>
         </RestrictedSection>
       )
 
-      const skeletonContainer = screen.getByTestId('skeleton-container')
-      expect(skeletonContainer.childNodes.length).toBe(7)
+      const restrictedSection = container.firstChild as HTMLElement
+      expect(restrictedSection).toHaveStyle('min-height: 75px')
+    })
+
+    it('applies a custom minHeight when provided', () => {
+      const { container } = render(
+        <RestrictedSection hasAccess={false} minHeight="250px">
+          <p>Restricted Content</p>
+        </RestrictedSection>
+      )
+
+      const restrictedSection = container.firstChild as HTMLElement
+      expect(restrictedSection).toHaveStyle('min-height: 250px')
     })
   })
 })
