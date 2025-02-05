@@ -20,7 +20,7 @@ import { RestrictedSection } from 'dept-central-lib-client'
 
     hasAccess: boolean,
     children: JSX.Element,
-    lines?: number,
+    minHeight?: number,
     className?: string,
     text?: string
 
