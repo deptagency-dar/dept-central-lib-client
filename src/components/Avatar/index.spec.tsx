@@ -70,6 +70,17 @@ describe('Avatar component', () => {
     })
   })
 
+  describe('when no image is provided', () => {
+    it('renders the default SVG icon instead of the image', () => {
+      const { getByTestId } = render(
+        <Avatar user={{ name: 'John Doe', email: 'john@example.com' }} />
+      )
+
+      const svgIcon = getByTestId('default-avatar-icon')
+      expect(svgIcon).toBeInTheDocument()
+    })
+  })
+
   describe('"compact" type', () => {
     it('renders the image only', async () => {
       const onLogoutMock = jest.fn()
