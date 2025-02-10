@@ -73,7 +73,6 @@ export const Pagination: FC<PaginationProps> = ({
     if (event.key === 'Escape') {
       setInputValue(String(itemsPerPage))
     } else if (event.key === 'Enter') {
-      handleBlur()
       event.currentTarget.blur()
     }
   };
