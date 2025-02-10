@@ -1,22 +1,28 @@
 import { FC, useState, useEffect } from 'react'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid'
+import { TextField } from '../TextField'
 
 interface PaginationProps {
   currentPage: number
   itemsPerPage: number
+  showItemsPerPage?: boolean
   totalItems: number
   onPageChange: (page: number) => void
+  onItemsPerPageChange?: (itemsPerPage: number) => void
   className?: string
 }
 
 export const Pagination: FC<PaginationProps> = ({
   currentPage,
   itemsPerPage,
+  showItemsPerPage = false,
   totalItems,
   onPageChange,
+  onItemsPerPageChange,
   className = '',
 }) => {
   const [windowWidth, setWindowWidth] = useState(0)
+  const [inputValue, setInputValue] = useState<string>(String(itemsPerPage));
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   useEffect(() => {
@@ -63,7 +69,47 @@ export const Pagination: FC<PaginationProps> = ({
     return pages
   }
 
-  if (totalPages <= 1) return null
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Escape') {
+      setInputValue(String(itemsPerPage))
+    } else if (event.key === 'Enter') {
+      handleBlur()
+      event.currentTarget.blur()
+    }
+  };
+
+  const handleItemsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    if (value === '' || (!isNaN(Number(value)) && Number(value) > 0)) {
+      setInputValue(value);
+    }
+  };
+
+  const handleBlur = () => {
+    const numValue = Number(inputValue);
+    if (!isNaN(numValue) && numValue > 0) {
+      onItemsPerPageChange?.(numValue);
+    } else {
+      setInputValue(String(itemsPerPage));
+    }
+  };
+
+  const itemsPerPageSelector = () => (
+    <div className="flex items-center gap-2 w-fit">
+      <TextField
+        value={inputValue}
+        onChange={handleItemsPerPageChange}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        size={3}
+      />
+      <span className="whitespace-nowrap text-gray-700">Items per page</span>
+    </div>
+  );
+
+  if (totalPages <= 1 && !showItemsPerPage) return null
 
   return (
     <div
@@ -101,6 +147,8 @@ export const Pagination: FC<PaginationProps> = ({
         )}
       </div>
 
+      {showItemsPerPage && itemsPerPageSelector()}
+
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
@@ -109,6 +157,7 @@ export const Pagination: FC<PaginationProps> = ({
         <span className="max-sm:hidden sm:inline">Next</span>
         <ArrowRightIcon className="w-4 h-4 ml-2" aria-hidden="true" />
       </button>
+
     </div>
   )
 }

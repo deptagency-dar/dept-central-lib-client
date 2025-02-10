@@ -78,8 +78,61 @@ describe('Pagination', () => {
         className={customClass}
       />
     );
-  
+
     const paginationContainer = screen.getByTestId('pagination-container');
     expect(paginationContainer).toHaveClass(customClass);
   });
+
+  describe('Items per page selector', () => {
+    it('shows the itemsPerPage selector when showItemsPerPage is true', () => {
+      render(
+        <Pagination
+          currentPage={1}
+          itemsPerPage={10}
+          totalItems={100}
+          onPageChange={onPageChangeMock}
+          showItemsPerPage={true}
+        />
+      );
+
+      const input = screen.getByRole('textbox');
+      expect(input).toBeInTheDocument();
+    });
+
+    it('hides the itemsPerPage selector when showItemsPerPage is false', () => {
+      render(
+        <Pagination
+          currentPage={1}
+          itemsPerPage={10}
+          totalItems={100}
+          onPageChange={onPageChangeMock}
+          showItemsPerPage={false}
+        />
+      );
+
+      expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    });
+
+    it('updates itemsPerPage when a valid number is entered', () => {
+      const onItemsPerPageChangeMock = jest.fn();
+    
+      render(
+        <Pagination
+          currentPage={1}
+          itemsPerPage={10}
+          totalItems={100}
+          onPageChange={onPageChangeMock}
+          onItemsPerPageChange={onItemsPerPageChangeMock}
+          showItemsPerPage={true}
+        />
+      );
+    
+      const input = screen.getByRole('textbox');
+    
+      fireEvent.change(input, { target: { value: '20' } });
+      fireEvent.blur(input);
+    
+      expect(onItemsPerPageChangeMock).toHaveBeenCalledWith(20);
+    });
+  })
 });
