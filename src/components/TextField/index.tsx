@@ -27,6 +27,7 @@ type TextFieldRootAttributes =
       | 'value'
       | 'onChange'
       | 'onBlur'
+      | 'onKeyDown'
       | 'placeholder'
       | 'id'
       | 'name'
@@ -48,6 +49,7 @@ type TextFieldRootAttributes =
       | 'name'
       | 'onChange'
       | 'onBlur'
+      | 'onKeyDown'
       | 'readOnly'
       | 'rows'
       | 'cols'
@@ -90,6 +92,7 @@ export const TextField = forwardRef<
       isRequired,
       onChange,
       onBlur,
+      onKeyDown,
       ...rest
     }: TextFieldProps,
     ref: ForwardedRef<HTMLInputElement | HTMLTextAreaElement>,
@@ -137,6 +140,7 @@ export const TextField = forwardRef<
               ref={ref as ForwardedRef<HTMLTextAreaElement>}
               onChange={(e) => (onChange ? onChange(e as never) : null)}
               onBlur={(e) => (onBlur ? onBlur(e as never) : null)}
+              onKeyDown={(e) => (onKeyDown ? onKeyDown(e as never) : null)}
               {...rest}
             />
           ) : (
@@ -147,6 +151,7 @@ export const TextField = forwardRef<
               ref={ref as ForwardedRef<HTMLInputElement>}
               onChange={(e) => (onChange ? onChange(e as never) : null)}
               onBlur={(e) => (onBlur ? onBlur(e as never) : null)}
+              onKeyDown={(e) => (onKeyDown ? onKeyDown(e as never) : null)}
               {...rest}
             />
           )}

@@ -1,3 +1,4 @@
+import React from 'react'
 import { StoryObj, Meta } from '@storybook/react';
 import { useState, useEffect } from 'react';
 import { Pagination } from './index';
@@ -48,19 +49,29 @@ export default {
   },
 } as Meta<typeof Pagination>;
 
-const Template: StoryObj<typeof Pagination> = (args) => {
+const Template = (args) => {
   const [currentPage, setCurrentPage] = useState(args.currentPage);
+  const [itemsPerPage, setItemsPerPage] = useState(args.itemsPerPage);
 
   useEffect(() => {
     setCurrentPage(args.currentPage);
   }, [args.currentPage]);
 
+  useEffect(() => {
+    setItemsPerPage(args.itemsPerPage);
+  }, [args.itemsPerPage]);
+
   return <Pagination
     {...args}
     currentPage={currentPage}
+    itemsPerPage={itemsPerPage}
     onPageChange={(page) => {
       args.onPageChange(page);
       setCurrentPage(page);
+    }}
+    onItemsPerPageChange={(items) => {
+      args.onItemsPerPageChange?.(items);
+      setItemsPerPage(items);
     }}
   />;
 };
@@ -97,4 +108,21 @@ export const LastPage: StoryObj<typeof Pagination> = {
     itemsPerPage: 10,
     currentPage: 15,
   },
+};
+
+export const ItemsPerPageSelector: StoryObj<typeof Pagination> = {
+  render: Template,
+  args: {
+    totalItems: 150,
+    itemsPerPage: 10,
+    showItemsPerPage: true,
+    currentPage: 1,
+  },
+  decorators: [
+    (Pagination) => (
+      <div style={{ width: '900px' }}>
+        <Pagination />
+      </div>
+    ),
+  ],
 };
