@@ -115,7 +115,7 @@ describe('Pagination', () => {
 
     it('updates itemsPerPage when a valid number is entered', () => {
       const onItemsPerPageChangeMock = jest.fn();
-    
+
       render(
         <Pagination
           currentPage={1}
@@ -126,13 +126,67 @@ describe('Pagination', () => {
           showItemsPerPage={true}
         />
       );
-    
+
       const input = screen.getByRole('textbox');
-    
+
       fireEvent.change(input, { target: { value: '20' } });
       fireEvent.blur(input);
-    
+
       expect(onItemsPerPageChangeMock).toHaveBeenCalledWith(20);
+    });
+
+    it('does not allow letters to be entered in the items per page input', () => {
+      render(
+        <Pagination
+          currentPage={1}
+          itemsPerPage={10}
+          totalItems={100}
+          onPageChange={onPageChangeMock}
+          showItemsPerPage={true}
+        />
+      );
+
+      const input = screen.getByRole('textbox');
+      fireEvent.change(input, { target: { value: 'a' } });
+
+      expect(input).toHaveValue('10');
+    });
+
+
+    it('does not allow 0 as a valid input for items per page', () => {
+      render(
+        <Pagination
+          currentPage={1}
+          itemsPerPage={10}
+          totalItems={100}
+          onPageChange={onPageChangeMock}
+          showItemsPerPage={true}
+        />
+      );
+
+      const input = screen.getByRole('textbox');
+      fireEvent.change(input, { target: { value: '0' } });
+      fireEvent.blur(input);
+
+      expect(input).toHaveValue('10');
+    });
+
+    it('does not allow negative numbers as items per page', () => {
+      render(
+        <Pagination
+          currentPage={1}
+          itemsPerPage={10}
+          totalItems={100}
+          onPageChange={onPageChangeMock}
+          showItemsPerPage={true}
+        />
+      );
+
+      const input = screen.getByRole('textbox');
+      fireEvent.change(input, { target: { value: '-5' } });
+      fireEvent.blur(input);
+
+      expect(input).toHaveValue('10');
     });
   })
 });
