@@ -129,6 +129,28 @@ export const NormalWithImageWidth: Story = {
 }
 
 /**
+ * With **normal** type (without image)
+ */
+export const NormalWithoutImage: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<Avatar user={{ name: 'John Doe', email: 'john@example.com'}} type="normal" />`,
+      },
+    },
+  },
+  args: {
+    type: 'normal',
+    user: {
+      name: 'John Doe',
+      email: 'john@example.com',
+    },
+    imageWidth: '63px',
+    onLogout: () => alert('Logging user out'),
+  },
+}
+
+/**
  * image only
  */
 export const Image: Story = {
