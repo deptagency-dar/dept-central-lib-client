@@ -25,6 +25,7 @@ type RadioRootAttributes = Pick<
   | 'value'
   | 'name'
   | 'defaultChecked'
+  | 'checked'
 >
 
 export type RadioProps = RadioRootAttributes & RadioOwnProps
@@ -60,7 +61,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           ref={ref}
           {...rest}
         />
-        {children && <span className={styles.label}>{children}</span>}
+        {children && <span className="text-sm leading-6 text-gray-500">{children}</span>}
       </label>
     )
   },
