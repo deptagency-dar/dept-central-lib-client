@@ -76,7 +76,7 @@ export const SearchInput = forwardRef<
             name="search"
             className={classNames(
               disabled ? 'cursor-not-allowed' : '',
-              'block w-full h-[3rem] rounded-md focus:outline-none focus:border-[--search-border-color] text-gray-500 placeholder-gray-500 p-4 gap-3 shadow pl-12 group-hover:shadow-md disabled:cursor-not-allowed',
+              'block w-full h-[3rem] rounded-md focus:outline-none focus:border-[--search-border-color] text-gray-500 placeholder-gray-500 py-4 pr-4 pl-12 gap-3 shadow  group-hover:shadow-md disabled:cursor-not-allowed',
             )}
             placeholder={placeholder}
             disabled={disabled}
