@@ -1,4 +1,4 @@
-import { colors } from './src/constants'
+import { theme } from './src/constants'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
       fontFamily: {
         maison: ['Maison Neue', 'Helvetica', 'Arial', 'sans-serif'],
       },
-      colors,
+      colors: theme.colors,
     },
   },
   plugins: [],
