@@ -43,3 +43,7 @@ export const colors: ColorPalette = {
     700: '#027A48',
   },
 }
+
+export const theme = {
+  colors
+}
