@@ -24,6 +24,8 @@ type SearchInputRootAttributes = Pick<
   | 'pattern'
   | 'size'
   | 'placeholder'
+  | 'autoComplete'
+  | 'onClick'
 >
 
 export type SearchInputProps = SearchInputRootAttributes & SearchInputOwnProps
