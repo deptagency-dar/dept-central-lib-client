@@ -37,6 +37,7 @@ import { Select } from 'dept-central-lib-client'
 | errorMessage | string                                                                  | Displays an errorMessage message below the select input. | -             |
 | onChange     | (option: SelectOption) => void                                          | Function triggered on select input change.               | -             |
 | onBlur       | (option?: SelectOption) => void                                         | Function triggered when the select input loses focus.    | -             |
+| small        | boolean                                                                 | Specifies whether the select input is small.             | false         |
 
 ## Examples
 
@@ -68,6 +69,19 @@ import { Select } from 'dept-central-lib-client'
 // Select without label
 
 <Select
+  placeholder="Select an option"
+  options={[
+    { label: 'Option 1', value: 'option-1' },
+    { label: 'Option 2', value: 'option-2' },
+    { label: 'Option 3', value: 'option-3' },
+  ]}
+  onChange={(option) => console.log('Option selected', option)}
+/>
+
+// Small version
+
+<Select
+  small
   placeholder="Select an option"
   options={[
     { label: 'Option 1', value: 'option-1' },

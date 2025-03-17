@@ -14,6 +14,7 @@ export interface SelectOption {
   label: string
   value: string
 }
+
 export interface SelectProps {
   options: SelectOption[]
   placeholder: string
@@ -27,6 +28,7 @@ export interface SelectProps {
   onChange: (option: SelectOption) => void
   onBlur?: (option?: SelectOption) => void
   selectedOption?: SelectOption
+  small?: boolean
 }
 
 const createSelectStyles = (
@@ -52,6 +54,7 @@ export const Select: FC<SelectProps> = ({
   onChange,
   onBlur,
   selectedOption,
+  small = false,
 }) => {
   const [selected, setSelected] = useState<SelectOption | undefined>(
     selectedOption,
@@ -132,17 +135,28 @@ export const Select: FC<SelectProps> = ({
           className={classNames(
             disabled ? 'cursor-not-allowed opacity-50' : '',
             errorMessage ? 'border-2 border-[--select-error-color]' : '',
-            'relative w-full h-[3rem] bg-white border rounded-md shadow-sm py-3 px-4 text-left cursor-default focus:border-[--select-scheme] focus:border-2',
+            small ? 'py-2 px-3' : 'py-3 px-4',
+            'relative w-full bg-white border rounded-md shadow-sm text-left cursor-default focus:border-[--select-scheme] focus:border-2',
             typography.base,
           )}
           onClick={() => setOpen(!open)}
         >
           <span className="flex items-center mr-6">
-            <span className="block truncate">
+            <span
+              className={classNames(
+                'block truncate',
+                small ? 'text-sm' : 'text-md',
+              )}
+            >
               {selected ? selected.label : placeholder}
             </span>
           </span>
-          <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+          <span
+            className={classNames(
+              'absolute inset-y-0 right-0 flex items-center pointer-events-none',
+              small ? 'pr-1' : 'pr-4',
+            )}
+          >
             <Icon
               className={classNames(
                 open ? 'text-[--select-scheme]' : '',
@@ -178,21 +192,32 @@ export const Select: FC<SelectProps> = ({
                   selected?.value === option.value
                     ? 'bg-gray-50'
                     : 'text-gray-900',
-                  'cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-gray-100',
+                  'cursor-default select-none relative py-2 pl-3 hover:bg-gray-100',
                 )}
                 onClick={() => handleOnChange(option)}
                 onKeyDown={(key) =>
                   key.code === 'Enter' && handleOnChange(option)
                 }
               >
-                <div className="flex items-center">
-                  <span className="ml-3 block truncate text-md">
-                    {option.label}
-                  </span>
-                </div>
+                <span
+                  className={classNames(
+                    'ml-3 block truncate min-w-6',
+                    small ? 'text-sm' : 'text-md',
+                  )}
+                >
+                  {option.label}
+                </span>
                 {selected?.value === option.value && (
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-[--select-scheme]">
-                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                  <span
+                    className={classNames(
+                      'absolute inset-y-0 right-0 flex items-center text-[--select-scheme]',
+                      small ? 'pr-2' : 'pr-4',
+                    )}
+                  >
+                    <CheckIcon
+                      className={classNames(small ? 'h-4 w-4' : 'h-5 w-5')}
+                      aria-hidden="true"
+                    />
                   </span>
                 )}
               </li>
