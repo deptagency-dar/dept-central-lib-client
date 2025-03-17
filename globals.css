@@ -12,4 +12,8 @@
     line-height: 1.125rem; /* 128.571% */
     letter-spacing: 0.00875rem;
   }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    cursor: pointer;
+  }
 }
