@@ -1,5 +1,5 @@
 // Select.tsx
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -9,6 +9,7 @@ import { classNames, getLightenColor } from '../../utils'
 import { ColorShade, ColorPalette } from '../../types'
 import { getColor } from '../../utils'
 import typography from '../../styles/typography.module.css'
+import { useLayer } from 'react-laag'
 
 export interface SelectOption {
   label: string
@@ -60,33 +61,10 @@ export const Select: FC<SelectProps> = ({
     selectedOption,
   )
   const [open, setOpen] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setSelected(selectedOption)
   }, [selectedOption])
-
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      const selectContent = document.querySelector('.select-content')
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        if (onBlur) {
-          onBlur(selected)
-        }
-        if (selectContent && !selectContent.contains(event.target as Node)) {
-          setOpen(false)
-        }
-      }
-    }
-
-    if (open) {
-      document.addEventListener('mousedown', handleOutsideClick)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick)
-    }
-  }, [onBlur, open, selected])
 
   if (!options) throw new Error('Options are required.')
 
@@ -104,6 +82,24 @@ export const Select: FC<SelectProps> = ({
   )
 
   const Icon = open ? ChevronUpIcon : ChevronDownIcon
+
+  const { renderLayer, triggerProps, triggerBounds, layerProps } = useLayer({
+    isOpen: open,
+    overflowContainer: false, // we want the menu to stay within its scroll-container
+    auto: true, // auto find a placement when required
+    snap: true, // snap to the possible placements (not in between)
+    placement: 'bottom-start', // we prefer placement on the bottom-side
+    possiblePlacements: ['top-start', 'bottom-start'], // stick with bottom and top
+    triggerOffset: 6,
+    onOutsideClick: () => {
+      if (onBlur) {
+        onBlur(selected)
+      }
+      if (open) {
+        setOpen(false)
+      }
+    },
+  })
 
   return (
     <div
@@ -126,6 +122,7 @@ export const Select: FC<SelectProps> = ({
       )}
       <div className="relative w-full select-content">
         <button
+          {...triggerProps}
           type="button"
           disabled={disabled}
           data-testid="select"
@@ -133,7 +130,7 @@ export const Select: FC<SelectProps> = ({
           aria-expanded="true"
           aria-labelledby="listbox-label"
           className={classNames(
-            disabled ? 'cursor-not-allowed opacity-50' : '',
+            disabled ? 'cursor-not-allowed opacity-50' : 'pointer',
             errorMessage ? 'border-2 border-[--select-error-color]' : '',
             small ? 'py-2 px-3' : 'py-3 px-4',
             'relative w-full bg-white border rounded-md shadow-sm text-left cursor-default focus:border-[--select-scheme] focus:border-2',
@@ -166,64 +163,68 @@ export const Select: FC<SelectProps> = ({
             />
           </span>
         </button>
-        <div
-          className={classNames(
-            open ? 'block' : 'hidden',
-            'absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg',
-          )}
-          ref={ref}
-        >
-          <ul
-            tabIndex={-1}
-            role="listbox"
-            aria-labelledby="listbox-label"
-            className={classNames(
-              'max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto sm:text-sm',
-              typography.base,
-            )}
-          >
-            {options.map((option) => (
-              <li
-                key={option.value}
-                id="listbox-item-0"
-                role="option"
-                tabIndex={0}
+        {open &&
+          renderLayer(
+            <div
+              {...layerProps}
+              style={{
+                width: triggerBounds?.width,
+                ...layerProps.style,
+              }}
+              className="z-10 mt-1 w-full rounded-md bg-white shadow-lg"
+            >
+              <ul
+                tabIndex={-1}
+                role="listbox"
+                aria-labelledby="listbox-label"
                 className={classNames(
-                  selected?.value === option.value
-                    ? 'bg-gray-50'
-                    : 'text-gray-900',
-                  'cursor-default select-none relative py-2 pl-3 hover:bg-gray-100',
+                  'max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto sm:text-sm',
+                  typography.base,
                 )}
-                onClick={() => handleOnChange(option)}
-                onKeyDown={(key) =>
-                  key.code === 'Enter' && handleOnChange(option)
-                }
               >
-                <span
-                  className={classNames(
-                    'ml-3 block truncate min-w-6',
-                    small ? 'text-sm' : 'text-md',
-                  )}
-                >
-                  {option.label}
-                </span>
-                {selected?.value === option.value && (
-                  <span
+                {options.map((option) => (
+                  <li
+                    key={option.value}
+                    id="listbox-item-0"
+                    role="option"
+                    tabIndex={0}
                     className={classNames(
-                      'absolute inset-y-0 right-0 flex items-center text-[--select-scheme]',
-                      small ? 'pr-2' : 'pr-4',
+                      selected?.value === option.value
+                        ? 'bg-gray-50'
+                        : 'text-gray-900',
+                      'cursor-default select-none relative py-2 pl-3 hover:bg-gray-100',
                     )}
+                    onClick={() => handleOnChange(option)}
+                    onKeyDown={(key) =>
+                      key.code === 'Enter' && handleOnChange(option)
+                    }
                   >
-                    <CheckIcon
-                      className={classNames(small ? 'h-4 w-4' : 'h-5 w-5')}
-                      aria-hidden="true"
-                    />
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
+                    <span
+                      className={classNames(
+                        'ml-3 block truncate min-w-6',
+                        small ? 'text-sm' : 'text-md',
+                      )}
+                    >
+                      {option.label}
+                    </span>
+                    {selected?.value === option.value && (
+                      <span
+                        className={classNames(
+                          'absolute inset-y-0 right-0 flex items-center text-[--select-scheme]',
+                          small ? 'pr-2' : 'pr-4',
+                        )}
+                      >
+                        <CheckIcon
+                          className={classNames(small ? 'h-4 w-4' : 'h-5 w-5')}
+                          aria-hidden="true"
+                        />
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>,
+          )}
       </div>
       {hint && (
         <span className="font-sans text-sm font-normal leading-[18px] tracking-[0.01em] text-left text-gray-500">
