@@ -1,22 +1,13 @@
+import { FC } from 'react'
 import { getDaysOfWeekByLocale, getMonthsByLocale } from '../../../utils/dates'
 import { useDatePicker } from '../use-datepicker'
 import { DayOfWeek } from './DayOfWeek'
 import { MonthSelector } from './MonthSelector'
 import { YearSelector } from './YearSelector'
 import styles from '../index.module.css'
+import { TimeSelector } from './TimeSelector'
 
-export const Calendar = ({
-  language,
-  isSecondCalendar,
-  isRage,
-  minDate,
-  maxDate,
-  onMonthChange,
-  onSelectDate,
-  onYearChange,
-  shouldDisableDate = () => false,
-  alwaysOpen,
-}: {
+interface CalendarProps {
   language: string
   onMonthChange: (value: number) => void
   onSelectDate: (day: number, isSecondCalendar?: boolean) => void
@@ -27,6 +18,21 @@ export const Calendar = ({
   isRage?: boolean
   shouldDisableDate?: (date: Date) => boolean
   alwaysOpen?: boolean
+  withTime?: boolean
+}
+
+export const Calendar: FC<CalendarProps> = ({
+  language,
+  isSecondCalendar,
+  isRage,
+  minDate,
+  maxDate,
+  onMonthChange,
+  onSelectDate,
+  onYearChange,
+  shouldDisableDate = () => false,
+  alwaysOpen,
+  withTime = false,
 }) => {
   const { state } = useDatePicker()
 
@@ -181,7 +187,9 @@ export const Calendar = ({
             ${isToday ? 'text-[--datepicker-scheme]' : ''}
             ${alwaysOpen || isDisabled ? '' : 'hover:bg-[--datepicker-hover-color]'}
           `}
-          onClick={() => isCurrentMonth && onSelectDate(day)}
+          onClick={() => {
+            isCurrentMonth && onSelectDate(day)
+          }}
           onMouseEnter={() =>
             isCurrentMonth && handleHoverEffect(date.toString())
           }
@@ -215,6 +223,11 @@ export const Calendar = ({
         ))}
       </div>
       <div className="grid grid-cols-7 gap-1">{dateButtons}</div>
+      {withTime && (
+        <div className="p-3">
+          <TimeSelector />
+        </div>
+      )}
     </div>
   )
 }

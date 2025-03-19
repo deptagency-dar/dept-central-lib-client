@@ -14,7 +14,10 @@ import {
   getLightenColor,
 } from '../../utils'
 import styles from './index.module.css'
-import { getDateFormatByLocale } from '../../utils/dates'
+import {
+  getDateFormatByLocale,
+  getDateTimeFormatByLocale,
+} from '../../utils/dates'
 import { DatePickerContext, datePickerReducer } from './use-datepicker'
 import { Calendar, DatePickerInput } from './components'
 
@@ -51,6 +54,7 @@ interface DatePickerOwnProps {
   onChange?: (value: { startDate: Date; endDate?: Date }) => void
   onBlur?: (value?: { startDate?: Date; endDate?: Date }) => void
   shouldDisableDate?: (date: Date) => boolean
+  withTime?: boolean
 }
 
 type DatePickerRootAttributes = Pick<
@@ -81,6 +85,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onChange,
       onBlur,
       shouldDisableDate,
+      withTime = false,
     }: DatePickerProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
@@ -167,12 +172,23 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       }
       const startDate = initialStartDate ?? null
       const endDate = initialEndDate ?? null
+
       if (onChange) {
         onChange({ startDate: initialStartDate!, endDate: initialEndDate })
       }
+
       dispatch({ type: 'SET_START_DATE', payload: startDate })
       dispatch({ type: 'SET_END_DATE', payload: endDate })
     }, [initialStartDate, initialEndDate, onChange])
+
+    useEffect(() => {
+      if (state.startDate) {
+        onChange?.({ startDate: state.startDate })
+      }
+      if (state.startDate && state.endDate) {
+        onChange?.({ startDate: state.startDate, endDate: state.endDate })
+      }
+    }, [state.startDate, state.endDate, onChange])
 
     const handleToggleModal = () => {
       dispatch({ type: 'TOGGLE_MODAL' })
@@ -237,17 +253,27 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }
 
     const handleDateSelection = (day: number, isSecondCalendar?: boolean) => {
+      const previousDate = isSecondCalendar
+        ? state.endDate
+          ? new Date(state.endDate)
+          : null
+        : state.startDate
+          ? new Date(state.startDate)
+          : null
+
       const selectedDate = new Date(
         isSecondCalendar ? state.secondYear : state.year,
         isSecondCalendar ? state.secondMonth : state.month,
         day,
+        previousDate ? previousDate.getHours() : 9,
+        previousDate ? previousDate.getMinutes() : 30,
       )
 
       if (!isRange) {
         dispatch({ type: 'SET_START_DATE', payload: selectedDate })
-        if (onChange) {
-          onChange({ startDate: selectedDate })
-        }
+
+        if (withTime) return
+
         handleToggleModal()
       } else if (!state.startDate || state.endDate) {
         dispatch({ type: 'SET_START_DATE', payload: selectedDate })
@@ -261,11 +287,18 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           onChange({ startDate: state.startDate, endDate: selectedDate })
         }
 
+        if (withTime) return
+
         handleToggleModal()
       }
     }
 
     const getDefaultPlaceholder = (): string => {
+      if (withTime) {
+        const displayFormat = getDateTimeFormatByLocale(i18n)
+        return isRange ? `${displayFormat} - ${displayFormat}` : displayFormat
+      }
+
       const displayFormat = getDateFormatByLocale(i18n)
       return isRange ? `${displayFormat} - ${displayFormat}` : displayFormat
     }
@@ -285,6 +318,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   onSelectDate={handleDateSelection}
                   onYearChange={handleYearChange}
                   alwaysOpen={alwaysOpen}
+                  withTime={withTime}
                 />
               </div>
             </div>
@@ -334,6 +368,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               }}
               className={datePickerInputClasses}
               disabled={disabled}
+              withTime={withTime}
             />
             {state.modalOpen && (
               <div
@@ -350,6 +385,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   onSelectDate={handleDateSelection}
                   onYearChange={handleYearChange}
                   shouldDisableDate={shouldDisableDate}
+                  withTime={!isRange && withTime}
                 />
                 {isRange && (
                   <Calendar

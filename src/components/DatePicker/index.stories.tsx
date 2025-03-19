@@ -219,3 +219,10 @@ export const AlwaysOpenRangeDatePicker: Story = {
     isRange: true,
   },
 }
+
+export const WithTime: Story = {
+  args: {
+    ...Default.args,
+    withTime: true,
+  },
+}

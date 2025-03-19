@@ -2,16 +2,7 @@ import { CSSProperties, useRef } from 'react'
 import { useDatePicker } from '../use-datepicker'
 import { getDateStringByLocale } from '../../../utils/dates'
 
-export const DatePickerInput = ({
-  className = '',
-  style = {},
-  isRange = false,
-  language = 'en',
-  disabled,
-  onClick,
-  onBlur,
-  ...rest
-}: {
+interface DatePickerInputProps {
   onClick: () => void
   onBlur?: (value?: { startDate?: Date; endDate?: Date }) => void
   language?: string
@@ -20,7 +11,20 @@ export const DatePickerInput = ({
   className?: string
   style?: CSSProperties
   disabled?: boolean
-}) => {
+  withTime?: boolean
+}
+
+export const DatePickerInput = ({
+  className = '',
+  style = {},
+  isRange = false,
+  language = 'en',
+  disabled,
+  onClick,
+  onBlur,
+  withTime,
+  ...rest
+}: DatePickerInputProps) => {
   const {
     state: { startDate, endDate },
   } = useDatePicker()
@@ -51,6 +55,7 @@ export const DatePickerInput = ({
           startDate,
           endDate,
           language,
+          withTime,
         })}
         readOnly
         ref={ref}
