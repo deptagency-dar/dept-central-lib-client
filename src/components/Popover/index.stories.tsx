@@ -34,7 +34,7 @@ const Template = (args: PopOverProps) => {
       isOpen={isOpen}
       setOpen={setOpen}
       content={<Content />}
-      trigger={<Button>{isOpen ? 'Close' : 'Show'}</Button>}
+      trigger={<Button>{isOpen ? 'Hide' : 'Show'}</Button>}
     />
   )
 }
