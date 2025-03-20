@@ -1,12 +1,15 @@
+import { FC } from 'react'
 import { Option } from '../DatePicker.types'
 import { Dropdown } from './Dropdown'
 
-export const YearSelector = ({
-  selectedYear,
-  onChange,
-}: {
+interface YearSelectorProps {
   selectedYear: number
   onChange: (value: string) => void
+}
+
+export const YearSelector: FC<YearSelectorProps> = ({
+  selectedYear,
+  onChange,
 }) => {
   const currentYear = new Date().getFullYear()
   const minYear = 1900

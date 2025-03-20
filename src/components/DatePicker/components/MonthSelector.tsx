@@ -1,14 +1,17 @@
+import { FC } from 'react'
 import { Option } from '../DatePicker.types'
 import { Dropdown } from './Dropdown'
 
-export const MonthSelector = ({
-  selectedMonth,
-  months,
-  onChange,
-}: {
+interface MonthSelectorProps {
   selectedMonth: number
   months: string[]
   onChange: (value: string) => void
+}
+
+export const MonthSelector: FC<MonthSelectorProps> = ({
+  selectedMonth,
+  months,
+  onChange,
 }) => {
   const monthOptions: Option[] = months.map((month, index) => ({
     label: month,
