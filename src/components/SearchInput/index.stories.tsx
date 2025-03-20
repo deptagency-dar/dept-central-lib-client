@@ -1,6 +1,6 @@
-// SearchInput.stories.tsx
+import React from 'react'
 import { StoryObj, Meta } from '@storybook/react'
-import { SearchInput } from '.'
+import { SearchInput, SearchInputProps } from '.'
 import { colors } from '../../constants'
 
 export default {
@@ -15,6 +15,13 @@ export default {
     },
     layout: 'centered',
   },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '500px', height: '300px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     disabled: {
@@ -39,7 +46,7 @@ export default {
     },
     colorScheme: {
       control: 'select',
-      description: 'Color of the button.',
+      description: 'Color of the input.',
       options: Object.keys(colors),
       table: {
         defaultValue: { summary: 'primary' },
@@ -53,10 +60,25 @@ export default {
         defaultValue: { summary: 600 },
       },
     },
+    selectOptions: {
+      description:
+        'An array of options for the search input. If provided, the input will display a list of options below it, allowing the user to select from them.',
+      control: 'array',
+      table: {
+        type: {
+          summary: '{ value: string; label: string; picture?: string}[]',
+        },
+      },
+    },
+    onClickSelect: {
+      description:
+        'If `selectOptions` is provided, this function is triggered when an option is selected from the list. The selected option is passed as an argument to the function.',
+      action: 'optionSelected',
+    },
   },
 } as Meta<typeof SearchInput>
 
-type Story = StoryObj<typeof SearchInput>
+type Story = StoryObj<SearchInputProps>
 
 export const Default: Story = {
   args: {
@@ -64,18 +86,11 @@ export const Default: Story = {
   },
 }
 
-/**
- * This is an example of a search input with an placeholder.
- * Just adding the **placeholder** prop with an placeholder.
- */
 export const WithPlaceholder: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<SearchInput 
-  label="SearchInput with Error" 
-  placeholder="Search anything..." 
-/>`,
+        code: `<SearchInput placeholder="Search anything..." />`,
       },
     },
   },
@@ -85,24 +100,44 @@ export const WithPlaceholder: Story = {
   },
 }
 
-/**
- * This is an example of a disabled search input.
- * Just adding the **disabled** prop with an placeholder.
- *  */
-
 export const Disabled: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<SearchInput 
-  label="SearchInput with Error" 
-  disabled
-/>`,
+        code: `<SearchInput disabled />`,
       },
     },
   },
   args: {
     ...Default.args,
     disabled: true,
+  },
+}
+
+export const WithSelectOptions: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<SearchInput 
+  placeholder="Search..." 
+  selectOptions={[
+    { value: '1', label: 'Option 1' },
+    { value: '2', label: 'Option 2' }
+  ]}
+  onClickSelect={(option) => console.log(option)} 
+/>`,
+      },
+    },
+  },
+  args: {
+    ...Default.args,
+    placeholder: 'Search...',
+    autoComplete: 'off',
+    value: 'Option',
+    selectOptions: [
+      { value: '1', label: 'Option 1', picture: 'https://placehold.co/50' },
+      { value: '2', label: 'Option 2', picture: 'https://placehold.co/50' },
+      { value: '3', label: 'Option 3', picture: 'https://placehold.co/50' },
+    ],
   },
 }
