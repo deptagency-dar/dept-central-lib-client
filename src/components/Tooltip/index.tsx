@@ -1,40 +1,71 @@
-import { HTMLAttributes, forwardRef } from 'react'
+import React, { FC, ReactNode, ReactElement } from 'react'
+import { useLayer, useHover, Arrow, Placement } from 'react-laag'
+import { motion, AnimatePresence } from 'framer-motion'
 
-interface TooltipOwnProps {
-  children: JSX.Element
-  textComponent: JSX.Element
+interface TooltipProps {
+  children: ReactNode
+  textComponent: ReactNode
+  placement?: Placement
+  maxWidth?: number
 }
 
-type TooltipPropsRootAttributes = Pick<
-  HTMLAttributes<HTMLDivElement>,
-  'className' | 'style' | 'id'
->
+export const Tooltip: FC<TooltipProps> = ({
+  children,
+  textComponent,
+  placement = 'top-center',
+  maxWidth = 320,
+}) => {
+  const [isOver, hoverProps] = useHover({ delayEnter: 100, delayLeave: 300 })
 
-type TooltipProps = TooltipPropsRootAttributes & TooltipOwnProps
+  const { triggerProps, layerProps, arrowProps, renderLayer } = useLayer({
+    isOpen: isOver,
+    placement,
+    triggerOffset: 8,
+    auto: true,
+    overflowContainer: false,
+  })
 
-const triangleStyle =
-  "before:content-[''] before:block before:w-0 before:h-0 before:border-x-8 before:border-x-transparent before:border-b-8 before:border-b-transparent before:border-t-8 before:border-t-gray-700 before:top-[100%] before:left-[45%] before:absolute"
+  const variants = {
+    visible: { opacity: 1, scale: 1 },
+    hidden: { opacity: 0, scale: 0.9 },
+  }
 
-const transitioStyle =
-  'opacity-0 ease-out duration-300 transition-all group-hover:opacity-100'
+  if (!textComponent) return <>{children}</>
 
-export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  ({ className = '', children, textComponent, ...rest }, ref) => {
-    return (
-      <div className={`${className} relative group`} {...rest} ref={ref}>
+  const trigger =
+    React.isValidElement(children) && typeof children !== 'string' ? (
+      React.cloneElement(children as ReactElement, {
+        ...triggerProps,
+        ...hoverProps,
+      })
+    ) : (
+      <span {...triggerProps} {...hoverProps}>
         {children}
-        {textComponent && (
-          <>
-            <div
-              className={`${triangleStyle} ${transitioStyle} absolute rounded-lg left-1/2 bottom-8 min-w-52	transform -translate-x-1/2 border mt-2 border-gray-700 text-center rounded-tiny p-2 z-50 bg-gray-700`}
-            >
-              <div>{textComponent}</div>
-            </div>
-          </>
-        )}
-      </div>
+      </span>
     )
-  },
-)
 
-Tooltip.displayName = 'Tooltip'
+  return (
+    <>
+      {trigger}
+      {renderLayer(
+        <AnimatePresence>
+          {isOver && (
+            <motion.div
+              {...layerProps}
+              style={{ maxWidth, ...layerProps.style }}
+              className="bg-[#344054] text-white px-3 py-2 text-sm rounded shadow-lg"
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              transition={{ duration: 0.1 }}
+            >
+              {textComponent}
+              <Arrow {...arrowProps} backgroundColor="#344054" size={6} />
+            </motion.div>
+          )}
+        </AnimatePresence>,
+      )}
+    </>
+  )
+}
