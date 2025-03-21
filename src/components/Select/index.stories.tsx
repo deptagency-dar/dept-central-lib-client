@@ -1,6 +1,6 @@
-// Select .stories.tsx
-import { StoryObj, Meta } from '@storybook/react';
-import { Select } from '.';
+import React from 'react'
+import { StoryObj, Meta } from '@storybook/react'
+import { Select } from '.'
 
 export default {
   title: 'Components/Select',
@@ -48,7 +48,8 @@ export default {
     },
     isRequired: {
       control: 'boolean',
-      description: 'Add asterisk after label to indicates the textfield is required',
+      description:
+        'Add asterisk after label to indicates the textfield is required',
       table: {
         defaultValue: { summary: false },
         type: { summary: 'boolean' },
@@ -66,9 +67,9 @@ export default {
       },
     },
   },
-} as Meta<typeof Select>;
+} as Meta<typeof Select>
 
-type Story = StoryObj<typeof Select>;
+type Story = StoryObj<typeof Select>
 
 export const Default: Story = {
   args: {
@@ -89,7 +90,7 @@ export const Default: Story = {
       </div>
     ),
   ],
-};
+}
 
 /**
  * This is an example of a Select without a label.
@@ -109,7 +110,7 @@ export const WithoutLabel: Story = {
     ...Default.args,
     label: '',
   },
-};
+}
 
 /**
  * This is an example of a disabled Select .
@@ -133,7 +134,7 @@ export const Disabled: Story = {
     ...Default.args,
     disabled: true,
   },
-};
+}
 
 export const WithHint: Story = {
   args: {
@@ -147,4 +148,18 @@ export const WithHint: Story = {
       </div>
     ),
   ],
-};
+}
+
+export const Small: Story = {
+  args: {
+    ...Default.args,
+    small: true,
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '500px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+}

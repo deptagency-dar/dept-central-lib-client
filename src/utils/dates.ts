@@ -30,6 +30,37 @@ export function getDateFormatByLocale(language?: string): string {
   return dateFormat
 }
 
+export function getDateTimeFormatByLocale(language?: string): string {
+  const locale = getLocale(language)
+  const formatter = new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  })
+
+  const parts = formatter.formatToParts(new Date())
+
+  const order = parts.map((part) => part.type)
+  const formatMap: Record<string, string> = {
+    year: 'yyyy',
+    month: 'MM',
+    day: 'dd',
+    hour: 'hh',
+    minute: 'mm',
+    dayPeriod: 'A', // AM/PM
+  }
+
+  const dateTimeFormat = order
+    .map((type, index) => formatMap[type] ?? parts[index].value)
+    .join('')
+    .toLocaleLowerCase()
+
+  return dateTimeFormat
+}
+
 export function getDaysOfWeekByLocale(language?: string): string[] {
   const locale = getLocale(language)
   const daysOfWeek: string[] = []
@@ -63,18 +94,22 @@ export function getDateStringByLocale({
   startDate,
   endDate,
   language,
+  withTime,
 }: {
   isRange: boolean
   startDate: Date | null
   endDate?: Date | null
   language?: string
+  withTime?: boolean
 }): string {
   const config: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
+    ...(withTime && { hour: '2-digit', minute: '2-digit' }),
   }
   const locale = getLocale(language)
+
   if (isRange && startDate && endDate) {
     return `${new Intl.DateTimeFormat(locale, config).format(startDate)} ~ ${new Intl.DateTimeFormat(locale, config).format(endDate)}`
   }

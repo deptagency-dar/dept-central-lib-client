@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import { Select } from '.'
@@ -46,7 +46,7 @@ describe('Select', () => {
   })
 
   it('renders options correctly', () => {
-    const { getByText } = render(
+    const { getByTestId, queryByText, debug } = render(
       <Select
         label="Select label"
         placeholder="Choose..."
@@ -55,11 +55,14 @@ describe('Select', () => {
       />,
     )
 
-    const select = getByText('Select label')
+    const select = getByTestId('select')
+
+    debug(select)
+
     fireEvent.click(select)
 
     options.forEach((option) => {
-      const optionElement = getByText(option.label)
+      const optionElement = queryByText(option.label)
       expect(optionElement).toBeInTheDocument()
     })
   })
@@ -67,7 +70,7 @@ describe('Select', () => {
   it('trigger onChange when an option is selected', () => {
     const onChange = jest.fn()
 
-    const { getByText } = render(
+    const { getByTestId, getByText } = render(
       <Select
         label="Select label"
         placeholder="Choose..."
@@ -76,17 +79,22 @@ describe('Select', () => {
       />,
     )
 
-    const select = getByText('Select label')
+    const select = getByTestId('select')
+
     fireEvent.click(select)
 
-    const option = getByText('Option 1')
-    fireEvent.click(option)
+    const firstOption = options[0].label
+    const option = getByText(firstOption)
+
+    act(() => {
+      fireEvent.click(option)
+    })
 
     expect(onChange).toHaveBeenCalledTimes(1)
   })
 
   it('displays hint text when the hint prop is provided', () => {
-    const hintMessage = "This is a hint";
+    const hintMessage = 'This is a hint'
 
     const { getByText } = render(
       <Select
@@ -96,10 +104,10 @@ describe('Select', () => {
         onChange={() => {}}
         hint={hintMessage}
       />,
-    );
+    )
 
-    expect(getByText(hintMessage)).toBeInTheDocument();
-  });
+    expect(getByText(hintMessage)).toBeInTheDocument()
+  })
 
   it('does not display hint text when the hint prop is not provided', () => {
     const { queryByText } = render(
@@ -109,9 +117,9 @@ describe('Select', () => {
         options={options}
         onChange={() => {}}
       />,
-    );
+    )
 
-    const hintMessage = "This is a hint";
-    expect(queryByText(hintMessage)).not.toBeInTheDocument();
-  });
+    const hintMessage = 'This is a hint'
+    expect(queryByText(hintMessage)).not.toBeInTheDocument()
+  })
 })
