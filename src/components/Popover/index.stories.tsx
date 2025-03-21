@@ -41,14 +41,14 @@ const Template = (args: PopOverProps) => {
 
 export const Default: StoryObj<typeof PopOver> = {
   args: {
-    placement: 'bottom-start',
+    placement: 'bottom-center',
   },
   render: Template,
 }
 
 export const CustomClassName: StoryObj<typeof PopOver> = {
   args: {
-    placement: 'bottom-start',
+    placement: 'bottom-center',
     className: 'border-primary-400 text-xl',
     hideArrow: true,
   },
