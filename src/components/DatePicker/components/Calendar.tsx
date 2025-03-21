@@ -17,7 +17,6 @@ interface CalendarProps {
   isSecondCalendar?: boolean
   isRage?: boolean
   shouldDisableDate?: (date: Date) => boolean
-  alwaysOpen?: boolean
   withTime?: boolean
 }
 
@@ -31,7 +30,6 @@ export const Calendar: FC<CalendarProps> = ({
   onSelectDate,
   onYearChange,
   shouldDisableDate = () => false,
-  alwaysOpen,
   withTime = false,
 }) => {
   const { state } = useDatePicker()
@@ -185,7 +183,7 @@ export const Calendar: FC<CalendarProps> = ({
             ${isInRange && !isStartDate && !isEndDate && isCurrentMonth ? `${styles.rangeItem}` : ''}
             ${isCurrentMonth && isDisabled ? 'line-through' : ''} 
             ${isToday ? 'text-[--datepicker-scheme]' : ''}
-            ${alwaysOpen || isDisabled ? '' : 'hover:bg-[--datepicker-hover-color]'}
+            ${isDisabled ? '' : 'hover:bg-[--datepicker-hover-color]'}
           `}
           onClick={() => {
             isCurrentMonth && onSelectDate(day)
