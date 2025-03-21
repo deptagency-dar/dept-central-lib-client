@@ -277,27 +277,17 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     if (alwaysOpen) {
       return (
         <DatePickerContext.Provider value={{ state, dispatch }}>
-          <div className="flex flex-col gap-2 items-start w-full">
-            <div style={datePickerStyles} id="datepicker" ref={ref}>
-              <div className={styles.calendar}>
-                <Calendar
-                  language={i18n}
-                  isRage={isRange}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  onMonthChange={handleMonthChange}
-                  onSelectDate={handleDateSelection}
-                  onYearChange={handleYearChange}
-                  alwaysOpen={alwaysOpen}
-                  withTime={withTime}
-                />
-              </div>
-            </div>
-            {errorMessage && (
-              <small className={styles.errorMessage} style={datePickerStyles}>
-                {errorMessage}
-              </small>
-            )}
+          <div style={datePickerStyles} className={styles.calendar} ref={ref}>
+            <Calendar
+              language={i18n}
+              isRage={isRange}
+              minDate={minDate}
+              maxDate={maxDate}
+              onMonthChange={handleMonthChange}
+              onSelectDate={handleDateSelection}
+              onYearChange={handleYearChange}
+              withTime={withTime}
+            />
           </div>
         </DatePickerContext.Provider>
       )
