@@ -14,7 +14,7 @@ export default {
 
 const Content = () => {
   return (
-    <div className="border-[1px] rounded-sm p-4">
+    <div className="p-4">
       <p>This is a popover.</p>
       <p>It can be used to display additional information.</p>
     </div>
@@ -42,6 +42,15 @@ const Template = (args: PopOverProps) => {
 export const Default: StoryObj<typeof PopOver> = {
   args: {
     placement: 'bottom-start',
+  },
+  render: Template,
+}
+
+export const CustomClassName: StoryObj<typeof PopOver> = {
+  args: {
+    placement: 'bottom-start',
+    className: 'border-primary-400 text-xl',
+    hideArrow: true,
   },
   render: Template,
 }

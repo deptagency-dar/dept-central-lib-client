@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
-import { useLayer, Placement } from 'react-laag'
+import { useLayer, Placement, Arrow } from 'react-laag'
 import { motion, AnimatePresence } from 'framer-motion'
+import { classNames } from '../../utils'
 
 export interface PopOverProps {
   content: React.ReactNode
@@ -8,6 +9,8 @@ export interface PopOverProps {
   placement?: Placement
   isOpen: boolean
   setOpen: (open: boolean) => void
+  hideArrow?: boolean
+  className?: string
 }
 
 export const PopOver: FC<PopOverProps> = ({
@@ -16,19 +19,20 @@ export const PopOver: FC<PopOverProps> = ({
   placement = 'bottom-center',
   isOpen,
   setOpen,
+  hideArrow = false,
+  className,
 }) => {
   const close = () => setOpen(false)
 
-  const { renderLayer, triggerProps, layerProps } = useLayer({
+  const { renderLayer, triggerProps, layerProps, arrowProps } = useLayer({
     isOpen,
     onOutsideClick: close,
     onDisappear: close,
     overflowContainer: false,
     auto: true,
     placement,
-    triggerOffset: 10,
-    containerOffset: 10,
     snap: true,
+    triggerOffset: hideArrow ? 6 : 10,
   })
 
   const variants = {
@@ -54,8 +58,20 @@ export const PopOver: FC<PopOverProps> = ({
               initial="closed"
               animate="open"
               exit="closed"
+              className={classNames(
+                'border-[1px] rounded-md bg-white',
+                className,
+              )}
             >
               {content}
+              {!hideArrow && (
+                <Arrow
+                  {...arrowProps}
+                  borderWidth={1}
+                  borderColor="#e5e7eb"
+                  backgroundColor="#FFF"
+                />
+              )}
             </motion.div>
           )}
         </AnimatePresence>,
