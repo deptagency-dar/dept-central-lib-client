@@ -28,7 +28,7 @@ export const PopOver: FC<PopOverProps> = ({
     isOpen,
     onOutsideClick: close,
     onDisappear: close,
-    overflowContainer: false,
+    overflowContainer: true,
     auto: true,
     placement,
     snap: true,
