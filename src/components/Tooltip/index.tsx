@@ -1,5 +1,6 @@
 import React, { FC, ReactNode, ReactElement } from 'react'
 import { useLayer, useHover, Arrow, Placement } from 'react-laag'
+import cn from 'classnames'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface TooltipProps {
@@ -7,6 +8,7 @@ interface TooltipProps {
   textComponent: ReactNode
   placement?: Placement
   maxWidth?: number
+  className?: string
 }
 
 export const Tooltip: FC<TooltipProps> = ({
@@ -14,6 +16,7 @@ export const Tooltip: FC<TooltipProps> = ({
   textComponent,
   placement = 'top-center',
   maxWidth = 320,
+  className,
 }) => {
   const [isOver, hoverProps] = useHover({ delayEnter: 100, delayLeave: 300 })
 
@@ -53,7 +56,10 @@ export const Tooltip: FC<TooltipProps> = ({
             <motion.div
               {...layerProps}
               style={{ maxWidth, ...layerProps.style }}
-              className="bg-[#344054] text-white px-3 py-2 text-sm rounded shadow-lg"
+              className={cn(
+                'bg-[#344054] text-white px-3 py-2 text-sm rounded shadow-lg',
+                className,
+              )}
               variants={variants}
               initial="hidden"
               animate="visible"
