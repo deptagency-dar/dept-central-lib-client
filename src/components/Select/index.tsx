@@ -85,7 +85,7 @@ export const Select: FC<SelectProps> = ({
 
   const { renderLayer, triggerProps, triggerBounds, layerProps } = useLayer({
     isOpen: open,
-    overflowContainer: false, // we want the menu to stay within its scroll-container
+    overflowContainer: true, // we want the menu to stay within its scroll-container
     auto: true, // auto find a placement when required
     snap: true, // snap to the possible placements (not in between)
     placement: 'bottom-start', // we prefer placement on the bottom-side

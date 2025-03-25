@@ -25,7 +25,7 @@ export const Tooltip: FC<TooltipProps> = ({
     placement,
     triggerOffset: 8,
     auto: true,
-    overflowContainer: false,
+    overflowContainer: true,
   })
 
   const variants = {
