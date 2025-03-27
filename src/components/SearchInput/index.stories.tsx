@@ -133,11 +133,30 @@ export const WithSelectOptions: Story = {
     ...Default.args,
     placeholder: 'Search...',
     autoComplete: 'off',
-    value: 'Option',
     selectOptions: [
       { value: '1', label: 'Option 1', picture: 'https://placehold.co/50' },
       { value: '2', label: 'Option 2', picture: 'https://placehold.co/50' },
       { value: '3', label: 'Option 3', picture: 'https://placehold.co/50' },
     ],
+  },
+}
+
+export const WithSelectOptionsWithouthMatches: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: `<SearchInput 
+  placeholder="Search..." 
+  selectOptions={[]}
+  onClickSelect={(option) => console.log(option)} 
+/>`,
+      },
+    },
+  },
+  args: {
+    ...Default.args,
+    placeholder: 'Search...',
+    autoComplete: 'off',
+    selectOptions: [],
   },
 }
