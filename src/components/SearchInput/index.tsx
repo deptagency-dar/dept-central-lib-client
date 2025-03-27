@@ -115,7 +115,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       debouncedDescriptionChange(e)
       const newValue = e.target.value
       setInputValue(newValue)
-      setOpen(!!newValue)
+      if (selectOptions) {
+        setOpen(!!newValue)
+      }
     }
 
     return (
@@ -144,7 +146,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             placeholder={placeholder}
             disabled={disabled}
             onClick={() => {
-              if (!open && inputValue) setOpen(true)
+              if (!open && inputValue && selectOptions) setOpen(true)
             }}
             onChange={handleInputChange}
             {...rest}
