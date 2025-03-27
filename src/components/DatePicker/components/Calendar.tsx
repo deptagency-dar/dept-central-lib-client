@@ -6,6 +6,7 @@ import { MonthSelector } from './MonthSelector'
 import { YearSelector } from './YearSelector'
 import styles from '../index.module.css'
 import { TimeSelector } from './TimeSelector'
+import clx from 'classnames'
 
 interface CalendarProps {
   language: string
@@ -177,14 +178,18 @@ export const Calendar: FC<CalendarProps> = ({
           key={date.toString()}
           id={date.toString()}
           type="button"
-          className={`
-            ${styles.day} ${!isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : ''} 
-            ${isStartDate || isEndDate ? `${styles.selected}` : ''} 
-            ${isInRange && !isStartDate && !isEndDate && isCurrentMonth ? `${styles.rangeItem}` : ''}
-            ${isCurrentMonth && isDisabled ? 'line-through' : ''} 
-            ${isToday ? 'text-[--datepicker-scheme]' : ''}
-            ${isDisabled ? '' : 'hover:bg-[--datepicker-hover-color]'}
-          `}
+          className={clx(
+            styles.day,
+            !isCurrentMonth ? 'text-gray-400 cursor-not-allowed' : 'text-black',
+            {
+              [styles.selected]: isStartDate || isEndDate,
+              [styles.rangeItem]:
+                isInRange && !isStartDate && !isEndDate && isCurrentMonth,
+              'line-through': isCurrentMonth && isDisabled,
+              'text-[--datepicker-scheme]': isToday,
+              'hover:bg-[--datepicker-hover-color]': !isDisabled,
+            },
+          )}
           onClick={() => {
             isCurrentMonth && onSelectDate(day)
           }}
