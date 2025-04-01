@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { getDaysOfWeekByLocale, getMonthsByLocale } from '../../../utils/dates'
+import { getDaysOfWeekByLocale } from '../../../utils/dates'
 import { useDatePicker } from '../use-datepicker'
 import { DayOfWeek } from './DayOfWeek'
 import { MonthSelector } from './MonthSelector'
@@ -7,6 +7,7 @@ import { YearSelector } from './YearSelector'
 import styles from '../index.module.css'
 import { TimeSelector } from './TimeSelector'
 import clx from 'classnames'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 interface CalendarProps {
   language: string
@@ -103,7 +104,7 @@ export const Calendar: FC<CalendarProps> = ({
   ) {
     const firstDay = new Date(year, month, 1)
     const lastDay = new Date(year, month + 1, 0)
-    const startDay = firstDay.getDay()
+    const startDay = (firstDay.getDay() + 6) % 7
     const lastDateOfMonth = lastDay.getDate()
 
     minDate?.setHours(0, 0, 0)
@@ -204,21 +205,45 @@ export const Calendar: FC<CalendarProps> = ({
     })
   }
 
+  const handlePreviousMonth = () => {
+    if (state.month === 0) {
+      onYearChange(state.year - 1)
+      onMonthChange(11)
+    } else {
+      onMonthChange(state.month - 1)
+    }
+  }
+
+  const handleNextMonth = () => {
+    if (state.month === 11) {
+      onYearChange(state.year + 1)
+      onMonthChange(0)
+    } else {
+      onMonthChange(state.month + 1)
+    }
+  }
+
   return (
     <div className="p-3">
-      <div className="flex justify-center mb-3">
-        <div className="relative col-span-3 flex justify-center items-center gap-x-1">
+      <div className="flex justify-between items-center mb-3 text-gray-500">
+        <button onClick={handlePreviousMonth}>
+          <ChevronLeftIcon className="w-4 h-4 stroke stroke-gray-300" />
+        </button>
+
+        <div className="relative col-span-3 flex justify-center items-center">
           <MonthSelector
+            language={language}
             selectedMonth={isSecondCalendar ? state.secondMonth : state.month}
-            months={getMonthsByLocale(language)}
             onChange={(value) => onMonthChange(parseInt(value))}
           />
-          <span className="text-gray-800 dark:text-gray-200">/</span>
           <YearSelector
             selectedYear={isSecondCalendar ? state.secondYear : state.year}
             onChange={(value) => onYearChange(parseInt(value))}
           />
         </div>
+        <button onClick={handleNextMonth}>
+          <ChevronRightIcon className="w-4 h-4 stroke stroke-gray-300" />
+        </button>
       </div>
       <div className="flex justify-center gap-x-1 pb-1.5">
         {getDaysOfWeekByLocale(language).map((day) => (

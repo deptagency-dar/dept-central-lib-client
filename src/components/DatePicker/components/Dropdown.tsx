@@ -74,7 +74,7 @@ export const Dropdown = ({
     <div className="relative">
       <button
         type="button"
-        className="bg-white rounded-md px-2 py-1 text-gray-800 hover:bg-gray-300 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-600 dark:focus:bg-gray-600"
+        className="bg-white rounded-md px-2 py-1 focus:outline-none"
         onClick={handleToggle}
       >
         {options.find((option) => option.value === selectedValue)?.label ||
