@@ -210,7 +210,7 @@ export const Select: FC<SelectProps> = ({
                     {selected?.value === option.value && (
                       <span
                         className={classNames(
-                          'absolute inset-y-0 right-0 flex items-center text-[--select-scheme]',
+                          'absolute inset-y-0 right-2 flex items-center text-[--select-scheme]',
                           small ? 'pr-2' : 'pr-4',
                         )}
                       >

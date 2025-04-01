@@ -284,13 +284,14 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         <DatePickerContext.Provider value={{ state, dispatch }}>
           <div style={datePickerStyles} className={styles.calendar} ref={ref}>
             <Calendar
-              isRage={isRange}
+              isRange={isRange}
               minDate={minDate}
               maxDate={maxDate}
               onMonthChange={handleMonthChange}
               onSelectDate={handleDateSelection}
               onYearChange={handleYearChange}
               withTime={withTime}
+              shouldDisableDate={shouldDisableDate}
             />
           </div>
         </DatePickerContext.Provider>
@@ -342,7 +343,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 role="dialog"
               >
                 <Calendar
-                  isRage={isRange}
+                  isRange={isRange}
                   minDate={minDate}
                   maxDate={maxDate}
                   onMonthChange={handleMonthChange}
@@ -353,7 +354,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 />
                 {isRange && (
                   <Calendar
-                    isRage={isRange}
+                    isRange={isRange}
                     isSecondCalendar={true}
                     minDate={minDate}
                     maxDate={maxDate}

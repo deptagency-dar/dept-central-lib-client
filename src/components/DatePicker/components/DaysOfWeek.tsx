@@ -13,9 +13,9 @@ export const DaysOfWeek = () => {
     for (let i = 0; i < 7; i++) {
       const day = new Date(Date.UTC(currentYear, 0, 0))
       day.setUTCDate(day.getUTCDate() + i)
-      const dayOfWeek = formatter
-        .format(day)
-        .replace(/^\w/, (c) => c.toUpperCase())
+
+      const dayOfWeek = formatter.format(day)
+
       daysOfWeek.push(dayOfWeek)
     }
 
@@ -25,9 +25,12 @@ export const DaysOfWeek = () => {
   const daysOfWeek = getDaysOfWeekByLocale()
 
   return (
-    <div className="flex justify-center gap-x-1 pb-1.5">
+    <div className="grid grid-cols-7 gap-2 mb-2">
       {daysOfWeek.map((day) => (
-        <span key={day} className="m-px w-8 block text-center text-gray-900">
+        <span
+          key={day}
+          className="w-10 h-10 flex justify-center items-center text-center text-gray-900"
+        >
           {day}
         </span>
       ))}

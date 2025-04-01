@@ -78,7 +78,7 @@ export const TimeSelector = () => {
   }
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 text-grayscale-900">
       <Select
         small
         options={HOURS}
