@@ -1,6 +1,6 @@
 // radio.spec.tsx
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect' // Para tener acceso a las expectativas adicionales
 
 import { SearchInput } from '.'
@@ -54,15 +54,21 @@ describe('SearchInput component', () => {
     expect(searchInput).toBeDisabled()
   })
 
-  it('triggers onChange handler when clicked', () => {
+  it('triggers onChange handler when clicked', async () => {
     const handleChange = jest.fn()
     const { getByPlaceholderText } = render(
-      <SearchInput placeholder={placeholder} onChange={handleChange} />,
+      <SearchInput
+        placeholder={placeholder}
+        onChange={handleChange}
+        debounce={0}
+      />,
     )
 
     const searchInput = getByPlaceholderText(placeholder) as HTMLInputElement
     fireEvent.input(searchInput, { target: { value: 'test' } })
-    expect(handleChange).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(handleChange).toHaveBeenCalledTimes(1)
+    })
   })
 
   it('updates when value prop changes', () => {
