@@ -1,6 +1,6 @@
 export * from './Calendar'
 export * from './DatePickerInput'
-export * from './DayOfWeek'
+export * from './DaysOfWeek'
 export * from './Dropdown'
 export * from './MonthSelector'
 export * from './YearSelector'

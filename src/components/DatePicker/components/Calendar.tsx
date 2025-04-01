@@ -1,7 +1,6 @@
 import { FC } from 'react'
-import { getDaysOfWeekByLocale } from '../../../utils/dates'
 import { useDatePicker } from '../use-datepicker'
-import { DayOfWeek } from './DayOfWeek'
+import { DaysOfWeek } from './DaysOfWeek'
 import { MonthSelector } from './MonthSelector'
 import { YearSelector } from './YearSelector'
 import styles from '../index.module.css'
@@ -10,7 +9,6 @@ import clx from 'classnames'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 interface CalendarProps {
-  language: string
   onMonthChange: (value: number) => void
   onSelectDate: (day: number, isSecondCalendar?: boolean) => void
   onYearChange: (value: number) => void
@@ -23,7 +21,6 @@ interface CalendarProps {
 }
 
 export const Calendar: FC<CalendarProps> = ({
-  language,
   isSecondCalendar,
   isRage,
   minDate,
@@ -104,7 +101,7 @@ export const Calendar: FC<CalendarProps> = ({
   ) {
     const firstDay = new Date(year, month, 1)
     const lastDay = new Date(year, month + 1, 0)
-    const startDay = (firstDay.getDay() + 6) % 7
+    const startDay = firstDay.getDay()
     const lastDateOfMonth = lastDay.getDate()
 
     minDate?.setHours(0, 0, 0)
@@ -232,7 +229,6 @@ export const Calendar: FC<CalendarProps> = ({
 
         <div className="relative col-span-3 flex justify-center items-center">
           <MonthSelector
-            language={language}
             selectedMonth={isSecondCalendar ? state.secondMonth : state.month}
             onChange={(value) => onMonthChange(parseInt(value))}
           />
@@ -246,9 +242,7 @@ export const Calendar: FC<CalendarProps> = ({
         </button>
       </div>
       <div className="flex justify-center gap-x-1 pb-1.5">
-        {getDaysOfWeekByLocale(language).map((day) => (
-          <DayOfWeek key={day} day={day} />
-        ))}
+        <DaysOfWeek />
       </div>
       <div className="grid grid-cols-7 gap-1">{dateButtons}</div>
       {withTime && (

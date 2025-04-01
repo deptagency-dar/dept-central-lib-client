@@ -78,6 +78,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         ? endDateObj.getMonth()
         : new Date().getMonth() + 1,
       rangeDays: [],
+      language: i18n,
     })
 
     const datePickerRef = useRef<HTMLDivElement>(null)
@@ -135,6 +136,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         dispatch({ type: 'SET_RANGE_DAYS', payload: [] })
       }
     }, [isRange, state.endDate, state.modalOpen, state.startDate])
+
+    useEffect(() => {
+      dispatch({ type: 'SET_LANGUAGE', payload: i18n })
+    }, [i18n])
 
     useEffect(() => {
       if (isFirstRender.current) {
@@ -279,7 +284,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         <DatePickerContext.Provider value={{ state, dispatch }}>
           <div style={datePickerStyles} className={styles.calendar} ref={ref}>
             <Calendar
-              language={i18n}
               isRage={isRange}
               minDate={minDate}
               maxDate={maxDate}
@@ -338,7 +342,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 role="dialog"
               >
                 <Calendar
-                  language={i18n}
                   isRage={isRange}
                   minDate={minDate}
                   maxDate={maxDate}
@@ -350,7 +353,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 />
                 {isRange && (
                   <Calendar
-                    language={i18n}
                     isRage={isRange}
                     isSecondCalendar={true}
                     minDate={minDate}
