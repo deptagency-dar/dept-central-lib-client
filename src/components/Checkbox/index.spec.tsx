@@ -1,13 +1,15 @@
 // checkbox.spec.tsx
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect' // Para tener acceso a las expectativas adicionales
+import '@testing-library/jest-dom/extend-expect' // For additional expectations
 
 import { Checkbox } from '.'
 
 describe('Checkbox component', () => {
   it('renders correctly with default props', () => {
-    const { getByLabelText } = render(<Checkbox readOnly>Checkbox Label</Checkbox>)
+    const { getByLabelText } = render(
+      <Checkbox readOnly>Checkbox Label</Checkbox>,
+    )
 
     const checkboxInput = getByLabelText('Checkbox Label') as HTMLInputElement
 
@@ -18,9 +20,7 @@ describe('Checkbox component', () => {
 
   it('renders as checked when the "checked" prop is true', () => {
     const { getByLabelText } = render(
-      <Checkbox defaultChecked>
-        Checkbox Label
-      </Checkbox>,
+      <Checkbox defaultChecked>Checkbox Label</Checkbox>,
     )
 
     const checkboxInput = getByLabelText('Checkbox Label') as HTMLInputElement
@@ -30,9 +30,7 @@ describe('Checkbox component', () => {
 
   it('renders as disabled when the "disabled" prop is true', () => {
     const { getByLabelText } = render(
-      <Checkbox disabled>
-        Checkbox Label
-      </Checkbox>,
+      <Checkbox disabled>Checkbox Label</Checkbox>,
     )
 
     const checkboxInput = getByLabelText('Checkbox Label') as HTMLInputElement
@@ -43,9 +41,7 @@ describe('Checkbox component', () => {
   it('triggers onChange handler when clicked', () => {
     const handleChange = jest.fn()
     const { getByLabelText } = render(
-      <Checkbox onChange={handleChange}>
-        Checkbox Label
-      </Checkbox>,
+      <Checkbox onChange={handleChange}>Checkbox Label</Checkbox>,
     )
 
     const checkboxInput = getByLabelText('Checkbox Label') as HTMLInputElement
@@ -56,9 +52,7 @@ describe('Checkbox component', () => {
 
   it('renders switch for "toggle" variant', () => {
     const { container } = render(
-      <Checkbox variant="toggle">
-        Checkbox Label
-      </Checkbox>,
+      <Checkbox variant="toggle">Checkbox Label</Checkbox>,
     )
 
     const toggle = container.querySelector('.toggleSlider')

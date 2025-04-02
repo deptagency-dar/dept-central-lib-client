@@ -157,14 +157,14 @@ export const WithError: Story = {
       source: {
         code: `<TextField 
   label="Text Field with Error" 
-  errorMessage="This is an errorMessage message" 
+  errorMessage="This is an error message" 
 />`,
       },
     },
   },
   args: {
     ...Default.args,
-    errorMessage: 'This is an errorMessage message',
+    errorMessage: 'This is an error message',
   },
 }
 

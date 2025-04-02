@@ -36,7 +36,7 @@ const getMonthDays = (
   minDate?.setHours(0, 0, 0)
   maxDate?.setHours(0, 0, 0)
 
-  // Días del mes actual
+  // Days of the current month
   const days = Array.from({ length: lastDateOfMonth }, (_, i) => {
     const day = i + 1
     const date = new Date(year, month, day)
@@ -56,7 +56,7 @@ const getMonthDays = (
     return { day, date, isCurrentMonth, isDisabled, isToday }
   })
 
-  // Días del mes anterior
+  // Days of the previous month
   const prevMonth = month === 0 ? 11 : month - 1
   const prevYear = month === 0 ? year - 1 : year
   const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate()
@@ -74,7 +74,7 @@ const getMonthDays = (
     }
   })
 
-  // Días del mes siguiente
+  // Days of the next month
   const nextMonth = month === 11 ? 0 : month + 1
   const nextYear = month === 11 ? year + 1 : year
   const daysFromNextMonth = 42 - lastDateOfMonth - daysFromPrevMonth
@@ -148,7 +148,7 @@ export const DaySelector: FC<DaySelectorProps> = ({
         const isInHoverRangeValue =
           isRange && !isSelected && isInHoverRange(date, hoveredDate)
 
-        // Determinar si está en el rango final (una vez seleccionado endDate)
+        // Determine if the date is in the final range (once endDate is selected)
         const isInSelectedRange =
           startDate && endDate && isInRange(date, startDate, endDate)
 
