@@ -2,7 +2,7 @@ import React from 'react'
 import { StoryObj, Meta } from '@storybook/react'
 import { DatePicker } from '.'
 import { colors } from '../../constants'
-import { endOfYesterday, addMonths, isWeekend } from 'date-fns'
+
 export default {
   title: 'Components/DatePicker',
   component: DatePicker,
@@ -215,19 +215,5 @@ export const WithTime: Story = {
   args: {
     ...Default.args,
     withTime: true,
-  },
-}
-
-export const WithTimeAndMinMaxDates: Story = {
-  args: {
-    ...Default.args,
-    withTime: true,
-    alwaysOpen: true,
-    startDate: new Date(),
-    minDate: endOfYesterday(),
-    maxDate: addMonths(new Date(), 1),
-    shouldDisableDate: (date) => isWeekend(date),
-    label: 'Select your next meeting date to use as a reference',
-    hint: 'Weekdays only',
   },
 }
