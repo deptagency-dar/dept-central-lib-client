@@ -18,6 +18,7 @@
     "build": "npm run clean && webpack",
     "build:prod": "npm run clean && webpack --mode production",
     "clean": "rimraf dist",
+    "dev": "webpack --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
