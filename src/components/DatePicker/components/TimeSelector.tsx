@@ -21,7 +21,9 @@ export const TimeSelector = () => {
 
   const currentDate = state.startDate ? new Date(state.startDate) : null
   const currentHour = currentDate ? currentDate.getHours() : null
-  const currentMinutes = currentDate ? currentDate.getMinutes() : null
+  const currentMinutes = currentDate
+    ? Math.ceil(currentDate.getMinutes() / 5) * 5
+    : null
 
   const isPM = currentHour !== null && currentHour >= 12
   const displayHour =

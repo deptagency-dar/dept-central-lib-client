@@ -25,7 +25,7 @@ export const DaysOfWeek = () => {
   const daysOfWeek = getDaysOfWeekByLocale()
 
   return (
-    <div className="grid grid-cols-7 gap-2 mb-2">
+    <div className="grid grid-cols-7 gap-x-1.5 gap-y-1 place-items-center mb-2">
       {daysOfWeek.map((day) => (
         <span
           key={day}

@@ -136,7 +136,7 @@ export const DaySelector: FC<DaySelectorProps> = ({
   const allDays = getMonthDays(year, month, minDate, maxDate, shouldDisableDate)
 
   return (
-    <div className="grid grid-cols-7 gap-x-1.5 gap-y-1">
+    <div className="grid grid-cols-7 gap-x-1.5 gap-y-1 place-items-center">
       {allDays.map(({ day, date, isCurrentMonth, isDisabled, isToday }) => {
         const startDate = state.startDate ? new Date(state.startDate) : null
         const endDate = state.endDate ? new Date(state.endDate) : null

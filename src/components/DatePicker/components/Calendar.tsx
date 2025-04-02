@@ -53,7 +53,7 @@ export const Calendar: FC<CalendarProps> = ({
   }
 
   return (
-    <div className="p-6 min-w-[24.5rem]">
+    <div className="p-4 w-max">
       <div className="flex items-center text-gray-500 mb-2">
         {!isRange && (
           <button onClick={handlePreviousMonth}>
