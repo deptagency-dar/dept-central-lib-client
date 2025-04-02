@@ -19,26 +19,26 @@ import { DatePicker } from 'dept-central-lib-client'
 
 ## Props
 
-Aquí está la tabla de propiedades actualizada para el componente `DatePicker`:
+Here is the updated props table for the `DatePicker` component:
 
 ## Props
 
-| Prop        | Type                                                                    | Description                                               | Default Value |
-| ----------- | ----------------------------------------------------------------------- | --------------------------------------------------------- | ------------- |
-| startDate   | Date                                                                    | Initial start date for the date picker.                   | -             |
-| endDate     | Date                                                                    | Initial end date for the date picker.                     | -             |
+| Prop         | Type                                                                    | Description                                              | Default Value |
+| ------------ | ----------------------------------------------------------------------- | -------------------------------------------------------- | ------------- |
+| startDate    | Date                                                                    | Initial start date for the date picker.                  | -             |
+| endDate      | Date                                                                    | Initial end date for the date picker.                    | -             |
 | errorMessage | string                                                                  | Displays an errorMessage message below the select input. | -             |
-| isRange     | boolean                                                                 | Specifies whether the date picker is in range mode.       | false         |
-| colorScheme | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | Specifies the color scheme for the date picker.           | "primary"     |
-| colorShade  | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | Specifies the color shade for the date picker.            | 600           |
-| config      | DatePickerConfig                                                        | Additional configurations for the date picker.            | -             |
-| maxDate     | Date                                                                    | Maximum allowed date for selection in the date picker.    | -             |
-| minDate     | Date                                                                    | Minimum allowed date for selection in the date picker.    | -             |
-| placeholder | string                                                                  | Placeholder text for the date picker input.               | -             |
-| onChange    | (value: { startDate: Date; endDate?: Date }) => void                    | Function triggered on date selection.                     | -             |
-| onBlur      | (value?: { startDate?: Date; endDate?: Date }) => void                  | Function triggered when the date picker loses focus.      | -             |
-| disabled    | boolean                                                                 | Disables the date picker if set to `true`.                | false         |
-| id          | string                                                                  | Specifies the id for the date picker.                     | -             |
+| isRange      | boolean                                                                 | Specifies whether the date picker is in range mode.      | false         |
+| colorScheme  | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | Specifies the color scheme for the date picker.          | "primary"     |
+| colorShade   | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | Specifies the color shade for the date picker.           | 600           |
+| config       | DatePickerConfig                                                        | Additional configurations for the date picker.           | -             |
+| maxDate      | Date                                                                    | Maximum allowed date for selection in the date picker.   | -             |
+| minDate      | Date                                                                    | Minimum allowed date for selection in the date picker.   | -             |
+| placeholder  | string                                                                  | Placeholder text for the date picker input.              | -             |
+| onChange     | (value: { startDate: Date; endDate?: Date }) => void                    | Function triggered on date selection.                    | -             |
+| onBlur       | (value?: { startDate?: Date; endDate?: Date }) => void                  | Function triggered when the date picker loses focus.     | -             |
+| disabled     | boolean                                                                 | Disables the date picker if set to `true`.               | false         |
+| id           | string                                                                  | Specifies the id for the date picker.                    | -             |
 
 ## Styling
 

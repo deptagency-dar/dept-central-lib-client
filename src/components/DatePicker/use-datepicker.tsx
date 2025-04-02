@@ -9,6 +9,7 @@ export interface DatePickerState {
   month: number
   secondMonth: number
   rangeDays: Date[]
+  language: string
 }
 
 export type Action =
@@ -20,6 +21,7 @@ export type Action =
   | { type: 'SET_MONTH'; payload: number }
   | { type: 'SET_SECOND_MONTH'; payload: number }
   | { type: 'SET_RANGE_DAYS'; payload: Date[] }
+  | { type: 'SET_LANGUAGE'; payload: string }
 
 export const datePickerReducer = (
   state: DatePickerState,
@@ -42,6 +44,8 @@ export const datePickerReducer = (
       return { ...state, secondMonth: action.payload }
     case 'SET_RANGE_DAYS':
       return { ...state, rangeDays: action.payload }
+    case 'SET_LANGUAGE':
+      return { ...state, language: action.payload }
     default:
       return state
   }

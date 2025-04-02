@@ -1,17 +1,13 @@
 // radio.spec.tsx
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect' // Para tener acceso a las expectativas adicionales
+import '@testing-library/jest-dom/extend-expect' // For additional expectations
 
 import { Radio } from '.'
 
 describe('Radio component', () => {
   it('renders correctly with default props', () => {
-    const { getByLabelText } = render(
-      <Radio readOnly>
-        Radio Label
-      </Radio>,
-    )
+    const { getByLabelText } = render(<Radio readOnly>Radio Label</Radio>)
 
     const radioInput = getByLabelText('Radio Label') as HTMLInputElement
 
@@ -21,11 +17,7 @@ describe('Radio component', () => {
   })
 
   it('renders as checked when the "checked" prop is true', () => {
-    const { getByLabelText } = render(
-      <Radio defaultChecked>
-        Radio Label
-      </Radio>,
-    )
+    const { getByLabelText } = render(<Radio defaultChecked>Radio Label</Radio>)
 
     const radioInput = getByLabelText('Radio Label') as HTMLInputElement
 
@@ -33,11 +25,7 @@ describe('Radio component', () => {
   })
 
   it('renders as disabled when the "disabled" prop is true', () => {
-    const { getByLabelText } = render(
-      <Radio disabled>
-        Radio Label
-      </Radio>,
-    )
+    const { getByLabelText } = render(<Radio disabled>Radio Label</Radio>)
 
     const radioInput = getByLabelText('Radio Label') as HTMLInputElement
 
@@ -57,11 +45,7 @@ describe('Radio component', () => {
   })
 
   it('updates when checked prop changes', () => {
-    const { getByLabelText, rerender } = render(
-      <Radio>
-        Radio Label
-      </Radio>,
-    )
+    const { getByLabelText, rerender } = render(<Radio>Radio Label</Radio>)
     const radioInput = getByLabelText('Radio Label') as HTMLInputElement
 
     expect(radioInput).not.toBeChecked()

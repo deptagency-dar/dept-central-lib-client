@@ -52,8 +52,9 @@ export default {
       },
     },
     i18n: {
-      control: 'text',
+      control: 'select',
       description: 'Internationalization config',
+      options: ['en', 'es', 'fr', 'de', 'it'],
       table: {
         defaultValue: { summary: 'en' },
         type: { summary: 'string' },
@@ -143,7 +144,7 @@ export const RangeDatePicker: Story = {
   args: {
     ...Default.args,
     startDate: new Date('2024-02-20'),
-    endDate: new Date('2024-02-26'),
+    endDate: new Date('2024-03-20'),
     isRange: true,
   },
 }
@@ -207,16 +208,6 @@ export const AlwaysOpenCalendar: Story = {
     startDate: new Date(),
     isRange: false,
     alwaysOpen: true,
-  },
-}
-
-export const AlwaysOpenRangeDatePicker: Story = {
-  args: {
-    ...Default.args,
-    alwaysOpen: true,
-    startDate: new Date('2024-02-20'),
-    endDate: new Date('2024-02-26'),
-    isRange: true,
   },
 }
 

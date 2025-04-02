@@ -1,4 +1,4 @@
-function getLocale(language?: string): string {
+export function getLocale(language?: string): string {
   if (!language) {
     return navigator.language
   } else if (language.length === 2) {
@@ -59,24 +59,6 @@ export function getDateTimeFormatByLocale(language?: string): string {
     .toLocaleLowerCase()
 
   return dateTimeFormat
-}
-
-export function getDaysOfWeekByLocale(language?: string): string[] {
-  const locale = getLocale(language)
-  const daysOfWeek: string[] = []
-  const formatter = new Intl.DateTimeFormat(locale, { weekday: 'short' })
-  const currentYear = new Date().getUTCFullYear()
-
-  for (let i = 0; i < 7; i++) {
-    const day = new Date(Date.UTC(currentYear, 0, 2))
-    day.setUTCDate(day.getUTCDate() + i)
-    const dayOfWeek = formatter
-      .format(day)
-      .replace(/^\w/, (c) => c.toUpperCase())
-    daysOfWeek.push(dayOfWeek)
-  }
-
-  return daysOfWeek
 }
 
 export function getMonthsByLocale(language?: string): string[] {

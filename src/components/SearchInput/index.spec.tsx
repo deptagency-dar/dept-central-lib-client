@@ -1,7 +1,7 @@
 // radio.spec.tsx
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect' // Para tener acceso a las expectativas adicionales
+import '@testing-library/jest-dom/extend-expect' // For additional expectations
 
 import { SearchInput } from '.'
 

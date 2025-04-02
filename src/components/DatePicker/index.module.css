@@ -21,10 +21,6 @@
   composes: smallBold from '../../styles/typography.module.css';
 }
 
-.day {
-  @apply w-8 h-8 flex justify-center items-center mx-px rounded-full;
-}
-
 .selected {
   @apply bg-[--datepicker-scheme] text-white;
 }
@@ -35,10 +31,6 @@
 
 .hovered {
   @apply bg-[--datepicker-hover-color];
-}
-
-.rangeItem {
-  @apply bg-[--datepicker-range-item-color];
 }
 
 .disabled {
