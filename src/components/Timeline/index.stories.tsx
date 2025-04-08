@@ -33,20 +33,41 @@ export const Default: Story = {
   args: {
     items: [
       {
-        icon: <CheckIcon className=" text-white bg-success-500 p-2" />,
+        icon: <CheckIcon className="text-white bg-success-500 p-2" />,
         title: 'Alert Created',
         subtitle: 'John Snow',
         caption: 'Friday June 13, 2024',
       },
       {
-        icon: <CheckIcon className="text-white bg-success-500 p-2" />,
+        icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
         title: 'Reminder',
-        subtitle: 'Remind created',
-        caption: 'Monday June 23, 2024',
+        cta: {
+          label: 'Make a reminder',
+          url: 'https://central.ar.deptagency.com',
+        },
+      },
+      {
+        icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
+        title: 'Reminder',
       },
       {
         icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
         title: 'Closed',
+      },
+    ],
+  } satisfies TimelineProps,
+}
+
+export const TimelineItemWithCTA: Story = {
+  args: {
+    items: [
+      {
+        icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
+        title: 'Click below to open',
+        cta: {
+          label: 'CTA Label',
+          url: 'https://central.ar.deptagency.com',
+        },
       },
     ],
   } satisfies TimelineProps,

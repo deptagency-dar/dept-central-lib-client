@@ -21,6 +21,14 @@ const mockItems: TimelineItem[] = [
     icon: <MockIcon />,
     title: 'Third',
   },
+  {
+    icon: <MockIcon />,
+    title: 'Fourth',
+    cta: {
+      label: 'View more',
+      url: 'https://example.com',
+    },
+  },
 ]
 
 describe('Timeline', () => {
@@ -32,15 +40,18 @@ describe('Timeline', () => {
     })
   })
 
-  it('show subtitle and caption if they exist', () => {
-    expect.assertions(2)
+  it('shows subtitle and caption if they exist, or CTA when provided', () => {
     render(<Timeline items={mockItems} />)
 
     expect(screen.getByText('Subtitle one')).toBeInTheDocument()
     expect(screen.getByText('Caption 1')).toBeInTheDocument()
+
+    const ctaLink = screen.getByRole('link', { name: 'View more' })
+    expect(ctaLink).toBeInTheDocument()
+    expect(ctaLink).toHaveAttribute('href', 'https://example.com')
   })
 
-  it('shows "-" if subtitle or caption not exist', () => {
+  it('shows "-" if subtitle or caption not exist and no CTA is provided', () => {
     render(<Timeline items={mockItems} />)
 
     const placeholders = screen.getAllByText('-')
@@ -52,5 +63,18 @@ describe('Timeline', () => {
 
     const icons = screen.getAllByTestId('icon')
     expect(icons).toHaveLength(mockItems.length)
+  })
+
+  it('applies expected Tailwind classes for layout, icon size, and line height', () => {
+    const { container } = render(<Timeline items={mockItems} />)
+
+    const wrapper = container.querySelector('div')
+    expect(wrapper?.className).toMatch(/gap-10/)
+
+    const iconContainer = screen.getAllByTestId('icon')[0].parentElement
+    expect(iconContainer?.className).toMatch(/size-10/)
+
+    const line = screen.getAllByRole('presentation')[0]
+    expect(line).toHaveClass('h-[100px]')
   })
 })
