@@ -30,8 +30,9 @@ export const Timeline = ({ items }: TimelineProps) => {
   return (
     <div className="flex flex-col gap-10">
       {items.map((item, index) => {
+        const { icon: IconComponent, title, subtitle, caption, cta } = item
+
         const isLast = index === items.length - 1
-        const IconComponent = item.icon
 
         return (
           <div key={index} className="flex items-center gap-4">
@@ -51,22 +52,22 @@ export const Timeline = ({ items }: TimelineProps) => {
               <p
                 className={cn(typography.baseBold, 'text-grayscale-900 mb-0.5')}
               >
-                {item.title}
+                {title}
               </p>
-              {item.cta ? (
+              {cta ? (
                 <a
-                  href={item.cta.url}
+                  href={cta.url}
                   className="cursor-pointer underline text-primary-600 underline-offset-[0.5rem] text-base font-medium hover:text-primary-700"
                 >
-                  {item.cta.label}
+                  {cta.label}
                 </a>
               ) : (
                 <>
                   <p className={cn(typography.smallBold, 'text-grayscale-700')}>
-                    {item.subtitle || '-'}
+                    {subtitle || '-'}
                   </p>
                   <p className={cn(typography.small, 'text-grayscale-400')}>
-                    {item.caption || '-'}
+                    {caption || '-'}
                   </p>
                 </>
               )}
