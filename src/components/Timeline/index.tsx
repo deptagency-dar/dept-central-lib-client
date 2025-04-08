@@ -36,7 +36,7 @@ export const Timeline = ({ items }: TimelineProps) => {
         return (
           <div key={index} className="flex items-center gap-4">
             <div className="relative flex flex-col items-center">
-              <div className="size-10 overflow-hidden rounded-full">
+              <div className="size-10 overflow-hidden rounded-full flex justify-center items-center">
                 {IconComponent}
               </div>
               {!isLast && (
