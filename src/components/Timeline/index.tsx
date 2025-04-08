@@ -28,7 +28,7 @@ export interface TimelineProps {
  */
 export const Timeline = ({ items }: TimelineProps) => {
   return (
-    <div className="relative flex flex-col gap-10">
+    <div className="flex flex-col gap-10">
       {items.map((item, index) => {
         const isLast = index === items.length - 1
         const IconComponent = item.icon
