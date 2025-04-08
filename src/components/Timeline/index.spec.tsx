@@ -6,23 +6,23 @@ const MockIcon = () => <span data-testid="icon">🔥</span>
 
 const mockItems: TimelineItem[] = [
   {
-    icon: <MockIcon />,
+    icon: MockIcon,
     title: 'First',
     subtitle: 'Subtitle one',
     caption: 'Caption 1',
   },
   {
-    icon: <MockIcon />,
+    icon: MockIcon,
     title: 'Second',
     subtitle: 'Subtitle two',
     caption: 'Caption 2',
   },
   {
-    icon: <MockIcon />,
+    icon: MockIcon,
     title: 'Third',
   },
   {
-    icon: <MockIcon />,
+    icon: MockIcon,
     title: 'Fourth',
     cta: {
       label: 'View more',

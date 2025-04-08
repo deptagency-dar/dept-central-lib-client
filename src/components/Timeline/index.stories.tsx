@@ -1,5 +1,4 @@
 // TextField.stories.tsx
-import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import { Timeline, TimelineProps } from '.'
 import { CheckIcon, ClockIcon } from '@heroicons/react/24/outline'
@@ -33,13 +32,15 @@ export const Default: Story = {
   args: {
     items: [
       {
-        icon: <CheckIcon className="text-white bg-success-500 p-2" />,
+        icon: CheckIcon,
+        iconColorScheme: 'success',
+        iconColorShade: 500,
         title: 'Alert Created',
         subtitle: 'John Snow',
         caption: 'Friday June 13, 2024',
       },
       {
-        icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
+        icon: ClockIcon,
         title: 'Reminder',
         cta: {
           label: 'Make a reminder',
@@ -47,7 +48,7 @@ export const Default: Story = {
         },
       },
       {
-        icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
+        icon: ClockIcon,
         title: 'Reminder',
       },
     ],
@@ -58,7 +59,7 @@ export const TimelineItemWithOnlyTitle: Story = {
   args: {
     items: [
       {
-        icon: <CheckIcon className="text-white bg-success-500 p-2" />,
+        icon: CheckIcon,
         title: 'This is the title',
       },
     ],
@@ -69,7 +70,7 @@ export const TimelineItemWithSubtitleAndCaption: Story = {
   args: {
     items: [
       {
-        icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
+        icon: ClockIcon,
         title: 'This is the title',
         subtitle: 'John Snow',
         caption: 'Friday June 13, 2024',
@@ -82,23 +83,8 @@ export const TimelineItemWithCTA: Story = {
   args: {
     items: [
       {
-        icon: <ClockIcon className="text-white bg-grayscale-300 p-2" />,
+        icon: ClockIcon,
         title: 'Only CTA',
-        cta: {
-          label: 'CTA Label',
-          url: 'https://central.ar.deptagency.com',
-        },
-      },
-    ],
-  } satisfies TimelineProps,
-}
-
-export const TimelineItemWithEmojiAsIcon: Story = {
-  args: {
-    items: [
-      {
-        icon: <span data-testid="icon">🔥</span>,
-        title: 'Emoji as Icon',
         cta: {
           label: 'CTA Label',
           url: 'https://central.ar.deptagency.com',

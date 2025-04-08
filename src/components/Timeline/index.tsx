@@ -1,10 +1,13 @@
-import { ReactNode } from 'react'
 import typography from '../../styles/typography.module.css'
-import { classNames as cn } from '../../utils'
+import { classNames as cn, getColor } from '../../utils'
+import { ColorPalette, ColorShade } from '../../types'
+import { ElementType } from 'react'
 
 export interface TimelineItem {
-  icon: ReactNode
+  icon: ElementType
   title: string
+  iconColorScheme?: keyof ColorPalette
+  iconColorShade?: keyof ColorShade
   subtitle?: string
   caption?: string
   cta?: { label: string; url: string }
@@ -30,7 +33,17 @@ export const Timeline = ({ items }: TimelineProps) => {
   return (
     <div className="flex flex-col gap-10">
       {items.map((item, index) => {
-        const { icon: IconComponent, title, subtitle, caption, cta } = item
+        const {
+          icon: Icon,
+          iconColorScheme = 'grayscale',
+          iconColorShade = 300,
+          title,
+          subtitle,
+          caption,
+          cta,
+        } = item
+
+        const iconColor = getColor(iconColorScheme, iconColorShade)
 
         const isLast = index === items.length - 1
 
@@ -38,7 +51,12 @@ export const Timeline = ({ items }: TimelineProps) => {
           <div key={index} className="flex items-center gap-4">
             <div className="relative flex flex-col items-center">
               <div className="size-10 overflow-hidden rounded-full flex justify-center items-center">
-                {IconComponent}
+                {
+                  <Icon
+                    className="text-white p-2"
+                    style={{ backgroundColor: iconColor }}
+                  />
+                }
               </div>
               {!isLast && (
                 <div
