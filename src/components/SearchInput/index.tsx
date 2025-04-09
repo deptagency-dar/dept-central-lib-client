@@ -12,6 +12,7 @@ import { classNames, getLightenColor, getColor } from '../../utils'
 import { ColorShade, ColorPalette } from '../../types'
 import typography from '../../styles/typography.module.css'
 import { useDebounce } from '../../utils/client-functions'
+import { DefaultAvatarIcon } from '../../svg/AvatarIcon'
 
 interface SelectOption {
   value: string
@@ -195,7 +196,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
                           className="size-8 rounded-full"
                           loading="lazy"
                         />
-                      ) : null}
+                      ) : (
+                        <DefaultAvatarIcon className="size-8" />
+                      )}
                       <span className="block truncate text-md">
                         {option.label}
                       </span>
