@@ -1,4 +1,5 @@
 import React from 'react'
+import { DefaultAvatarIcon } from '../../svg/AvatarIcon'
 
 interface User {
   name: string | null
@@ -51,21 +52,23 @@ export const Avatar: React.FC<TProps> = ({
   }
 
   function avatar() {
-    const noImageIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"> 
-                            <rect width="100%" height="100%" fill="#D0D5DD" /> 
-                            <path fill="white" stroke="white" stroke-width="1" transform="scale(0.8) translate(3, 3)" stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /> 
-                          </svg>`;
-
     return (
       <div className="flex flex-col items-center relative">
-        <img
-          className="rounded-full"
-          style={{ width: imageWidth }}
-          referrerPolicy="no-referrer"
-          src={user.image || `data:image/svg+xml;base64,${btoa(noImageIcon)}`}
-          alt="Avatar"
-          data-testid={user.image ? undefined : 'default-avatar-icon'}
-        />
+        {user.image ? (
+          <img
+            className="rounded-full"
+            style={{ width: imageWidth }}
+            referrerPolicy="no-referrer"
+            src={user.image}
+            alt="Avatar"
+          />
+        ) : (
+          <DefaultAvatarIcon
+            data-testid="default-avatar-icon"
+            size={imageWidth}
+          />
+        )}
+
         {renderStatus()}
       </div>
     )

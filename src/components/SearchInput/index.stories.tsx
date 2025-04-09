@@ -134,14 +134,14 @@ export const WithSelectOptions: Story = {
     placeholder: 'Search...',
     autoComplete: 'off',
     selectOptions: [
-      { value: '1', label: 'Option 1', picture: 'https://placehold.co/50' },
+      { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2', picture: 'https://placehold.co/50' },
       { value: '3', label: 'Option 3', picture: 'https://placehold.co/50' },
     ],
   },
 }
 
-export const WithSelectOptionsWithouthMatches: Story = {
+export const WithSelectOptionsWithoutMatches: Story = {
   parameters: {
     docs: {
       source: {
