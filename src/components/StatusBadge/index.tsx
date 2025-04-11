@@ -6,11 +6,11 @@ type StatusBadgePropsRootAttributes = Pick<
 >
 
 interface StatusBadgeOwnProps {
-  type: 'pending' | 'denied' | 'approved'
+  type: 'pending' | 'denied' | 'approved' | 'reminded' | 'archived' | 'resolved'
   text?: string | null
 }
 
-type StatusBadgeProps = StatusBadgePropsRootAttributes & StatusBadgeOwnProps
+export type StatusBadgeProps = StatusBadgePropsRootAttributes & StatusBadgeOwnProps
 
 export const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
   ({ className = '', type, text = null, ...rest }, ref) => {

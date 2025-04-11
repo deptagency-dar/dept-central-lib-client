@@ -33,3 +33,39 @@
 .text-denied {
   @apply text-error-700;
 }
+
+.reminded {
+  @apply bg-error-100;
+}
+
+.dot-reminded {
+  @apply bg-error-500;
+}
+
+.text-reminded {
+  @apply text-error-700;
+}
+
+.archived {
+  @apply bg-grayscale-200;
+}
+
+.dot-archived {
+  @apply bg-grayscale-500;
+}
+
+.text-archived {
+  @apply text-grayscale-700;
+}
+
+.resolved {
+  @apply bg-success-100;
+}
+
+.dot-resolved {
+  @apply bg-success-500;
+}
+
+.text-resolved {
+  @apply text-success-700;
+}
