@@ -1,3 +1,5 @@
+'use client'
+
 import { CSSProperties, useRef } from 'react'
 import { useDatePicker } from '../use-datepicker'
 import { getDateStringByLocale } from '../../../utils/dates'

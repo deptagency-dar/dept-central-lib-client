@@ -1,3 +1,5 @@
+'use client'
+
 import { FC, useState } from 'react'
 import clx from 'classnames'
 import { useDatePicker } from '../use-datepicker'

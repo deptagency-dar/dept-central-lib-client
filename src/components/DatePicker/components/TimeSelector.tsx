@@ -1,3 +1,5 @@
+'use client'
+
 import { Select, SelectOption } from '../../Select'
 import { useDatePicker } from '../use-datepicker'
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { Dispatch, createContext, useContext } from 'react'
 
 export interface DatePickerState {
