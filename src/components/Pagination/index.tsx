@@ -1,3 +1,5 @@
+'use client'
+
 import { FC, useState, useEffect } from 'react'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid'
 import { TextField } from '../TextField'
@@ -22,7 +24,7 @@ export const Pagination: FC<PaginationProps> = ({
   className = '',
 }) => {
   const [windowWidth, setWindowWidth] = useState(0)
-  const [inputValue, setInputValue] = useState<string>(String(itemsPerPage));
+  const [inputValue, setInputValue] = useState<string>(String(itemsPerPage))
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   useEffect(() => {
@@ -75,25 +77,25 @@ export const Pagination: FC<PaginationProps> = ({
     } else if (event.key === 'Enter') {
       event.currentTarget.blur()
     }
-  };
+  }
 
   const handleItemsPerPageChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const value = event.target.value;
+    const value = event.target.value
     if (value === '' || (!isNaN(Number(value)) && Number(value) > 0)) {
-      setInputValue(value);
+      setInputValue(value)
     }
-  };
+  }
 
   const handleBlur = () => {
-    const numValue = Number(inputValue);
+    const numValue = Number(inputValue)
     if (!isNaN(numValue) && numValue > 0) {
-      onItemsPerPageChange?.(numValue);
+      onItemsPerPageChange?.(numValue)
     } else {
-      setInputValue(String(itemsPerPage));
+      setInputValue(String(itemsPerPage))
     }
-  };
+  }
 
   const itemsPerPageSelector = () => (
     <div className="flex items-center gap-2 w-fit">
@@ -106,7 +108,7 @@ export const Pagination: FC<PaginationProps> = ({
       />
       <span className="whitespace-nowrap text-gray-700">Items per page</span>
     </div>
-  );
+  )
 
   if (totalPages <= 1 && !showItemsPerPage) return null
 
@@ -156,7 +158,6 @@ export const Pagination: FC<PaginationProps> = ({
         <span className="max-sm:hidden sm:inline">Next</span>
         <ArrowRightIcon className="w-4 h-4 ml-2" aria-hidden="true" />
       </button>
-
     </div>
   )
 }

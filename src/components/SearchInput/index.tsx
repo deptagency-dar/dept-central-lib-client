@@ -1,3 +1,5 @@
+'use client'
+
 // SearchInput.tsx
 import {
   forwardRef,

@@ -1,3 +1,5 @@
+'use client'
+
 import { forwardRef, ForwardedRef, useEffect, useRef, useReducer } from 'react'
 import {
   classNames,

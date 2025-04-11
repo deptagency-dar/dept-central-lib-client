@@ -1,3 +1,5 @@
+'use client'
+
 import React, { FC } from 'react'
 import { useLayer, Placement, Arrow } from 'react-laag'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -70,6 +72,8 @@ export const PopOver: FC<PopOverProps> = ({
                   borderWidth={1}
                   borderColor="#e5e7eb"
                   backgroundColor="#FFF"
+                  onPointerEnterCapture={() => {}}
+                  onPointerLeaveCapture={() => {}}
                 />
               )}
             </motion.div>

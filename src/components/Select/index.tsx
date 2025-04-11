@@ -1,3 +1,5 @@
+'use client'
+
 // Select.tsx
 import { FC, useCallback, useEffect, useState } from 'react'
 import {
