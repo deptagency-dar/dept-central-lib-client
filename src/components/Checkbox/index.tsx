@@ -1,3 +1,5 @@
+'use client'
+
 // Checkbox.tsx
 import React, {
   forwardRef,
@@ -69,9 +71,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       disabledColor,
     )
 
-    const handleCheckboxChange = (
-      event: ChangeEvent<HTMLInputElement>,
-    ) => {
+    const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
       const { checked } = event.target
       if (onChange) {
         onChange(checked)

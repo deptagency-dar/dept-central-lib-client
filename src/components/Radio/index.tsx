@@ -1,3 +1,5 @@
+'use client'
+
 // Radio.tsx
 import { forwardRef, ForwardedRef, InputHTMLAttributes } from 'react'
 import { colors } from '../../constants'
@@ -56,12 +58,10 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     const radioStyles = createRadioStyles(color, initialColor, disabledColor)
     return (
       <label className={styles.radio} style={radioStyles}>
-        <input
-          type="radio"
-          ref={ref}
-          {...rest}
-        />
-        {children && <span className="text-sm leading-6 text-gray-500">{children}</span>}
+        <input type="radio" ref={ref} {...rest} />
+        {children && (
+          <span className="text-sm leading-6 text-gray-500">{children}</span>
+        )}
       </label>
     )
   },

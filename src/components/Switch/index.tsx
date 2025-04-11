@@ -1,3 +1,5 @@
+'use client'
+
 // Switch.tsx
 
 import { useEffect, forwardRef, useState } from 'react'
