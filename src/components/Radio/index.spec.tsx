@@ -50,7 +50,7 @@ describe('Radio component', () => {
 
     expect(radioInput).not.toBeChecked()
 
-    rerender(<Radio defaultChecked>Radio Label</Radio>)
+    rerender(<Radio checked>Radio Label</Radio>)
 
     expect(radioInput).toBeChecked()
   })
