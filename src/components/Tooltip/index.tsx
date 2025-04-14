@@ -67,7 +67,13 @@ export const Tooltip: FC<TooltipProps> = ({
               transition={{ duration: 0.1 }}
             >
               {textComponent}
-              <Arrow {...arrowProps} backgroundColor="#344054" size={6} />
+              <Arrow
+                {...arrowProps}
+                backgroundColor="#344054"
+                size={6}
+                onPointerEnterCapture={() => {}}
+                onPointerLeaveCapture={() => {}}
+              />
             </motion.div>
           )}
         </AnimatePresence>,
