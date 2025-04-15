@@ -14,6 +14,10 @@
       "main"
     ]
   },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=11.0.0"
+  },
   "scripts": {
     "build": "npm run clean && webpack",
     "build:prod": "npm run clean && webpack --mode production",
