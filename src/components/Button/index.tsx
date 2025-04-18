@@ -4,6 +4,7 @@ import { ButtonHTMLAttributes, ForwardedRef, forwardRef } from 'react'
 import { ColorPalette, ColorShade } from '../../types'
 import { getColor, getContrastColor, getDarkenColor } from '../../utils'
 import styles from './index.module.css'
+import cn from 'classnames'
 
 interface ButtonOwnProps {
   colorScheme?: keyof ColorPalette
@@ -70,7 +71,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        className={`${styles[variant]} ${disabled ? styles.disabled : ''} ${className}`}
+        className={cn(styles[variant], disabled && styles.disabled, className)}
         disabled={disabled}
         ref={ref}
         style={buttonStyles}
