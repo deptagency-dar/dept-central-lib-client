@@ -1,4 +1,5 @@
 import { Fragment, HTMLAttributes, forwardRef } from 'react'
+import cn from 'classnames'
 
 interface TableOwnProps {
   head: HeadProps
@@ -12,7 +13,13 @@ interface HeadProps {
 }
 
 interface BodyProps {
-  bodyComponent: Array<Array<JSX.Element | string | (JSX.Element & string)>>
+  bodyComponent: Array<RowProps>
+  className?: string
+}
+
+interface RowProps {
+  data: Array<JSX.Element | string | (JSX.Element & string)>
+  onClick?: () => void
   className?: string
 }
 
@@ -47,13 +54,18 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
           </tr>
         </thead>
         <tbody>
-          {body.bodyComponent.map((items, index) => {
+          {body.bodyComponent.map(({ data, onClick, className }, index) => {
             return (
               <tr
                 key={`tr-item-${index}`}
-                className="border-b border-b-gray-200"
+                {...(onClick && { onClick })}
+                className={cn(
+                  'border-b border-b-gray-200',
+                  onClick && 'cursor-pointer',
+                  className,
+                )}
               >
-                {items.map((item, subIndex) => {
+                {data.map((item, subIndex) => {
                   return (
                     <td
                       className="px-4 py-5 text-left"
