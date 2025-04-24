@@ -1,8 +1,10 @@
 import { Fragment, HTMLAttributes, forwardRef } from 'react'
+import cn from 'classnames'
 
 interface TableOwnProps {
   head: HeadProps
   body: BodyProps
+  rowProps?: RowProps
 }
 
 interface HeadProps {
@@ -16,6 +18,11 @@ interface BodyProps {
   className?: string
 }
 
+interface RowProps {
+  onClick?: () => void
+  className?: string
+}
+
 type TablePropsRootAttributes = Pick<
   HTMLAttributes<HTMLTableElement>,
   'className' | 'style' | 'id'
@@ -24,7 +31,7 @@ type TablePropsRootAttributes = Pick<
 type TableProps = TablePropsRootAttributes & TableOwnProps
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
-  ({ className = '', body, head, ...rest }, ref) => {
+  ({ className = '', body, head, rowProps, ...rest }, ref) => {
     return (
       <table className={`table-auto ${className}`} ref={ref} {...rest}>
         <thead>
@@ -51,7 +58,12 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
             return (
               <tr
                 key={`tr-item-${index}`}
-                className="border-b border-b-gray-200"
+                {...(rowProps?.onClick && { onClick: rowProps.onClick })}
+                className={cn(
+                  'border-b border-b-gray-200',
+                  rowProps?.onClick && 'cursor-pointer',
+                  rowProps?.className,
+                )}
               >
                 {items.map((item, subIndex) => {
                   return (
