@@ -4,7 +4,6 @@ import cn from 'classnames'
 interface TableOwnProps {
   head: HeadProps
   body: BodyProps
-  rowProps?: RowProps
 }
 
 interface HeadProps {
@@ -14,11 +13,12 @@ interface HeadProps {
 }
 
 interface BodyProps {
-  bodyComponent: Array<Array<JSX.Element | string | (JSX.Element & string)>>
+  bodyComponent: Array<RowProps>
   className?: string
 }
 
 interface RowProps {
+  data: Array<JSX.Element | string | (JSX.Element & string)>
   onClick?: () => void
   className?: string
 }
@@ -31,7 +31,7 @@ type TablePropsRootAttributes = Pick<
 type TableProps = TablePropsRootAttributes & TableOwnProps
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
-  ({ className = '', body, head, rowProps, ...rest }, ref) => {
+  ({ className = '', body, head, ...rest }, ref) => {
     return (
       <table className={`table-auto ${className}`} ref={ref} {...rest}>
         <thead>
@@ -54,18 +54,18 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
           </tr>
         </thead>
         <tbody>
-          {body.bodyComponent.map((items, index) => {
+          {body.bodyComponent.map(({ data, onClick, className }, index) => {
             return (
               <tr
                 key={`tr-item-${index}`}
-                {...(rowProps?.onClick && { onClick: rowProps.onClick })}
+                {...(onClick && { onClick })}
                 className={cn(
                   'border-b border-b-gray-200',
-                  rowProps?.onClick && 'cursor-pointer',
-                  rowProps?.className,
+                  onClick && 'cursor-pointer',
+                  className,
                 )}
               >
-                {items.map((item, subIndex) => {
+                {data.map((item, subIndex) => {
                   return (
                     <td
                       className="px-4 py-5 text-left"
