@@ -1,6 +1,6 @@
 import styles from './index.module.css'
 
-interface StatusBadgeProps {
+export interface StatusBadgeProps {
   type: 'pending' | 'denied' | 'approved' | 'reminded' | 'archived' | 'resolved'
   text?: string | null
 }
