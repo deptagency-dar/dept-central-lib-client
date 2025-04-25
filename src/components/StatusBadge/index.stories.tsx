@@ -30,7 +30,7 @@ type Story = StoryObj<typeof StatusBadge>
 
 export const Default: Story = {
   args: {
-    type: 'aprroved',
+    type: 'approved',
   },
 }
 
@@ -42,11 +42,11 @@ export const Approved: Story = {
   parameters: {
     docs: {
       source: {
-        code: ` <StatusBadge type="aprroved" /> `,
+        code: ` <StatusBadge type="approved" /> `,
       },
     },
   },
-  render: () => <StatusBadge type="aprroved" />,
+  render: () => <StatusBadge type="approved" />,
 }
 
 export const Pending: Story = {
