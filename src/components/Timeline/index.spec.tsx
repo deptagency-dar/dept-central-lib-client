@@ -75,6 +75,6 @@ describe('Timeline', () => {
     expect(iconContainer?.className).toMatch(/size-10/)
 
     const line = screen.getAllByRole('presentation')[0]
-    expect(line).toHaveClass('h-[100px]')
+    expect(line).toHaveClass('h-[80px]')
   })
 })

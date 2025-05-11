@@ -61,7 +61,7 @@ export const Timeline = ({ items }: TimelineProps) => {
               {!isLast && (
                 <div
                   role="presentation"
-                  className="w-px h-[100px] bg-grayscale-300 absolute top-1/2 -z-10"
+                  className="w-px h-[80px] bg-grayscale-300 absolute top-full"
                 />
               )}
             </div>
