@@ -2,6 +2,7 @@ import typography from '../../styles/typography.module.css'
 import { classNames as cn, getColor } from '../../utils'
 import { ColorPalette, ColorShade } from '../../types'
 import { ElementType } from 'react'
+import { Button } from '../Button'
 
 export interface TimelineItem {
   icon: ElementType
@@ -10,7 +11,7 @@ export interface TimelineItem {
   iconColorShade?: keyof ColorShade
   subtitle?: string
   caption?: string
-  cta?: { label: string; url: string }
+  cta?: { label: string; onClick: () => void }
 }
 
 export interface TimelineProps {
@@ -73,12 +74,13 @@ export const Timeline = ({ items }: TimelineProps) => {
                 {title}
               </p>
               {cta ? (
-                <a
-                  href={cta.url}
-                  className="cursor-pointer underline text-primary-600 underline-offset-[0.5rem] text-base font-medium hover:text-primary-700"
+                <Button
+                  onClick={cta.onClick}
+                  variant="link"
+                  className='!p-0'
                 >
                   {cta.label}
-                </a>
+                </Button>
               ) : (
                 <>
                   <p className={cn(typography.smallBold, 'text-grayscale-700')}>
