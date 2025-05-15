@@ -77,7 +77,7 @@ export const Timeline = ({ items }: TimelineProps) => {
                 <Button
                   onClick={cta.onClick}
                   variant="link"
-                  className='!p-0'
+                  className='!p-0 !text-base'
                 >
                   {cta.label}
                 </Button>
