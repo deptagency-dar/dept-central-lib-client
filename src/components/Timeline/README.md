@@ -26,8 +26,8 @@ import { CheckIcon, ClockIcon } from '@heroicons/react/24/outline'
       icon: ClockIcon,
       title: 'Timeline Item 2',
       cta: {
-        label: 'Learn more',
-        url: 'https://example.com',
+        label: 'CTA Label',
+        onClick: alert('Reminder created!'),
       },
     },
   ]}
@@ -47,12 +47,12 @@ import { CheckIcon, ClockIcon } from '@heroicons/react/24/outline'
 | Prop            | Type                                                                    | Description                                                                                                              | Default Value |
 | --------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------- |
 | icon            | ElementType                                                             | REQUIRED. A reference to a React component representing an SVG icon (e.g., from Heroicons), not an instantiated element. | -             |
-| iconColorScheme | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | OPTIONAL. Specifies the icon bg color.                                                                                    | "grayscale"   |
-| iconColorShade  | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | OPTIONAL. Specifies the icon bg color.                                                                                    | 300           |
+| iconColorScheme | 'primary' \| 'grayscale' \| 'error' \| 'warning' \| 'success'           | OPTIONAL. Specifies the icon bg color.                                                                                   | "grayscale"   |
+| iconColorShade  | 25 \| 50 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 | OPTIONAL. Specifies the icon bg color.                                                                                   | 300           |
 | title           | string                                                                  | REQUIRED. Main title of the item.                                                                                        | -             |
 | subtitle?       | string?                                                                 | OPTIONAL. Secondary line below the title. Ignored if cta is present.                                                     | -             |
 | caption?        | string?                                                                 | OPTIONAL. Caption under the subtitle. Ignored if cta is present.                                                         | -             |
-| cta?            | { label: string; url: string }                                          | OPTIONAL. Replaces subtitle and caption with a clickable call-to-action.                                                 | -             |
+| cta?            | { label: string; onClick: () => void }                                  | OPTIONAL. Replaces subtitle and caption with a clickable call-to-action.                                                 | -             |
 
 ## Go to main README
 

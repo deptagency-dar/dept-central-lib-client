@@ -1,8 +1,10 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { Timeline, TimelineItem } from '.'
 
 const MockIcon = () => <span data-testid="icon">🔥</span>
+
+const mockOnClick = jest.fn()
 
 const mockItems: TimelineItem[] = [
   {
@@ -26,7 +28,7 @@ const mockItems: TimelineItem[] = [
     title: 'Fourth',
     cta: {
       label: 'View more',
-      url: 'https://example.com',
+      onClick: mockOnClick,
     },
   },
 ]
@@ -46,9 +48,11 @@ describe('Timeline', () => {
     expect(screen.getByText('Subtitle one')).toBeInTheDocument()
     expect(screen.getByText('Caption 1')).toBeInTheDocument()
 
-    const ctaLink = screen.getByRole('link', { name: 'View more' })
-    expect(ctaLink).toBeInTheDocument()
-    expect(ctaLink).toHaveAttribute('href', 'https://example.com')
+    const ctaButton = screen.getByRole('button', { name: 'View more' })
+    expect(ctaButton).toBeInTheDocument()
+
+    fireEvent.click(ctaButton)
+    expect(mockOnClick).toHaveBeenCalled()
   })
 
   it('shows "-" if subtitle or caption not exist and no CTA is provided', () => {
