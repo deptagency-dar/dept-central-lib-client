@@ -44,7 +44,7 @@ export const Default: Story = {
         title: 'Reminder',
         cta: {
           label: 'Make a reminder',
-          url: 'https://central.ar.deptagency.com',
+          onClick: () => alert('Reminder created!'),
         },
       },
       {
@@ -87,7 +87,7 @@ export const TimelineItemWithCTA: Story = {
         title: 'Only CTA',
         cta: {
           label: 'CTA Label',
-          url: 'https://central.ar.deptagency.com',
+          onClick: () => alert('Reminder created!'),
         },
       },
     ],
