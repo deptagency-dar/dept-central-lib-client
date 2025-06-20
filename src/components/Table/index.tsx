@@ -60,7 +60,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
                 key={`tr-item-${index}`}
                 {...(onClick && { onClick })}
                 className={cn(
-                  'border-b border-b-gray-200',
+                  'border-b border-b-gray-200 hover:bg-violet-50 transition-colors',
                   onClick && 'cursor-pointer',
                   className,
                 )}
