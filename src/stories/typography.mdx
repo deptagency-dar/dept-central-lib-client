@@ -6,7 +6,7 @@ import { Meta, Typeset } from '@storybook/blocks';
 
 export const typography = {
   type: {
-    primary: '"Maison Neue", Helvetica, Arial, sans-serif',
+    primary: '"Inter", Helvetica, Arial, sans-serif',
   },
   weight: {
     regular: '400',
@@ -27,7 +27,7 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 
 # Typography
 
-**Font:** Maison Neue
+**Font:** Inter
 
 **Weights:** 400(regular), 600(bold)
 
@@ -41,7 +41,7 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
     Number(typography.size.base),
     Number(typography.size.small),
   ]}
-  fontWeight={typography.weight.bold}
+  fontWeight={typography.weight.regular}
   sampleText={SampleText}
   fontFamily={typography.type.primary}
 />

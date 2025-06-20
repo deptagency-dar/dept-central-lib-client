@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        maison: ['Maison Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       ...theme,
     },
