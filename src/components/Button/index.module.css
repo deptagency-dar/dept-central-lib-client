@@ -40,5 +40,5 @@
 }
 
 .disabled {
-  @apply opacity-50 cursor-not-allowed;
+  @apply bg-gray-200 text-gray-500 cursor-not-allowed;
 }
